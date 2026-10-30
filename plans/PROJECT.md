@@ -364,7 +364,11 @@ Before hand-off:
 
 - [x] `npm run build` clean, no Nunjucks errors, no dead links in `_site/` (checked: all `href`/`src`
       resolve, all in-page anchors have a matching `id`).
-- [x] 5 URLs + 404 reachable; footer legal links present on every page.
+- [x] 5 URLs + 404 reachable; footer legal links present on every page. Verified against the local
+      dev server: all five routes return `200`, every referenced asset (CSS, `woff2`, favicons,
+      `og-image.png`, manifest, sitemap, robots) returns `200`, an unknown path returns `404`.
+      `404.html` is served as the error page by the host, not by Eleventy's dev server — the host
+      configuration is part of the hosting decision in phase 12.
 - [x] Impressum cites `§ 5 DDG` + `§ 18 MStV`, no `TMG`/`RStV`, no OS link, no `§ 36 VSBG`.
 - [x] Datenschutz describes only what actually happens; no cookie banner.
 - [x] Zero third-party requests in the HTML (no CDN fonts, no iframe, no pixel). The only external
@@ -412,8 +416,29 @@ rest needs a served URL.
 - [x] 10 SEO + 404 — titles, canonical, OG image, JSON-LD, sitemap, robots, 404
 - [~] 11 A11y + responsive pass — contrast computed (all AA/3:1), focus rings fixed, skip-link
            overflow fixed, widths reasoned through; keyboard walk-through + Lighthouse in the
-           browser still pending (needs a served URL, see phase 12)
+           browser still pending (see G2–G3, Chrome is available locally)
 - [ ] 12 Client review round — copy corrections, open items, hosting decision
+
+---
+
+## 13. Goals — remaining work
+
+One goal per step. Each goal is small enough to hold in context, ends in a check, and gets its own
+commit. Work them in order; a goal is not started before the previous one is committed.
+
+| Goal | Scope | Done when |
+| --- | --- | --- |
+| G1 | Docs commit: record this goal list + the served-routes finding in § 11 | `git status` clean, docs commit |
+| G2 | Visual pass in Chrome against the local dev server: screenshots of every page at 320 / 640 / 768 / 1024 / 1440 px | No overlap, truncation or horizontal scrollbar; findings either fixed or recorded |
+| G3 | Lighthouse ≥ 90 on the served local site (all five routes): performance, accessibility, best practices, SEO | Scores ≥ 90, fixes applied, summary recorded in § 11 |
+| G4 | Keyboard + focus walk-through in Chrome: Tab order, visible focus ring, skip link, icon-link labels | Tab order matches reading order, ring visible everywhere, no trap |
+| G5 | Hosting decision: final domain, HTTPS, `404.html` as error page, `sitemap:` line reachable | Canonical + OG URLs match the live domain; live smoke test |
+| G6 | Copy review round with the client | Corrections applied, no invented claims, final German wording |
+| G7 | Open items from section 9 (Meistertitel, Öffnungszeiten, photos/references, trust info) | Each item either supplied and integrated, or explicitly marked not applicable |
+| G8 | Release check on the live site: Rich Results test, OG scrape, sitemap + robots live, 404 behaviour | § 11 fully `[x]`, ready for hand-off |
+
+Order: G1 → G2 → G3 → G4 are offline-verifiable now (local dev server + installed Chrome).
+G5 → G8 need the client's hosting decision and copy feedback, so they wait.
 
 
 
