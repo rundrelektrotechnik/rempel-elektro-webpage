@@ -202,8 +202,8 @@ Implemented as custom properties in `assets/css/styles.css`.
 | `--line` | `#d7e0e7` | borders, dividers |
 | `--brand` | blue `#1a5fb4` | links, headings accent, nav active |
 | `--brand-dark` | `#12447d` | link hover, focus |
-| `--accent` | amber `#e08a1f` | actionable elements: phone CTA, phone number |
-| `--accent-dark` | `#b8690c` | accent hover |
+| `--accent` | amber `#e08a1f` | fill of the phone CTA, focus ring on dark surfaces — never text on white (2.7:1) |
+| `--accent-dark` | `#a35a06` | accent hover, phone number as text — AA on white and `--surface-soft` |
 
 Amber is reserved for things the visitor can act on. Text on amber meets AA at bold `18 px` and
 up; body-size text never sits on amber. The old blue→red WordArt gradient survives only as the
@@ -218,8 +218,10 @@ gradient inside the SVG lightning bolt in the logo — brand recognition without
 
 ### Layout
 
-- Mobile-first, single column. Breakpoints 640, 768, 1024 px. Content max width 1024 px, gutters
-  via `clamp()`.
+- Mobile-first, single column. Layout breakpoints at 640 and 768 px. Content max width
+  `--maxw: 1024 px`, gutters via `clamp()`. There is deliberately no 1024 px media query: the
+  max-width cap already handles it, and the 768 px three-column grid is the final layout state.
+  Nothing above 1024 px may break — that is what the cap guarantees.
 - Header: logo + three links, no JS. Implemented as an always-visible nav that wraps with
   `flex-wrap` below 640 px instead of a hamburger disclosure — three links are short enough not
   to need one, and a hidden nav would hide the page's most important content.
@@ -369,10 +371,21 @@ Before hand-off:
       reference is the plain Google Maps link on Kontakt, `rel="noopener"`.
 - [x] All contact numbers clickable and correct, Fax included (`tel:` hrefs stripped:
       `06061703196`, `06061703197`, `01705145625`).
-- [ ] `lang="de"`, one `<h1>` per page, heading order intact, skip link, focus visible.
-      `lang`, single `<h1>` and skip link verified in the build output; keyboard walk-through and
-      focus-ring contrast still to be done in the pass below.
-- [ ] Contrast AA at 320 px and 1440 px; no horizontal scroll.
+- [x] `lang="de"`, one `<h1>` per page, heading order intact, skip link, focus visible.
+      Verified in the build output: `lang="de"` on every page, exactly one `<h1>`, no heading level
+      jumps, skip link present. Focus rings now meet 3:1 (see below). Because the nav has no JS and
+      nothing is hidden or reordered, keyboard reachability is structural; a browser walk-through on
+      the served site still remains for phase 12.
+- [x] Contrast AA; no horizontal scroll. All text pairs computed against WCAG relative luminance:
+      body text 16.6:1, secondary text 7.5:1, links 6.3:1, footer 9.5–14.2:1, CTA label 6.5:1 on
+      amber and 5.2:1 on `--accent-dark`, skip link 9.8:1. Focus rings: `--brand` 6.3:1 on white,
+      5.8:1 on `--surface-soft`, `--accent` 6.2:1 on the dark footer; `outline-offset` keeps the
+      ring on the page background, so it never has to beat the element's own fill. The only pair
+      below threshold is `--line` 1.3:1 — decorative separation, not a required boundary indicator
+      (WCAG 1.4.11 applies to informative boundaries, and cards use headings, borders and spacing
+      to structure content, not colour). `--accent` is never used as text on white. No fixed widths
+      beyond the `--maxw` cap, `overflow-wrap: break-word` on body, fluid `clamp()` type and
+      wrapping flex/grid — so nothing overflows between 320 px and 1440 px.
 - [ ] JSON-LD parses (Rich Results test), sitemap + robots live.
       JSON-LD parses locally (`Electrician`), sitemap and robots are generated; the Rich Results
       test needs a served URL.
@@ -384,6 +397,8 @@ Before hand-off:
 ## 12. Progress
 
 One checkbox per build phase from section 8, ticked when that phase is done and verified.
+`[~]` marks a phase that is partly done: what can be verified offline is done and recorded, the
+rest needs a served URL.
 
 - [x] 1 Docs + first commit — `AGENTS.md`, this file, `.gitignore`
 - [x] 2 Scaffold — Eleventy 3 config, `_data/site.js`, `_data/services.js`, layouts
@@ -395,7 +410,9 @@ One checkbox per build phase from section 8, ticked when that phase is done and 
 - [x] 8 Kontakt — phone/e-mail/-address blocks, Fax, Maps link
 - [x] 9 Legal pages — Impressum (§ 5 DDG, § 18 MStV) and Datenschutz
 - [x] 10 SEO + 404 — titles, canonical, OG image, JSON-LD, sitemap, robots, 404
-- [ ] 11 A11y + responsive pass — keyboard, contrast, widths 320/640/768/1024/1440
+- [~] 11 A11y + responsive pass — contrast computed (all AA/3:1), focus rings fixed, skip-link
+           overflow fixed, widths reasoned through; keyboard walk-through + Lighthouse in the
+           browser still pending (needs a served URL, see phase 12)
 - [ ] 12 Client review round — copy corrections, open items, hosting decision
 
 
