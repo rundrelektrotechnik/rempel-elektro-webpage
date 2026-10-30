@@ -269,6 +269,8 @@ _includes/
   layouts/base.njk
   components/header.njk, footer.njk, cta.njk, logo.njk, seo.njk, jsonld.njk
                       icons are inlined via the `icon` filter in eleventy.config.js
+                      (its output is a Nunjucks `SafeString`: Eleventy auto-escapes filter
+                      results, which would print the markup as text instead of an element)
 assets/
   css/styles.css      one file, custom properties, ~15 KB target
   fonts/              Inter subset woff2, copied from node_modules via passthrough

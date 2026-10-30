@@ -1,11 +1,17 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const nunjucks = require('nunjucks');
 
 /**
  * Reads an icon from assets/icons and returns markup for inline embedding.
  * Icons are hand-written SVG: stroke based, viewBox 0 0 24 24, no fill.
  * The wrapper is aria-hidden because every icon sits next to real text or
  * inside a labelled link.
+ *
+ * The result is wrapped in a Nunjucks SafeString: Eleventy turns autoescaping
+ * on, and a plain string returned from a filter gets escaped — the markup then
+ * reaches the page as literal text instead of an element. Only shortcodes are
+ * treated as safe by Eleventy, so filters have to mark it themselves.
  */
 function icon(name) {
   const file = path.join(__dirname, 'assets', 'icons', `${name}.svg`);
@@ -13,7 +19,7 @@ function icon(name) {
     throw new Error(`icon(): missing icon "${name}" (assets/icons/${name}.svg)`);
   }
   const svg = fs.readFileSync(file, 'utf8').replace(/\s*\n\s*/g, ' ').trim();
-  return `<span class="icon" aria-hidden="true">${svg}</span>`
+  return new nunjucks.runtime.SafeString(`<span class="icon" aria-hidden="true">${svg}</span>`)
 }
 
 /**
