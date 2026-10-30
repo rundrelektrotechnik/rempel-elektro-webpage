@@ -125,9 +125,12 @@ Defined in `plans/PROJECT.md`, implemented as custom properties in `assets/css/s
 ## 8. Commands
 
 ```bash
-npm run dev      # Eleventy --serve with watch, local preview
+npm run dev      # Eleventy --serve with watch, local preview on http://localhost:8081/
 npm run build    # production build into _site/
 ```
+
+The dev server is pinned to port 8081 (`--port=8081` in `package.json`): 8080 is already
+used by the local strata service, so do not switch this back.
 
 Before finishing any task, run the build and check `_site/` output renders correctly.
 

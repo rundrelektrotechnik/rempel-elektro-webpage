@@ -5,7 +5,7 @@
   "description": "Static site for Rempel-Elektro, Michelstadt. Eleventy build.",
   "type": "commonjs",
   "scripts": {
-    "dev": "eleventy --serve",
+    "dev": "eleventy --serve --port=8081",
     "build": "eleventy"
   },
   "devDependencies": {
