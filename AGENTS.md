@@ -22,7 +22,7 @@ supports that.
 | Generator | Eleventy (11ty) 3.x, Nunjucks templates |
 | Environment | Node 24, npm 11 (already installed locally) |
 | Styling | Plain modern CSS, single file. No Sass, no Tailwind, no CSS-in-JS |
-| JavaScript | Effectively none. Mobile nav and disclosure blocks use CSS/HTML only |
+| JavaScript | None, apart from the JSON-LD block. Header nav is always visible and wraps on small screens |
 | Fonts | Self-hosted, OFL-licensed, Latin-subset `woff2` via npm |
 | Imagery | Hand-written inline SVG. No stock photos, no external image CDNs |
 | Build output | `_site/` — never hand-edit, never commit |

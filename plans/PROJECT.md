@@ -92,7 +92,7 @@ Innung membership. The current Impressum states `Dipl. Ing. (FH)` only.
 | Generator | Eleventy 3.x with Nunjucks | Static output, no runtime, no DB. Small site, few pages — Eleventy's directory/data layer is enough. |
 | Environment | Node 24, npm 11 (installed) | Nothing to install beyond dev dependencies. |
 | Styling | Single plain modern CSS file, custom properties | No Sass, no Tailwind, no CSS-in-JS. Keeps output inspectable and dependency-free. |
-| JavaScript | Effectively none | Mobile nav via `:target`/CSS, disclosure via `<details>`. No bundler. |
+| JavaScript | None, apart from the JSON-LD block | Header nav is always visible and wraps on small screens; nothing needs JS. No bundler. |
 | Fonts | Inter, Latin-subset `woff2`, self-hosted via npm | OFL licence, preloaded, `font-display: swap`, no third-party request. |
 | Imagery | Hand-written inline SVG icons + SVG logo | `currentColor`, no raster assets, no image CDN. |
 | Structured data | `schema.org/Electrician` JSON-LD built from `_data/site.js` | Contact details become machine-readable. |
@@ -220,8 +220,9 @@ gradient inside the SVG lightning bolt in the logo — brand recognition without
 
 - Mobile-first, single column. Breakpoints 640, 768, 1024 px. Content max width 1024 px, gutters
   via `clamp()`.
-- Header: logo + three links. Below 640 px a CSS-only nav (`:target` or checkbox disclosure, no
-  JS).
+- Header: logo + three links, no JS. Implemented as an always-visible nav that wraps with
+  `flex-wrap` below 640 px instead of a hamburger disclosure — three links are short enough not
+  to need one, and a hidden nav would hide the page's most important content.
 - Cards: `--surface-soft` background, 1 px `--line` border, radius 10 px, shadow only on hover.
 - `prefers-reduced-motion` respected; transitions ≤ 150 ms, none when reduced.
 
@@ -248,7 +249,8 @@ Eleventy 3's default data and includes directories sit at the project root, besi
 
 ```
 package.json          scripts + dev dependencies only
-eleventy.config.js    content/data/includes dirs, permalinks, output, asset passthrough
+eleventy.config.js    content/data/includes dirs, permalinks, output, asset passthrough,
+                      `icon` filter, `isoDate` filter, `sitemap` collection
 content/
   index.njk
   leistungen.njk
@@ -256,18 +258,21 @@ content/
   impressum.njk
   datenschutz.njk
   404.njk
-  sitemap.xml.njk     → sitemap.xml
+  sitemap.xml.njk     → sitemap.xml (from the `sitemap` collection + `isoDate` filter)
   robots.txt.njk      → robots.txt
 _data/site.js         company data: name, address, phone, fax, mobile, e-mail, Kammer,
-                      USt-IdNr, nav, services list — single source of truth
+                      USt-IdNr, url, nav — single source of truth
+_data/services.js     the five services with copy, used by index, leistungen and JSON-LD
 _includes/
   layouts/base.njk
-  components/header.njk, footer.njk, cta.njk, icon.njk, seo.njk, jsonld.njk
+  components/header.njk, footer.njk, cta.njk, logo.njk, seo.njk, jsonld.njk
+                      icons are inlined via the `icon` filter in eleventy.config.js
 assets/
   css/styles.css      one file, custom properties, ~15 KB target
   fonts/              Inter subset woff2, copied from node_modules via passthrough
   icons/              .svg sources, inlined into templates at build time
   favicon/            favicon.svg + PNG fallbacks
+  img/                og-image.png (rendered from favicon.svg geometry)
 site.webmanifest
 .gitignore            _site/, node_modules/
 AGENTS.md
@@ -310,7 +315,7 @@ Ordered so each phase ends in something verifiable. Nothing starts before the pl
 | --- | --- | --- |
 | 1 | Docs into repo | `AGENTS.md`, `plans/PROJECT.md`, `.gitignore`, first commit |
 | 2 | Scaffold | `npm init`, Eleventy installed, `eleventy.config.js`, `_data/site.js`, layouts. `npm run build` produces `_site/index.html`. |
-| 3 | Design system | `styles.css` with tokens, type scale, header/footer, CSS-only nav. Render with dummy data. |
+| 3 | Design system | `styles.css` with tokens, type scale, header/footer, always-visible wrapping nav. Rendered with real data. |
 | 4 | Logo + icons | SVG wordmark, 5 service icons, contact icons, favicon, manifest. Visual check in header. |
 | 5 | Fonts | Inter subset installed, passthrough copy, `@font-face`, preload, `font-display: swap`. No FOUC, no layout shift. |
 | 6 | Start page | Full German copy, hero, teaser cards, ablauf, region, contact block. |
@@ -355,17 +360,43 @@ Tracked so nothing gets silently invented. Do not write around them.
 
 Before hand-off:
 
-- [ ] `npm run build` clean, no Nunjucks errors, no dead links in `_site/`.
-- [ ] 5 URLs + 404 reachable; footer legal links present on every page.
-- [ ] Impressum cites `§ 5 DDG` + `§ 18 MStV`, no `TMG`/`RStV`, no OS link, no `§ 36 VSBG`.
-- [ ] Datenschutz describes only what actually happens; no cookie banner.
-- [ ] Zero third-party requests in the HTML (no CDN fonts, no iframe, no pixel).
-- [ ] All contact numbers clickable and correct, Fax included.
+- [x] `npm run build` clean, no Nunjucks errors, no dead links in `_site/` (checked: all `href`/`src`
+      resolve, all in-page anchors have a matching `id`).
+- [x] 5 URLs + 404 reachable; footer legal links present on every page.
+- [x] Impressum cites `§ 5 DDG` + `§ 18 MStV`, no `TMG`/`RStV`, no OS link, no `§ 36 VSBG`.
+- [x] Datenschutz describes only what actually happens; no cookie banner.
+- [x] Zero third-party requests in the HTML (no CDN fonts, no iframe, no pixel). The only external
+      reference is the plain Google Maps link on Kontakt, `rel="noopener"`.
+- [x] All contact numbers clickable and correct, Fax included (`tel:` hrefs stripped:
+      `06061703196`, `06061703197`, `01705145625`).
 - [ ] `lang="de"`, one `<h1>` per page, heading order intact, skip link, focus visible.
+      `lang`, single `<h1>` and skip link verified in the build output; keyboard walk-through and
+      focus-ring contrast still to be done in the pass below.
 - [ ] Contrast AA at 320 px and 1440 px; no horizontal scroll.
 - [ ] JSON-LD parses (Rich Results test), sitemap + robots live.
-- [ ] No empty reference/photo placeholder markup.
-- [ ] Open items in section 9 untouched, no invented facts.
+      JSON-LD parses locally (`Electrician`), sitemap and robots are generated; the Rich Results
+      test needs a served URL.
+- [x] No empty reference/photo placeholder markup.
+- [x] Open items in section 9 untouched, no invented facts.
+
+---
+
+## 12. Progress
+
+One checkbox per build phase from section 8, ticked when that phase is done and verified.
+
+- [x] 1 Docs + first commit — `AGENTS.md`, this file, `.gitignore`
+- [x] 2 Scaffold — Eleventy 3 config, `_data/site.js`, `_data/services.js`, layouts
+- [x] 3 Design system — `styles.css` tokens, type scale, header/footer/nav
+- [x] 4 Logo + icons — SVG wordmark, 10 icons, favicon + PNG fallbacks, manifest
+- [x] 5 Fonts — Inter variable Latin subset self-hosted, preloaded, OFL file shipped
+- [x] 6 Start page — hero, service teasers, Ablauf, Region, contact block
+- [x] 7 Leistungen — five anchored sections with icons and per-section CTA
+- [x] 8 Kontakt — phone/e-mail/-address blocks, Fax, Maps link
+- [x] 9 Legal pages — Impressum (§ 5 DDG, § 18 MStV) and Datenschutz
+- [x] 10 SEO + 404 — titles, canonical, OG image, JSON-LD, sitemap, robots, 404
+- [ ] 11 A11y + responsive pass — keyboard, contrast, widths 320/640/768/1024/1440
+- [ ] 12 Client review round — copy corrections, open items, hosting decision
 
 
 
