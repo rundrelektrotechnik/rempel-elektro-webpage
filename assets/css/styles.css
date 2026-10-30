@@ -426,13 +426,17 @@ section,
   align-items: center;
   gap: 0.6rem;
   font-weight: 650;
+  flex-wrap: wrap; /* the value wraps below the label instead of overflowing */
 }
 
 .contact-list .icon {
   color: var(--brand);
 }
 
+/* Never break a label (e.g. "E-Mail"); the value wraps instead. */
 .contact-list .label {
+  flex: none;
+  white-space: nowrap;
   font-weight: 400;
   color: var(--ink-soft);
 }

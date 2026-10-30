@@ -392,6 +392,25 @@ Before hand-off:
       to structure content, not colour). `--accent` is never used as text on white. No fixed widths
       beyond the `--maxw` cap, `overflow-wrap: break-word` on body, fluid `clamp()` type and
       wrapping flex/grid — so nothing overflows between 320 px and 1440 px.
+- [x] Visual pass in Chrome (G2): 30 full-page screenshots — 6 routes (`/`, `/leistungen/`,
+      `/kontakt/`, `/impressum/`, `/datenschutz/`, `/404.html`) at 320 / 640 / 768 / 1024 / 1440 px,
+      captured through the Chrome DevTools Protocol against the local dev server (viewport override,
+      `captureBeyondViewport`, no layout hacks or JS emulation). Every capture measured in-page:
+      `document.scrollWidth` never exceeds the viewport, no horizontal scrollbar, no element
+      overflowing the viewport, no clipped text node, no overlapping text node, no console or
+      network error. On top of the measurements, tiles of every page were read by eye at each
+      route/width: nothing truncated, no word cut off, header and footer intact at all five widths.
+      Findings in the two paragraphs below.
+      One fix: the contact rows on Kontakt/Start let a long label break mid-word ("Umsatzsteuer-",
+      "Identifikationsnummer") and the value dropped to a ragged second line, so `.contact-list .label`
+      is now `flex: none; white-space: nowrap` and the row `flex-wrap: wrap` — the value wraps below
+      its label instead of the label wrapping mid-word.
+      Recorded, no fix needed: the longest words anywhere in the pages are `nikolai.rempel@freenet.de`,
+      `Umsatzsteuer-Identifikationsnummer`, `Datenschutzgrundverordnung`, `Datenschutz-Aufsichtsbehörde`;
+      none of them exceeds its box at any width (`overflow-wrap` only kicks in below 320 px, which is
+      not a supported width). `document.scrollWidth` equals viewport minus the ~15 px scrollbar gutter
+      on scrolling pages; `/404.html` reports the exact viewport width because that page is short
+      enough not to scroll — that is the reason it differs, not an overflow.
 - [ ] JSON-LD parses (Rich Results test), sitemap + robots live.
       JSON-LD parses locally (`Electrician`), sitemap and robots are generated; the Rich Results
       test needs a served URL.
@@ -417,8 +436,9 @@ rest needs a served URL.
 - [x] 9 Legal pages — Impressum (§ 5 DDG, § 18 MStV) and Datenschutz
 - [x] 10 SEO + 404 — titles, canonical, OG image, JSON-LD, sitemap, robots, 404
 - [~] 11 A11y + responsive pass — contrast computed (all AA/3:1), focus rings fixed, skip-link
-           overflow fixed, widths reasoned through; keyboard walk-through + Lighthouse in the
-           browser still pending (see G2–G3, Chrome is available locally)
+           overflow fixed; responsive pass done in Chrome (G2): 30 full-page screenshots, 6 routes
+           × 5 widths (320–1440 px), measured clean and reviewed by eye; contact-row label wrap
+           fixed. Keyboard walk-through + Lighthouse in the browser still pending (G3, G4)
 - [ ] 12 Client review round — copy corrections, open items, hosting decision
 
 ---
@@ -428,19 +448,25 @@ rest needs a served URL.
 One goal per step. Each goal is small enough to hold in context, ends in a check, and gets its own
 commit. Work them in order; a goal is not started before the previous one is committed.
 
-| Goal | Scope | Done when |
-| --- | --- | --- |
-| G1 | Docs commit: record this goal list + the served-routes finding in § 11 | `git status` clean, docs commit |
-| G2 | Visual pass in Chrome against the local dev server: screenshots of every page at 320 / 640 / 768 / 1024 / 1440 px | No overlap, truncation or horizontal scrollbar; findings either fixed or recorded |
-| G3 | Lighthouse ≥ 90 on the served local site (all five routes): performance, accessibility, best practices, SEO | Scores ≥ 90, fixes applied, summary recorded in § 11 |
-| G4 | Keyboard + focus walk-through in Chrome: Tab order, visible focus ring, skip link, icon-link labels | Tab order matches reading order, ring visible everywhere, no trap |
-| G5 | Hosting decision: final domain, HTTPS, `404.html` as error page, `sitemap:` line reachable | Canonical + OG URLs match the live domain; live smoke test |
-| G6 | Copy review round with the client | Corrections applied, no invented claims, final German wording |
-| G7 | Open items from section 9 (Meistertitel, Öffnungszeiten, photos/references, trust info) | Each item either supplied and integrated, or explicitly marked not applicable |
-| G8 | Release check on the live site: Rich Results test, OG scrape, sitemap + robots live, 404 behaviour | § 11 fully `[x]`, ready for hand-off |
+| Goal | Scope | Done when | Status |
+| --- | --- | --- | --- |
+| G1 | Docs commit: record this goal list + the served-routes finding in § 11 | `git status` clean, docs commit | done |
+| G2 | Visual pass in Chrome against the local dev server: screenshots of every page at 320 / 640 / 768 / 1024 / 1440 px | No overlap, truncation or horizontal scrollbar; findings either fixed or recorded | done — § 11 |
+| G3 | Lighthouse ≥ 90 on the served local site (all five routes): performance, accessibility, best practices, SEO | Scores ≥ 90, fixes applied, summary recorded in § 11 | next |
+| G4 | Keyboard + focus walk-through in Chrome: Tab order, visible focus ring, skip link, icon-link labels | Tab order matches reading order, ring visible everywhere, no trap | open |
+| G5 | Hosting decision: final domain, HTTPS, `404.html` as error page, `sitemap:` line reachable | Canonical + OG URLs match the live domain; live smoke test | open |
+| G6 | Copy review round with the client | Corrections applied, no invented claims, final German wording | open |
+| G7 | Open items from section 9 (Meistertitel, Öffnungszeiten, photos/references, trust info) | Each item either supplied and integrated, or explicitly marked not applicable | open |
+| G8 | Release check on the live site: Rich Results test, OG scrape, sitemap + robots live, 404 behaviour | § 11 fully `[x]`, ready for hand-off | open |
 
 Order: G1 → G2 → G3 → G4 are offline-verifiable now (local dev server + installed Chrome).
 G5 → G8 need the client's hosting decision and copy feedback, so they wait.
 
-
-
+G2 was run outside the repo: a plain Node script driving headless Chrome over the DevTools Protocol
+(no dependency added, no Puppeteer), with a per-route, per-width viewport override, a full-page
+`captureBeyondViewport` screenshot and an in-page audit of `scrollWidth`, overflowing, clipped and
+overlapping elements, plus console and network errors. Two harness artefacts worth remembering for
+G3/G4: a horizontal-scrollbar the harness once reported came from a dev server still serving markup
+from before the icon fix — a stale build, not a layout bug, gone after a rebuild; and the dark band
+at the top of the full-page PNGs is a `captureBeyondViewport` artefact, not a page bug. The tiles
+reviewed by eye were clipped to legible slices instead of full pages, which is what makes them sharp.
