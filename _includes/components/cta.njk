@@ -1,0 +1,12 @@
+{# Phone CTA, used on every page that offers a way to act. #}
+{# A real link with text, never an icon-only button (PROJECT.md §6). #}
+{% macro phoneCta(text = 'Anrufen', note = '') %}
+<p class="cta">
+  <a class="btn btn--primary" href="{{ site.phoneHref }}">
+    {{ 'phone' | icon }}{{ text }} {{ site.phone }}
+  </a>
+</p>
+{% if note %}
+<p class="cta__note">{{ note }}</p>
+{% endif %}
+{% endmacro %}

@@ -1,0 +1,14 @@
+{# Per-page metadata. `title` and `description` come from each page's #}
+{# frontmatter; the fallbacks are the site defaults in _data/site.js.   #}
+{# No generator tag, no analytics: nothing here sends a third request.  #}
+<title>{% if title %}{{ title }} | {{ site.name }}{% else %}{{ site.metaTitle }}{% endif %}</title>
+<meta name="description" content="{% if description %}{{ description }}{% else %}{{ site.metaDescription }}{% endif %}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{% if title %}{{ title }} | {{ site.name }}{% else %}{{ site.metaTitle }}{% endif %}">
+<meta property="og:description" content="{% if description %}{{ description }}{% else %}{{ site.metaDescription }}{% endif %}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}{{ site.ogImage }}">
+<meta property="og:locale" content="de_DE">
+<meta name="theme-color" content="{{ site.themeColor }}">

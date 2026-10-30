@@ -1,0 +1,33 @@
+{# schema.org/Electrician, built from _data/site.js. Rendered only on pages #}
+{# that set `jsonld: true` in their frontmatter (layouts/base.njk). #}
+{# Nothing invented: no founding year, no certifications, no opening hours, #}
+{# no Meister-title claim. #}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Electrician",
+    "@id": "{{ site.url }}/#company",
+    "name": "{{ site.name }}",
+    "url": "{{ site.url }}/",
+    "logo": "{{ site.url }}{{ site.ogImage }}",
+    "image": "{{ site.url }}{{ site.ogImage }}",
+    "description": "{{ site.metaDescription }}",
+    "telephone": "{{ site.phonePlain }}",
+    "faxNumber": "{{ site.faxPlain }}",
+    "email": "{{ site.email }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ site.street }}",
+      "postalCode": "{{ site.zip }}",
+      "addressLocality": "{{ site.city }}",
+      "addressRegion": "{{ site.region }}",
+      "addressCountry": "DE"
+    },
+    "areaServed": [
+      {% for area in site.areaNames %}
+      { "@type": "AdministrativeArea", "name": "{{ area }}" }{{ "," if not loop.last }}
+      {% endfor %}
+    ],
+    "sameAs": ["{{ site.mapsUrl }}"]
+  }
+</script>

@@ -1,0 +1,26 @@
+---
+title: "Seite nicht gefunden"
+description: "Die angeforderte Seite wurde nicht gefunden. Weiter zur Startseite von Rempel-Elektro oder zur Kontaktseite."
+layout: layouts/base.njk
+permalink: /404.html
+sitemap: false
+eleventyExcludeFromCollections: true
+---
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Die Seite wurde nicht gefunden.</h1>
+    <p class="hero__lede">
+      Diese Adresse gibt es nicht, oder die Seite ist weggefallen. Am besten rufen Sie uns direkt an –
+      dann ist auch gleich geklärt, was Sie brauchen.
+    </p>
+    <div class="hero__actions">
+      {% import 'components/cta.njk' as cta %}
+      {{ cta.phoneCta() | safe }}
+    </div>
+    <p class="hero__actions">
+      <a class="btn btn--secondary" href="/">Zur Startseite</a>
+      <a class="btn btn--secondary" href="/kontakt/">Zur Kontaktseite</a>
+    </p>
+  </div>
+</section>

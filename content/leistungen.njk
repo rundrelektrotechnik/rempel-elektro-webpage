@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+title: 'Leistungen im Überblick'
+description: 'Planung und Beratung, Kundendienst, Elektroinstallation, Antennenanlagen und Photovoltaik für Michelstadt und den Odenwald. Was jeder Bereich umfasst und was an Arbeit anfällt.'
+sitemap: true
+---
+{% import 'components/cta.njk' as cta %}
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Leistungen</h1>
+    <p class="hero__lede">
+      Was wir machen und was dabei anfällt. Fünf Bereiche, der Reihe nach. Für jeden
+      ist der Anruf der erste Weg: {{ site.phone }}.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="{{ site.phoneHref }}">{{ 'phone' | icon }}Anrufen {{ site.phone }}</a>
+      <a class="btn btn--secondary" href="/kontakt/">Kontakt</a>
+    </div>
+  </div>
+</section>
+
+{% for service in services %}
+<section class="service" id="{{ service.id }}">
+  <div class="wrap">
+    <h2 class="service__title">{{ service.icon | icon }}{{ service.title }}</h2>
+    <p class="service__lede">{{ service.lede }}</p>
+    {% for absatz in service.body %}
+    <p>{{ absatz }}</p>
+    {% endfor %}
+    <p>Dabei fällt unter anderem an:</p>
+    <ul>
+      {% for item in service.items %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    {{ cta.phoneCta('Anrufen', 'Sprechen Sie uns an, wir schätzen ein, was in Ihrem Fall nötig ist.') | safe }}
+  </div>
+</section>
+{% endfor %}

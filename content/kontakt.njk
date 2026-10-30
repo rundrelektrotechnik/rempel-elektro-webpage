@@ -1,0 +1,63 @@
+---
+layout: layouts/base.njk
+title: 'Kontakt'
+description: 'Rempel-Elektro in Michelstadt: Telefon 06061 - 70 31 96, Mobil 0170 - 514 562 5, E-Mail und Anschrift Chemnitzer-Str. 4, 64720 Michelstadt.'
+sitemap: true
+---
+{% import 'components/cta.njk' as cta %}
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Kontakt</h1>
+    <p class="hero__lede">
+      Der kürzeste Weg ist der Anruf. Wir fragen nach, was ansteht, und sagen am
+      Telefon, was nötig ist und welcher Aufwand dabei entsteht.
+    </p>
+    <p class="phone-big">
+      <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}{{ site.phone }}</a>
+    </p>
+    <p class="cta__note">
+      Rufen Sie an, wenn etwas nicht funktioniert oder etwas geplant ist.
+      Sollte der Anruf nicht passen, schreiben Sie eine E-Mail.
+    </p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Erreichbarkeit</h2>
+    <ul class="contact-list">
+      <li>
+        <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}<span class="label">Telefon</span>{{ site.phone }}</a>
+      </li>
+      <li>
+        <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>
+      </li>
+      <li>
+        <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
+      </li>
+      <li>
+        <a href="{{ site.faxHref }}">{{ 'fax' | icon }}<span class="label">Fax</span>{{ site.fax }}</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Anschrift</h2>
+    <address>
+      {{ site.name }}<br>
+      {{ site.owner }}, {{ site.title }}<br>
+      {{ site.street }}<br>
+      {{ site.zip }} {{ site.city }}
+    </address>
+    <p>
+      <a class="card__link" href="{{ site.mapsUrl }}" rel="noopener">{{ 'location' | icon }}Standort auf Google Maps</a>
+    </p>
+    <p class="cta__note">
+      Ein Formular gibt es nicht. Telefon und E-Mail sind die Wege, auf denen wir
+      erreichen – und auf denen wir zurückmelden.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+{
+  "name": "Rempel-Elektro – Elektrohandwerk in Michelstadt und im Odenwald",
+  "short_name": "Rempel-Elektro",
+  "description": "Elektrohandwerk in Michelstadt und im Odenwald. Telefon: 06061 - 70 31 96.",
+  "lang": "de",
+  "dir": "ltr",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#12202b",
+  "theme_color": "#12202b",
+  "icons": [
+    {
+      "src": "/assets/favicon/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/favicon/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

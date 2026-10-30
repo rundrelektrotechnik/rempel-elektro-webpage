@@ -1,0 +1,156 @@
+# AGENTS.md — Rempel-Elektro website
+
+Working instructions for AI agents and human contributors working in this repository.
+Read `plans/PROJECT.md` for the full plan, findings and page specifications before changing anything.
+
+## 1. Project purpose
+
+Rebuilding the web presence of **Rempel-Elektro** (Nikolai Rempel, Dipl.-Ing. (FH)) in Michelstadt,
+Odenwald, to replace the current live site at <http://www.rempel-elektro.de/>.
+
+The old site is an unstyled HTML 4 table layout: no mobile support, no `Datenschutzerklärung`,
+content inside `<pre>` tags, a WordArt `.gif` logo, no favicon, no meta data. The rebuild is a
+modern, static, single-language German business site.
+
+The site's job is one thing: **make it easy to reach the business by phone**. Everything else
+supports that.
+
+## 2. Stack and tooling
+
+| Area | Decision |
+| --- | --- |
+| Generator | Eleventy (11ty) 3.x, Nunjucks templates |
+| Environment | Node 24, npm 11 (already installed locally) |
+| Styling | Plain modern CSS, single file. No Sass, no Tailwind, no CSS-in-JS |
+| JavaScript | Effectively none. Mobile nav and disclosure blocks use CSS/HTML only |
+| Fonts | Self-hosted, OFL-licensed, Latin-subset `woff2` via npm |
+| Imagery | Hand-written inline SVG. No stock photos, no external image CDNs |
+| Build output | `_site/` — never hand-edit, never commit |
+
+## 3. Repository layout
+
+```
+/content           source pages, one file per URL
+/_data             site.js = single source of truth for all contact/legal data
+/_includes         layouts/ and components/
+/assets            css/, fonts/, icons/, favicon
+/eleventy.config.js
+/plans             planning documents (PROJECT.md)
+/_site             build output — ignored
+/site.webmanifest  manifest + favicon fallbacks
+```
+
+Every page is generated from `layouts/base.njk`. Navigation, footer and legal links come from
+includes, never from duplicated markup.
+
+## 4. Content and copy rules
+
+- All user-facing copy is **German**, formal register, `Sie` throughout.
+- Documents and code comments in English.
+- **Never invent business claims.** No "Meisterbetrieb", no certifications, no customer reviews,
+  no reference projects, no team members, no invented founding year. The existing Impressum
+  states `Dipl. Ing. (FH)` only — do not upgrade that into a master-title claim.
+- Facts live in `_data/site.js`; copy that repeats a fact (address, phone) must pull from that
+  file instead of being retyped. Any change to contact data happens in exactly one place.
+- Service list is fixed: **Planung & Beratung, Kundendienst, Elektroinstallation,
+  Antennenanlagen, Photovoltaik.**
+- German copy must read as written for this business, not as filler. Placeholder text is
+  acceptable only when clearly marked as such, and never shipped.
+
+### Canonical company data (use verbatim, do not paraphrase)
+
+| Field | Value |
+| --- | --- |
+| Firma | Rempel-Elektro |
+| Inhaber | Nikolai Rempel, Dipl.-Ing. (FH) |
+| Anschrift | Chemnitzer-Str. 4, 64720 Michelstadt |
+| Telefon | 06061 - 70 31 96 |
+| Fax | 06061 - 70 31 97 |
+| Mobil | 0170 - 514 562 5 |
+| E-Mail | nikolai.rempel@freenet.de |
+| Kammer | Handwerkskammer Frankfurt-Rhein-Main, Betriebs-Nr. 4165157 |
+| USt-IdNr. | DE 245119682 |
+
+Numbers keep their German spacing when displayed; the `tel:` href strips spaces and dashes
+(`06061 703196`, not `06061-70 31 96`).
+
+## 5. Legal constraints (German law — treat as hard requirements)
+
+- Impressum basis is **`§ 5 DDG`** (Digitale-Dienste-Gesetz, since 14 May 2024, replaces the TMG)
+  together with `§ 18 MStV`. Never write `§ 5 TMG`, never reference `RStV`.
+- **No link to the EU OS-Streitbeilegungsplattform.** It was shut down 20 July 2025. Keeping the
+  link is misleading and competition-law attackable.
+- **No `§ 36 VSBG` notice.** Obligatory only for businesses with more than 10 employees;
+  Rempel-Elektro is exempt. Do not add it "for completeness".
+- Impressum must contain: name, ladungsfähige postal address (no PO box, no virtual office),
+  phone, e-mail, Kammer + Betriebs-Nr., USt-IdNr. Fax is included deliberately, per client
+  decision.
+- `Datenschutzerklärung` (Art. 13/14 DSGVO) is **mandatory** and currently missing from the live
+  site. It must state exactly what actually happens: nothing. No cookies, no analytics, no
+  third-party requests. If that changes, the document must change with it.
+- Fonts are self-hosted. Loading fonts from a CDN sends visitors' IP addresses to a third party
+  and requires consent management.
+- No third-party embeds at all: no Google Fonts, no Maps iframe, no analytics, no social plugins.
+  Address links to Google Maps as a plain external link, `rel="noopener"`.
+- A cookie banner is therefore not needed. Do not add one.
+
+These are not legal advice for the client: they are the constraints for this build. If a legal
+wording is uncertain, verify the current statute before writing it — do not guess from memory.
+
+## 6. Engineering baseline
+
+- Semantic HTML5, `lang="de"`, single `<h1>` per page, correct heading order, skip link.
+- WCAG 2.2 AA: contrast, visible focus styles, keyboard reachable, `aria-label` on icon links,
+  text never relies on colour alone, `prefers-reduced-motion` respected.
+- Mobile-first fluid layout. Breakpoints at 640, 768, 1024 px. Nothing above 1024 px may break.
+- `tel:` and `mailto:` as primary contact mechanisms; no contact form, therefore no AVV needed.
+- Structured data: `schema.org/Electrician` JSON-LD generated from `_data/site.js`.
+- Per-page `<title>` and description, canonical, Open Graph, `sitemap.xml`, `robots.txt`,
+  SVG favicon with PNG fallback.
+- Self-contained CSS (~15 KB target), preloaded subset `woff2`, no layout shift on first paint.
+
+## 7. Design system
+
+Defined in `plans/PROJECT.md`, implemented as custom properties in `assets/css/styles.css`.
+
+- Palette: slate-navy ink, blue primary, amber accent reserved for actionable elements.
+  The old blue→red logo gradient survives only inside the SVG lightning bolt.
+- Typography: Inter, self-hosted, Latin-subset.
+- Icons: one inline-SVG stroke system, consistent stroke width, `currentColor`, no decorative
+  animation.
+- Logo: modern SVG wordmark, hand-written, no raster assets.
+- No photos until the client supplies them — the layout must not reserve empty photo slots.
+
+## 8. Commands
+
+```bash
+npm run dev      # Eleventy --serve with watch, local preview
+npm run build    # production build into _site/
+```
+
+Before finishing any task, run the build and check `_site/` output renders correctly.
+
+## 9. Do not
+
+- Edit `_site/`, `node_modules/` or generated files.
+- Add dependencies without a concrete need. No framework, no CSS framework, no JS bundler.
+- Add analytics, tracking pixels or third-party widgets "for later".
+- Fabricate legal text, certifications, service scope or testimonials.
+- Change contact or legal data directly inside a page template.
+- Add a cookie banner, consent tool or font CDN.
+- Build scaffolding for references or photo galleries that has no real content behind it.
+
+## 10. Open items pending client confirmation
+
+Tracked here so nothing gets silently invented:
+
+- Meistertitel / actual qualification — currently deliberately not stated anywhere.
+- Opening hours — not provided by the client; block left out until supplied.
+- Real project photos and references — deferred until the client provides them; no empty slots.
+- Hosting provider for the new build, and whether the old server is reused.
+- Trust information (Innung membership, certifications) — deferred, will be provided later.
+
+## 11. Before implementing
+
+The plan in `plans/PROJECT.md` is authoritative. If a task conflicts with it, update the plan
+first, then the code. Keep the legal constraints in section 5 non-negotiable.

@@ -1,0 +1,17 @@
+{
+  "name": "rempel-elektro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site for Rempel-Elektro, Michelstadt. Eleventy build.",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.5"
+  }
+}

@@ -1,0 +1,14 @@
+<header class="site-header">
+  <div class="wrap site-header__inner">
+  {% include 'components/logo.njk' %}
+  <nav class="nav" aria-label="Hauptnavigation">
+    <ul>
+      {% for item in site.nav %}
+      <li>
+        <a href="{{ item.href }}"{% if page.url == item.href %} aria-current="page"{% endif %}>{{ item.text }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  </div>
+</header>

@@ -1,0 +1,93 @@
+---
+layout: layouts/base.njk
+title: 'Elektrohandwerk in Michelstadt und im Odenwald'
+description: 'Rempel-Elektro in Michelstadt: Planung und Beratung, Kundendienst, Elektroinstallation, Antennenanlagen und Photovoltaik im Odenwald. Anruf unter 06061 - 70 31 96.'
+jsonld: true
+sitemap: true
+---
+{% import 'components/cta.njk' as cta %}
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Elektrohandwerk in Michelstadt und im Odenwald</h1>
+    <p class="hero__lede">
+      Ein Betrieb, ein Ansprechpartner. Sie rufen an, wir fragen nach, was ansteht,
+      und schätzen am Telefon ein, was zu tun ist. Wenn wir kommen müssen, kommen wir –
+      und sagen vorher, welcher Aufwand dabei entsteht.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="{{ site.phoneHref }}">{{ 'phone' | icon }}Anrufen {{ site.phone }}</a>
+      <a class="btn btn--secondary" href="/kontakt/">Kontakt aufnehmen</a>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Leistungen</h2>
+    <p>Fünf Bereiche. Was genau anfällt, klären wir im Gespräch.</p>
+    <ul class="cards">
+      {% for service in services %}
+      <li class="card">
+        <h3 class="card__title">{{ service.icon | icon }}{{ service.title }}</h3>
+        <p class="card__desc">{{ service.desc }}</p>
+        <a class="card__link" href="/leistungen/#{{ service.id }}">Mehr dazu {{ 'arrow' | icon }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>So läuft die Zusammenarbeit</h2>
+    <ol class="steps">
+      <li class="step">
+        <span class="step__num">1. Anruf</span>
+        <h3 class="step__title">Sie schildern, was ansteht</h3>
+        <p>Telefon oder E-Mail: Wir fragen nach, was passiert ist oder was Sie vorhaben.</p>
+      </li>
+      <li class="step">
+        <span class="step__num">2. Einschätzung</span>
+        <h3 class="step__title">Wir sagen, was nötig ist</h3>
+        <p>Was gemacht werden muss, welcher Aufwand dabei entsteht und in welcher Reihenfolge.</p>
+      </li>
+      <li class="step">
+        <span class="step__num">3. Ausführung</span>
+        <h3 class="step__title">Wir führen aus und prüfen</h3>
+        <p>Nach der Arbeit prüfen wir die Anlage und geben die Übersicht der Stromkreise.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Wo wir arbeiten</h2>
+    <p>
+      Wir sind in {{ site.area }} im Einsatz. Das heißt: kurze Wege, und wir können
+      sagen, wann wir bei Ihnen sein können.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Kontakt</h2>
+    <p class="phone-big">
+      <a href="{{ site.phoneHref }}">{{ site.phone }}</a>
+    </p>
+    {{ cta.phoneCta('Anrufen', 'Sollte der Anruf nicht passen, schreiben Sie eine E-Mail. Wir melden zurück.') | safe }}
+    <ul class="contact-list">
+      <li>
+        <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>
+      </li>
+      <li>
+        <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
+      </li>
+      <li>
+        <address>{{ 'location' | icon }}{{ site.street }}, {{ site.zip }} {{ site.city }}</address>
+      </li>
+    </ul>
+  </div>
+</section>

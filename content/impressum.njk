@@ -1,0 +1,85 @@
+---
+layout: layouts/base.njk
+title: 'Impressum'
+description: 'Impressum von Rempel-Elektro in Michelstadt: Inhaber Nikolai Rempel, Dipl.-Ing. (FH), Anschrift, Telefon, Fax, E-Mail, Handwerkskammer und Umsatzsteuer-Identifikationsnummer.'
+sitemap: true
+---
+
+<section>
+  <div class="wrap pro">
+    <h1>Impressum</h1>
+
+    <div class="block">
+      <h2>Angaben gemäß § 5 DDG und § 18 MStV</h2>
+      <address>
+        {{ site.name }}<br>
+        Inhaber: {{ site.owner }}, {{ site.title }}<br>
+        {{ site.street }}<br>
+        {{ site.zip }} {{ site.city }}
+      </address>
+      <p>
+        Diese Anschrift ist die ladungsfähige Anschrift des Betriebs. Sie wird für
+        Postsendungen und im Zustellungsfall verwendet.
+      </p>
+    </div>
+
+    <div class="block">
+      <h2>Kontakt</h2>
+      <ul class="contact-list">
+        <li>
+          <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}<span class="label">Telefon</span>{{ site.phone }}</a>
+        </li>
+        <li>
+          <a href="{{ site.faxHref }}">{{ 'fax' | icon }}<span class="label">Fax</span>{{ site.fax }}</a>
+        </li>
+        <li>
+          <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h2>Betriebliche und berufliche Angaben</h2>
+      <p>
+        Handwerkskammer: {{ site.kammer }}, Betriebs-Nr. {{ site.betriebsnummer }}<br>
+        Umsatzsteuer-Identifikationsnummer nach § 27a UStG: {{ site.ustIdNr }}
+      </p>
+      <p>
+        Inhaltlich verantwortlich nach § 5 DDG und § 18 MStV:
+        {{ site.owner }}, {{ site.title }}, {{ site.address }}.
+      </p>
+    </div>
+
+    <div class="block">
+      <h2>Haftung für Inhalte</h2>
+      <p>
+        Die Inhalte dieser Seiten werden nach bestem Wissen erstellt und regelmäßig
+        geprüft. Für die Richtigkeit, Vollständigkeit und Aktualität der Angaben kann
+        keine Gewähr übernommen werden.
+      </p>
+    </div>
+
+    <div class="block">
+      <h2>Haftung für Verweise</h2>
+      <p>
+        Diese Seiten enthalten Links zu Angeboten anderer Anbieter. Für deren Inhalte
+        ist stets der jeweilige Betreiber verantwortlich. Die verlinkten Seiten wurden
+        zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft; rechtswidrige
+        Inhalte waren damals nicht erkennbar. Bei Bekanntwerden entsprechender
+        Rechtsverstöße werden solche Links entfernt.
+      </p>
+    </div>
+
+    <div class="block">
+      <h2>Urheberrecht</h2>
+      <p>
+        Die Texte, Bilder und Gestaltungselemente dieser Seiten sind urheberrechtlich
+        geschützt. Ihr Ansprechpartner ist {{ site.owner }}.
+      </p>
+      <p class="cta__note">
+        {{ site.name }} · {{ site.address }} · Telefon {{ site.phone }} · Stand
+        {{ site.year }}
+      </p>
+    </div>
+  </div>
+</section>
