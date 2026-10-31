@@ -1,65 +1,14 @@
+/* Component styles. The design tokens are not here: every custom property lives in
+   variables.css, which loads with this file in the head. Add a value to variables.css
+   and reference it as var(...) here. The literals kept in this file are the pure white
+   and the translucent white overlays on the dark surfaces — everything from the palette
+   comes from a token. */
 @font-face {
   font-family: 'Inter';
   src: url('/assets/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
-}
-
-:root {
-  /* Surfaces. The page base is a soft blue-grey tint rather than pure white —
-     it gives the layout a colour floor while cards and the header stay light.
-     Text on --canvas: --ink 14.4:1, --ink-soft 6.4:1, --brand 5.5:1. */
-  --canvas: #e9f0f7;
-  --surface: #ffffff;
-  --surface-soft: #d8e6f2;
-  --line: #c4d6e6;
-  --line-soft: #dbe8f3;
-
-  --ink: #12202b;
-  --ink-soft: #44586b;
-
-  --brand: #1a5fb4;
-  --brand-dark: #12447d;
-  --brand-deep: #0d2b46;
-  --brand-tint: #dfebf7;
-
-  /* Dark surfaces: hero band and footer. */
-  --hero-1: #1d4269;
-  --hero-2: #12324e;
-  --hero-3: #0c2539;
-  --on-dark: #eaf3fa;
-  --on-dark-soft: #bccfdf;
-
-  /* Amber, reserved for actionable elements. As text on a light surface it is
-     only 2.3:1 on --canvas and 2.7:1 on --surface, so it never carries text
-     there: it works as a fill, with the ink below sitting on top of it. */
-  --accent: #e08a1f;
-  /* The darker fill for the hover state of an amber CTA. White text on it is
-     5.2:1, so the pair flips to white when the fill darkens. */
-  --accent-dark: #a35a06;
-  /* Amber as text or hairline on a dark surface: 8.0:1 on --hero-2, 9.6:1 on
-     --hero-3. Bright enough to be the loudest thing on the navy. */
-  --accent-light: #f6c172;
-  /* Warm near-black ink for text on amber fills: 7.5:1 on --accent, 12.2:1 on
-     --accent-light. On --accent-dark it drops to 3.9:1, so there the text
-     switches to white instead. */
-  --accent-ink: #0b0702;
-
-  --gutter: clamp(1rem, 4vw, 2.5rem);
-  --maxw: 1024px;
-  --radius: 10px;
-
-  /* Depth on the tinted canvas: cards and steps lift slightly. */
-  --shadow-sm: 0 1px 2px rgb(13 43 70 / 0.06), 0 2px 8px rgb(13 43 70 / 0.05);
-  --shadow: 0 2px 6px rgb(13 43 70 / 0.08), 0 14px 28px -18px rgb(13 43 70 / 0.35);
-
-  --body: clamp(1.0625rem, 0.9rem + 0.55vw, 1.125rem);
-  --h1: clamp(2rem, 1.4rem + 2.2vw, 3rem);
-  --h2: clamp(1.5rem, 1.2rem + 1.1vw, 2rem);
-  --h3: 1.1875rem;
-
-  --ease: 150ms ease;
 }
 
 *,

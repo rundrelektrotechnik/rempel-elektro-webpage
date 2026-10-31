@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% include 'components/seo.njk' %}
     <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Design tokens first, then the rules that consume them: two small sheets,
+        fetched in parallel, no @import (which would fetch the second serially). -->
+    <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml">
     <link rel="icon" href="/assets/favicon/favicon-32.png" sizes="32x32" type="image/png">

@@ -190,7 +190,10 @@ without configuration.
 
 ## 6. Design system
 
-Implemented as custom properties in `assets/css/styles.css`.
+Implemented as custom properties in `assets/css/variables.css` — the only `:root` block and the
+only place literal values live. `assets/css/styles.css` holds the component rules and references
+tokens through `var(...)`; both sheets are `<link>`ed in the head, tokens first, so neither needs
+an `@import`.
 
 ### Colour
 
@@ -272,7 +275,8 @@ _includes/
                       (its output is a Nunjucks `SafeString`: Eleventy auto-escapes filter
                       results, which would print the markup as text instead of an element)
 assets/
-  css/styles.css      one file, custom properties, ~15 KB target
+  css/variables.css   the design tokens — the only :root block, the only literal values
+  css/styles.css      component rules + @font-face, ~15 KB target across both sheets
   fonts/              Inter subset woff2, copied from node_modules via passthrough
   icons/              .svg sources, inlined into templates at build time
   favicon/            favicon.svg + PNG fallbacks
@@ -319,7 +323,7 @@ Ordered so each phase ends in something verifiable. Nothing starts before the pl
 | --- | --- | --- |
 | 1 | Docs into repo | `AGENTS.md`, `plans/PROJECT.md`, `.gitignore`, first commit |
 | 2 | Scaffold | `npm init`, Eleventy installed, `eleventy.config.js`, `_data/site.js`, layouts. `npm run build` produces `_site/index.html`. |
-| 3 | Design system | `styles.css` with tokens, type scale, header/footer, always-visible wrapping nav. Rendered with real data. |
+| 3 | Design system | `variables.css` tokens + `styles.css` type scale, header/footer, always-visible wrapping nav. Rendered with real data. |
 | 4 | Logo + icons | SVG wordmark, 5 service icons, contact icons, favicon, manifest. Visual check in header. |
 | 5 | Fonts | Inter subset installed, passthrough copy, `@font-face`, preload, `font-display: swap`. No FOUC, no layout shift. |
 | 6 | Start page | Full German copy, hero, teaser cards, ablauf, region, contact block. |
@@ -430,8 +434,11 @@ Before hand-off:
       `weight = 0`, so none of them contributes to the performance score. The non-scoring insights
       that remain are `cache-insight` (≈ 51 s / 50 KiB "savings" — the test server sends no cache
       headers on purpose, so that belongs to the hosting decision in phase 12, not to the markup),
-      `render-blocking-insight` 65–125 ms (`styles.css` is the single render-blocking stylesheet by
-      design, and at 2.97 KiB gzip it is most of the page's transfer cost already),
+      `render-blocking-insight` 65–125 ms (`styles.css` was the single render-blocking stylesheet
+      at the time of this measurement, and at 2.97 KiB gzip it is most of the page's transfer cost
+      already). Since then the tokens were split out into `variables.css`, so the insight now
+      covers two small sheets — 1.34 + 3.71 KiB gzip — fetched in parallel from the same origin
+      instead of one, still render-blocking by design, with no `@import` to serialise them.
       `document-latency-insight` and `network-dependency-tree-insight`, plus on the dev server only
       `unminified-css` ≈ 3 KiB and `unminified-javascript` ≈ 4 KiB, both from the reload client.
       `/404.html` scores 100 on either server: it is a real file, so it returns `200` and
@@ -476,7 +483,7 @@ rest needs a served URL.
 
 - [x] 1 Docs + first commit — `AGENTS.md`, this file, `.gitignore`
 - [x] 2 Scaffold — Eleventy 3 config, `_data/site.js`, `_data/services.js`, layouts
-- [x] 3 Design system — `styles.css` tokens, type scale, header/footer/nav
+- [x] 3 Design system — `variables.css` tokens, `styles.css` type scale, header/footer/nav
 - [x] 4 Logo + icons — SVG wordmark, 10 icons, favicon + PNG fallbacks, manifest
 - [x] 5 Fonts — Inter variable Latin subset self-hosted, preloaded, OFL file shipped
 - [x] 6 Start page — hero, service teasers, Ablauf, Region, contact block
@@ -549,3 +556,16 @@ contrast is computed against the background colour painted under the ring, not t
 fill, and accessible names come from `Accessibility.getFullAXTree` rather than a heuristic. Both
 servers were measured: the dev server's injected reload client adds no focusable element, so both
 report identical stop counts.
+
+**Maintenance note — token split.** All design tokens now live in `assets/css/variables.css`, the
+only `:root` block in the project; `styles.css` contains the component rules and only the literals
+documented in section 7. Two consequences worth remembering:
+
+- Both sheets are `<link>`ed in `layouts/base.njk`, tokens first. Custom properties resolve at
+  computed-value time, so the order does not change what `var(...)` picks up; it is there so the
+  head reads in the same order the cascade does, and so no `@import` is needed — an `@import` would
+  make the second sheet a serial, slower request.
+- The token inventory is a useful check: 30 properties defined, 30 used across `styles.css` and the
+  templates, none undefined and none unused. Run the same comparison (`--[a-z0-9-]+\s*:` against
+  `var\(\s*--`) after adding or removing a token. Sizes: 2.71 KiB + 12.09 KiB raw
+  (1.34 + 3.71 KiB gzip), which keeps the ~15 KB self-contained CSS target across two files.

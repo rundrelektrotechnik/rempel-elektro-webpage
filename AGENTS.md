@@ -21,7 +21,7 @@ supports that.
 | --- | --- |
 | Generator | Eleventy (11ty) 3.x, Nunjucks templates |
 | Environment | Node 24, npm 11 (already installed locally) |
-| Styling | Plain modern CSS, single file. No Sass, no Tailwind, no CSS-in-JS |
+| Styling | Plain modern CSS, two sheets: `variables.css` (tokens) + `styles.css` (rules). No Sass, no Tailwind, no CSS-in-JS, no `@import` |
 | JavaScript | None, apart from the JSON-LD block. Header nav is always visible and wraps on small screens |
 | Fonts | Self-hosted, OFL-licensed, Latin-subset `woff2` via npm |
 | Imagery | Hand-written inline SVG. No stock photos, no external image CDNs |
@@ -33,7 +33,7 @@ supports that.
 /content           source pages, one file per URL
 /_data             site.js = single source of truth for all contact/legal data
 /_includes         layouts/ and components/
-/assets            css/, fonts/, icons/, favicon
+/assets            css/ (variables.css + styles.css), fonts/, icons/, favicon
 /eleventy.config.js
 /plans             planning documents (PROJECT.md)
 /_site             build output — ignored
@@ -108,11 +108,15 @@ wording is uncertain, verify the current statute before writing it — do not gu
 - Structured data: `schema.org/Electrician` JSON-LD generated from `_data/site.js`.
 - Per-page `<title>` and description, canonical, Open Graph, `sitemap.xml`, `robots.txt`,
   SVG favicon with PNG fallback.
-- Self-contained CSS (~15 KB target), preloaded subset `woff2`, no layout shift on first paint.
+- Self-contained CSS, no build step (~15 KB target across `variables.css` + `styles.css`),
+  preloaded subset `woff2`, no layout shift on first paint.
 
 ## 7. Design system
 
-Defined in `plans/PROJECT.md`, implemented as custom properties in `assets/css/styles.css`.
+Defined in `plans/PROJECT.md`, implemented as custom properties in `assets/css/variables.css`.
+That file holds the only `:root` block and the only literal values: `styles.css` references
+tokens through `var(...)` and never repeats a colour, width or shadow — the exceptions are
+pure white and the translucent white overlays that sit on the dark surfaces.
 
 - Palette: slate-navy ink, blue primary, amber accent reserved for actionable elements.
   The old blue→red logo gradient survives only inside the SVG lightning bolt.
