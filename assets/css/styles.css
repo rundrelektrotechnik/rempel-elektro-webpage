@@ -23,29 +23,29 @@ html {
 
 body {
   margin: 0;
-  background: var(--canvas);
-  color: var(--ink);
+  background: var(--lcl-color-canvas);
+  color: var(--lcl-color-ink);
   font-family: 'Inter', system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: var(--body);
+  font-size: var(--lcl-size-body);
   line-height: 1.55;
   font-variant-ligatures: no-contextual;
   overflow-wrap: break-word;
 }
 
 .wrap {
-  max-width: var(--maxw);
+  max-width: var(--lcl-size-maxw);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  padding-inline: var(--lcl-size-gutter);
 }
 
 .skip-link {
   position: absolute;
   top: 0;
   left: 0;
-  background: var(--brand-dark);
+  background: var(--lcl-color-brand-dark);
   color: #fff;
   padding: 0.5rem 1rem;
-  border-radius: 0 0 var(--radius) 0;
+  border-radius: 0 0 var(--lcl-size-radius) 0;
   /* Clipped in place: off-screen left would create a horizontal scrollbar. */
   transform: translateY(-100%);
   clip-path: inset(50%);
@@ -57,25 +57,25 @@ body {
 }
 
 a {
-  color: var(--brand);
+  color: var(--lcl-color-brand);
   text-underline-offset: 0.15em;
 }
 
 a:hover {
-  color: var(--brand-dark);
+  color: var(--lcl-color-brand-dark);
 }
 
 :focus-visible {
-  outline: 3px solid var(--brand);
+  outline: 3px solid var(--lcl-color-brand);
   outline-offset: 2px;
 }
 
-/* Focus ring: --brand is 5.5:1 on --canvas, 4.9:1 on --surface-soft and 6.3:1
-   on --surface, so it is AA-safe on every light surface. `outline-offset` keeps
+/* Focus ring: --lcl-color-brand is 5.5:1 on --lcl-color-canvas, 4.9:1 on --lcl-color-surface-soft and 6.3:1
+   on --lcl-color-surface, so it is AA-safe on every light surface. `outline-offset` keeps
    the ring on the page background, so it never has to beat the CTA's amber
    fill. PROJECT.md §6: focus ring ≥ 3:1 against the background. */
 .site-footer :focus-visible {
-  outline-color: var(--accent); /* 4.9:1 on --hero-2, the lightest footer colour */
+  outline-color: var(--lcl-color-accent); /* 4.9:1 on --lcl-color-hero-2, the lightest footer colour */
 }
 
 h1,
@@ -87,17 +87,17 @@ h3 {
 }
 
 h1 {
-  font-size: var(--h1);
+  font-size: var(--lcl-size-h1);
   font-weight: 700;
 }
 
 h2 {
-  font-size: var(--h2);
+  font-size: var(--lcl-size-h2);
   font-weight: 650;
 }
 
 h3 {
-  font-size: var(--h3);
+  font-size: var(--lcl-size-h3);
   font-weight: 650;
 }
 
@@ -129,8 +129,8 @@ li {
 
 /* Header */
 .site-header {
-  border-bottom: 1px solid var(--line);
-  background: var(--surface);
+  border-bottom: 1px solid var(--lcl-color-line);
+  background: var(--lcl-color-surface);
   box-shadow: 0 1px 6px rgb(13 43 70 / 0.07);
 }
 
@@ -140,7 +140,7 @@ li {
   content: '';
   display: block;
   height: 4px;
-  background: linear-gradient(90deg, var(--brand-deep), var(--brand) 55%, var(--accent));
+  background: linear-gradient(90deg, var(--lcl-color-brand-deep), var(--lcl-color-brand) 55%, var(--lcl-color-accent));
 }
 
 .site-header__inner {
@@ -155,7 +155,7 @@ li {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--ink);
+  color: var(--lcl-color-ink);
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: -0.01em;
@@ -163,7 +163,7 @@ li {
 }
 
 .logo:hover {
-  color: var(--brand-dark);
+  color: var(--lcl-color-brand-dark);
 }
 
 .logo svg {
@@ -182,7 +182,7 @@ li {
 .logo__parts i {
   font-style: normal;
   font-weight: 500;
-  color: var(--ink-soft);
+  color: var(--lcl-color-ink-soft);
 }
 
 .nav {
@@ -201,19 +201,19 @@ li {
 .nav a {
   display: inline-block;
   padding: 0.35rem 0.1rem;
-  color: var(--ink);
+  color: var(--lcl-color-ink);
   text-decoration: none;
   border-bottom: 2px solid transparent;
 }
 
 .nav a:hover {
-  color: var(--brand-dark);
-  border-bottom-color: var(--brand);
+  color: var(--lcl-color-brand-dark);
+  border-bottom-color: var(--lcl-color-brand);
 }
 
 .nav a[aria-current='page'] {
-  color: var(--brand-dark);
-  border-bottom-color: var(--brand);
+  color: var(--lcl-color-brand-dark);
+  border-bottom-color: var(--lcl-color-brand);
   font-weight: 650;
 }
 
@@ -223,31 +223,31 @@ li {
   align-items: center;
   gap: 0.5rem;
   padding: 0.7rem 1.15rem;
-  border-radius: var(--radius);
+  border-radius: var(--lcl-size-radius);
   border: 1px solid transparent;
   font-weight: 650;
   text-decoration: none;
-  transition: background-color var(--ease), color var(--ease), border-color var(--ease);
+  transition: background-color var(--lcl-motion-ease), color var(--lcl-motion-ease), border-color var(--lcl-motion-ease);
 }
 
 .btn--primary {
-  background: var(--accent);
-  color: var(--accent-ink); /* 7.5:1 */
+  background: var(--lcl-color-accent);
+  color: var(--lcl-color-accent-ink); /* 7.5:1 */
 }
 
 .btn--primary:hover {
-  background: var(--accent-dark);
+  background: var(--lcl-color-accent-dark);
   color: #fff; /* 5.2:1 — the ink would only reach 3.9:1 on the darker fill */
 }
 
 .btn--secondary {
-  border-color: var(--brand);
-  color: var(--brand-dark);
+  border-color: var(--lcl-color-brand);
+  color: var(--lcl-color-brand-dark);
 }
 
 .btn--secondary:hover {
-  background: var(--brand-dark);
-  border-color: var(--brand-dark);
+  background: var(--lcl-color-brand-dark);
+  border-color: var(--lcl-color-brand-dark);
   color: #fff;
 }
 
@@ -263,19 +263,19 @@ section,
 }
 
 .band {
-  background: var(--surface-soft);
-  border-block: 1px solid var(--line);
+  background: var(--lcl-color-surface-soft);
+  border-block: 1px solid var(--lcl-color-line);
 }
 
 /* Hero: the one dark surface at the top of the page. It carries the brand blue
    from the first view instead of a white page, and the phone CTA stands out on
-   it. Text on --hero-2: 13.2:1 (#fff), 8.3:1 (--on-dark-soft). */
+   it. Text on --lcl-color-hero-2: 13.2:1 (#fff), 8.3:1 (--lcl-color-on-dark-soft). */
 .hero {
   background:
     radial-gradient(circle at 88% -12%, rgb(255 255 255 / 0.13), transparent 58%),
-    linear-gradient(160deg, var(--hero-1) 0%, var(--hero-2) 55%, var(--hero-3) 100%);
-  color: var(--on-dark);
-  border-bottom: 3px solid var(--accent);
+    linear-gradient(160deg, var(--lcl-color-hero-1) 0%, var(--lcl-color-hero-2) 55%, var(--lcl-color-hero-3) 100%);
+  color: var(--lcl-color-on-dark);
+  border-bottom: 3px solid var(--lcl-color-accent);
 }
 
 .hero h1 {
@@ -286,7 +286,7 @@ section,
 .hero__lede {
   font-size: 1.1875rem;
   max-width: 58ch;
-  color: var(--on-dark-soft);
+  color: var(--lcl-color-on-dark-soft);
 }
 
 .hero__actions {
@@ -305,29 +305,29 @@ section,
 .hero .btn--secondary:hover {
   background: #fff;
   border-color: #fff;
-  color: var(--brand-dark);
+  color: var(--lcl-color-brand-dark);
 }
 
 /* On the dark hero the pill goes lighter so it stays the brightest element. */
 .hero .phone-big a {
-  background: var(--accent-light);
-  color: var(--accent-ink); /* 12.2:1 */
-  box-shadow: 0 0 0 1px rgb(246 193 114 / 0.45), var(--shadow-sm);
+  background: var(--lcl-color-accent-light);
+  color: var(--lcl-color-accent-ink); /* 12.2:1 */
+  box-shadow: 0 0 0 1px rgb(246 193 114 / 0.45), var(--lcl-shadow-sm);
 }
 
 .hero .phone-big a:hover {
-  background: var(--accent);
-  color: var(--accent-ink); /* 7.5:1 */
+  background: var(--lcl-color-accent);
+  color: var(--lcl-color-accent-ink); /* 7.5:1 */
 }
 
 .hero .cta__note {
-  color: var(--on-dark-soft);
+  color: var(--lcl-color-on-dark-soft);
 }
 
-/* --brand is dark on the dark hero (1.6:1), so the ring goes light: 6.3:1
+/* --lcl-color-brand is dark on the dark hero (1.6:1), so the ring goes light: 6.3:1
    against the lightest part of the hero gradient. */
 .hero :focus-visible {
-  outline-color: var(--accent-light);
+  outline-color: var(--lcl-color-accent-light);
 }
 
 /* Phone CTA (components/cta.njk) */
@@ -339,7 +339,7 @@ section,
 .cta__note {
   margin: 0.5rem 0 0;
   font-size: 0.9375rem;
-  color: var(--ink-soft);
+  color: var(--lcl-color-ink-soft);
   max-width: 46ch;
 }
 
@@ -353,17 +353,17 @@ section,
 }
 
 .card {
-  background: var(--surface);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
+  background: var(--lcl-color-surface);
+  border: 1px solid var(--lcl-color-line-soft);
+  border-radius: var(--lcl-size-radius);
   padding: 1.25rem;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--ease), border-color var(--ease);
+  box-shadow: var(--lcl-shadow-sm);
+  transition: box-shadow var(--lcl-motion-ease), border-color var(--lcl-motion-ease);
 }
 
 .card:hover {
-  box-shadow: var(--shadow);
-  border-color: var(--brand);
+  box-shadow: var(--lcl-shadow);
+  border-color: var(--lcl-color-brand);
 }
 
 .card__title {
@@ -371,7 +371,7 @@ section,
   align-items: center;
   gap: 0.6rem;
   margin: 0 0 0.5rem;
-  font-size: var(--h3);
+  font-size: var(--lcl-size-h3);
 }
 
 /* Icon chips: a filled brand-tinted square behind the stroke icon. This is what
@@ -384,8 +384,8 @@ section,
   width: 2.15em;
   height: 2.15em;
   border-radius: 8px;
-  background: var(--brand-tint);
-  color: var(--brand-dark);
+  background: var(--lcl-color-brand-tint);
+  color: var(--lcl-color-brand-dark);
 }
 
 .card__title .icon svg,
@@ -416,12 +416,12 @@ section,
 }
 
 .step {
-  background: var(--surface);
-  border: 1px solid var(--line-soft);
-  border-top: 3px solid var(--brand);
-  border-radius: var(--radius);
+  background: var(--lcl-color-surface);
+  border: 1px solid var(--lcl-color-line-soft);
+  border-top: 3px solid var(--lcl-color-brand);
+  border-radius: var(--lcl-size-radius);
   padding: 1rem 1.1rem 1.15rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--lcl-shadow-sm);
 }
 
 .step__title {
@@ -434,8 +434,8 @@ section,
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 650;
-  color: var(--brand-dark);
-  background: var(--brand-tint);
+  color: var(--lcl-color-brand-dark);
+  background: var(--lcl-color-brand-tint);
   border-radius: 999px;
   padding: 0.15rem 0.6rem;
   margin-bottom: 0.6rem;
@@ -444,13 +444,13 @@ section,
 /* Service sections: white sheets on the tinted canvas, alternating with the
    canvas itself so the page has rhythm without looking striped. */
 .service {
-  background: var(--surface);
-  border-block-start: 1px solid var(--line-soft);
+  background: var(--lcl-color-surface);
+  border-block-start: 1px solid var(--lcl-color-line-soft);
 }
 
 .service:nth-of-type(even) {
-  background: var(--canvas);
-  border-block-start-color: var(--line);
+  background: var(--lcl-color-canvas);
+  border-block-start-color: var(--lcl-color-line);
 }
 
 .service__title {
@@ -462,7 +462,7 @@ section,
 
 .service__lede {
   font-size: 1.125rem;
-  color: var(--ink-soft);
+  color: var(--lcl-color-ink-soft);
 }
 
 .service__cta {
@@ -495,7 +495,7 @@ section,
   flex: none;
   white-space: nowrap;
   font-weight: 400;
-  color: var(--ink-soft);
+  color: var(--lcl-color-ink-soft);
 }
 
 .phone-big {
@@ -510,7 +510,7 @@ section,
 /* A filled call pill rather than coloured text: the number is the call to
    action, so it reads as a target. Amber text on the tinted canvas would fail
    AA (2.3:1), amber as a fill with the warm near-black ink on top is 7.5:1 and
-   loud. The colour belongs on the anchor itself: `a { color: var(--brand) }`
+   loud. The colour belongs on the anchor itself: `a { color: var(--lcl-color-brand) }`
    applies directly to it and would otherwise beat an inherited colour. */
 .phone-big a {
   display: inline-flex;
@@ -518,15 +518,15 @@ section,
   gap: 0.45em;
   padding: 0.5em 1.05em;
   border-radius: 999px;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--lcl-color-accent);
+  color: var(--lcl-color-accent-ink);
   text-decoration: none;
-  box-shadow: var(--shadow-sm);
-  transition: background-color var(--ease), color var(--ease);
+  box-shadow: var(--lcl-shadow-sm);
+  transition: background-color var(--lcl-motion-ease), color var(--lcl-motion-ease);
 }
 
 .phone-big a:hover {
-  background: var(--accent-dark);
+  background: var(--lcl-color-accent-dark);
   color: #fff; /* 5.2:1 */
 }
 
@@ -544,15 +544,15 @@ address {
 
 /* Footer: the closing dark surface, mirroring the hero. */
 .site-footer {
-  background: linear-gradient(180deg, var(--hero-2), var(--hero-3) 70%, var(--brand-deep));
-  border-top: 3px solid var(--accent);
-  color: var(--on-dark);
+  background: linear-gradient(180deg, var(--lcl-color-hero-2), var(--lcl-color-hero-3) 70%, var(--lcl-color-brand-deep));
+  border-top: 3px solid var(--lcl-color-accent);
+  color: var(--lcl-color-on-dark);
   padding-block: 2rem 2.5rem;
   margin-top: clamp(2rem, 5vw, 3rem);
 }
 
 .site-footer a {
-  color: var(--accent-light);
+  color: var(--lcl-color-accent-light);
 }
 
 .site-footer a:hover {
@@ -585,7 +585,7 @@ address {
 }
 
 .site-footer .fine {
-  color: var(--on-dark-soft);
+  color: var(--lcl-color-on-dark-soft);
   font-size: 0.9375rem;
 }
 

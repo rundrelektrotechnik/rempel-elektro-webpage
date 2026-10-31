@@ -195,18 +195,34 @@ only place literal values live. `assets/css/styles.css` holds the component rule
 tokens through `var(...)`; both sheets are `<link>`ed in the head, tokens first, so neither needs
 an `@import`.
 
+Naming: every token is `--lcl-<function>-<name>`, so `--lcl-color-surface` became `--lcl-color-surface`.
+`lcl` marks the property as belonging to this project and not to a library, and the second segment
+states its function — `color`, `size`, `shadow`, `motion`. Because the project uses `--` modifiers
+in class names (`btn--primary`), the prefix also makes a token impossible to confuse with a class
+name fragment.
+
 ### Colour
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--ink` | slate-navy `#12202b` | body text, headings |
-| `--surface` | `#ffffff` | page background |
-| `--surface-soft` | `#f4f7f9` | cards, section bands |
-| `--line` | `#d7e0e7` | borders, dividers |
-| `--brand` | blue `#1a5fb4` | links, headings accent, nav active |
-| `--brand-dark` | `#12447d` | link hover, focus |
-| `--accent` | amber `#e08a1f` | fill of the phone CTA, focus ring on dark surfaces — never text on white (2.7:1) |
-| `--accent-dark` | `#a35a06` | accent hover, phone number as text — AA on white and `--surface-soft` |
+| `--lcl-color-canvas` | blue-grey `#e9f0f7` | page background, the colour floor under everything |
+| `--lcl-color-surface` | `#ffffff` | header, cards, sections that sit on the canvas |
+| `--lcl-color-surface-soft` | `#d8e6f2` | cards, section bands |
+| `--lcl-color-line` | `#c4d6e6` | borders, dividers |
+| `--lcl-color-line-soft` | `#dbe8f3` | lighter separation |
+| `--lcl-color-ink` | slate-navy `#12202b` | body text, headings |
+| `--lcl-color-ink-soft` | `#44586b` | secondary text, meta lines |
+| `--lcl-color-brand` | blue `#1a5fb4` | links, headings accent, nav active, focus ring on light surfaces |
+| `--lcl-color-brand-dark` | `#12447d` | link hover |
+| `--lcl-color-brand-deep` | `#0d2b46` | darkest blue, footer text on dark |
+| `--lcl-color-brand-tint` | `#dfebf7` | tinted fill behind inline links |
+| `--lcl-color-hero-1/2/3` | `#1d4269`→`#0c2539` | hero gradient, footer band |
+| `--lcl-color-on-dark` | `#eaf3fa` | text on the dark surfaces |
+| `--lcl-color-on-dark-soft` | `#bccfdf` | secondary text on the dark surfaces |
+| `--lcl-color-accent` | amber `#e08a1f` | fill of the phone CTA, focus ring on dark surfaces — never text on white (2.7:1) |
+| `--lcl-color-accent-dark` | `#a35a06` | accent hover, phone number as text — AA on white and `--lcl-color-surface-soft` |
+| `--lcl-color-accent-light` | `#f6c172` | amber as text on a dark surface (8.0:1 on `--lcl-color-hero-2`) |
+| `--lcl-color-accent-ink` | `#0b0702` | text on amber fills (7.5:1) |
 
 Amber is reserved for things the visitor can act on. Text on amber meets AA at bold `18 px` and
 up; body-size text never sits on amber. The old blue→red WordArt gradient survives only as the
@@ -222,13 +238,14 @@ gradient inside the SVG lightning bolt in the logo — brand recognition without
 ### Layout
 
 - Mobile-first, single column. Layout breakpoints at 640 and 768 px. Content max width
-  `--maxw: 1024 px`, gutters via `clamp()`. There is deliberately no 1024 px media query: the
+  `--lcl-size-maxw: 1024 px`, gutters via `clamp()`. There is deliberately no 1024 px media query: the
   max-width cap already handles it, and the 768 px three-column grid is the final layout state.
   Nothing above 1024 px may break — that is what the cap guarantees.
 - Header: logo + three links, no JS. Implemented as an always-visible nav that wraps with
   `flex-wrap` below 640 px instead of a hamburger disclosure — three links are short enough not
   to need one, and a hidden nav would hide the page's most important content.
-- Cards: `--surface-soft` background, 1 px `--line` border, radius 10 px, shadow only on hover.
+- Cards: `--lcl-color-surface-soft` background, 1 px `--lcl-color-line` border, radius 10 px,
+  shadow only on hover.
 - `prefers-reduced-motion` respected; transitions ≤ 150 ms, none when reduced.
 
 ### Icons and logo
@@ -241,8 +258,8 @@ gradient inside the SVG lightning bolt in the logo — brand recognition without
 
 ### Accessibility
 
-- Visible focus ring using `--brand` on white and `--accent` on dark surfaces, ≥ 3:1 against
-  background.
+- Visible focus ring using `--lcl-color-brand` on white and `--lcl-color-accent` on dark surfaces,
+  ≥ 3:1 against background.
 - `aria-label` on icon-only links; skip link at the top; `aria-current="page"` on active nav.
 - Phone CTA is a real link with text, never an icon-only button.
 
@@ -276,7 +293,7 @@ _includes/
                       results, which would print the markup as text instead of an element)
 assets/
   css/variables.css   the design tokens — the only :root block, the only literal values
-  css/styles.css      component rules + @font-face, ~15 KB target across both sheets
+  css/styles.css      component rules + @font-face, 16.7 KiB raw / 5.4 KiB gzip across both sheets
   fonts/              Inter subset woff2, copied from node_modules via passthrough
   icons/              .svg sources, inlined into templates at build time
   favicon/            favicon.svg + PNG fallbacks
@@ -388,13 +405,13 @@ Before hand-off:
       real key presses on the served site — see the keyboard walk-through below.
 - [x] Contrast AA; no horizontal scroll. All text pairs computed against WCAG relative luminance:
       body text 16.6:1, secondary text 7.5:1, links 6.3:1, footer 9.5–14.2:1, CTA label 6.5:1 on
-      amber and 5.2:1 on `--accent-dark`, skip link 9.8:1. Focus rings: `--brand` 6.3:1 on white,
-      5.8:1 on `--surface-soft`, `--accent` 6.2:1 on the dark footer; `outline-offset` keeps the
+      amber and 5.2:1 on `--lcl-color-accent-dark`, skip link 9.8:1. Focus rings: `--lcl-color-brand` 6.3:1 on white,
+      5.8:1 on `--lcl-color-surface-soft`, `--lcl-color-accent` 6.2:1 on the dark footer; `outline-offset` keeps the
       ring on the page background, so it never has to beat the element's own fill. The only pair
-      below threshold is `--line` 1.3:1 — decorative separation, not a required boundary indicator
+      below threshold is `--lcl-color-line` 1.3:1 — decorative separation, not a required boundary indicator
       (WCAG 1.4.11 applies to informative boundaries, and cards use headings, borders and spacing
-      to structure content, not colour). `--accent` is never used as text on white. No fixed widths
-      beyond the `--maxw` cap, `overflow-wrap: break-word` on body, fluid `clamp()` type and
+      to structure content, not colour). `--lcl-color-accent` is never used as text on white. No fixed widths
+      beyond the `--lcl-size-maxw` cap, `overflow-wrap: break-word` on body, fluid `clamp()` type and
       wrapping flex/grid — so nothing overflows between 320 px and 1440 px.
 - [x] Visual pass in Chrome (G2): 30 full-page screenshots — 6 routes (`/`, `/leistungen/`,
       `/kontakt/`, `/impressum/`, `/datenschutz/`, `/404.html`) at 320 / 640 / 768 / 1024 / 1440 px,
@@ -436,9 +453,10 @@ Before hand-off:
       headers on purpose, so that belongs to the hosting decision in phase 12, not to the markup),
       `render-blocking-insight` 65–125 ms (`styles.css` was the single render-blocking stylesheet
       at the time of this measurement, and at 2.97 KiB gzip it is most of the page's transfer cost
-      already). Since then the tokens were split out into `variables.css`, so the insight now
-      covers two small sheets — 1.34 + 3.71 KiB gzip — fetched in parallel from the same origin
-      instead of one, still render-blocking by design, with no `@import` to serialise them.
+      already). Since then the tokens were split out into `variables.css` and renamed with the
+      `lcl` prefix, so the insight now covers two small sheets — 1.65 + 3.76 KiB gzip — fetched
+      in parallel from the same origin instead of one, still render-blocking by design, with no
+      `@import` to serialise them.
       `document-latency-insight` and `network-dependency-tree-insight`, plus on the dev server only
       `unminified-css` ≈ 3 KiB and `unminified-javascript` ≈ 4 KiB, both from the reload client.
       `/404.html` scores 100 on either server: it is a real file, so it returns `200` and
@@ -456,9 +474,9 @@ Before hand-off:
       directions and both sizes. The skip link is the first stop and works — Tab lands on it, Enter
       moves focus to `main#inhalt` and scrolls it into view (118 px on mobile, 76 px on desktop, 0 on
       `/404.html` because that page does not scroll). Focus visible on every stop: exactly two ring
-      styles exist in the build — `3px solid` in `--brand`, and `3px solid` in `--accent` inside the
+      styles exist in the build — `3px solid` in `--lcl-color-brand`, and `3px solid` in `--lcl-color-accent` inside the
       dark footer, both `outline-offset: 2px`. Measured against the painted page the weakest ring is
-      6.17:1 (footer links on `--ink`), the lowest overall 5.84:1 (Kontakt links on `--surface-soft`),
+      6.17:1 (footer links on `--lcl-color-ink`), the lowest overall 5.84:1 (Kontakt links on `--lcl-color-surface-soft`),
       so every ring clears the 3:1 non-text minimum by a wide margin. Chrome's own accessibility tree
       (`Accessibility.getFullAXTree`) names every link: **0 unnamed links**, because the `icon` filter
       already wraps each icon in an `aria-hidden` span and the logo is `aria-hidden` /
@@ -566,6 +584,8 @@ documented in section 7. Two consequences worth remembering:
   head reads in the same order the cascade does, and so no `@import` is needed — an `@import` would
   make the second sheet a serial, slower request.
 - The token inventory is a useful check: 30 properties defined, 30 used across `styles.css` and the
-  templates, none undefined and none unused. Run the same comparison (`--[a-z0-9-]+\s*:` against
-  `var\(\s*--`) after adding or removing a token. Sizes: 2.71 KiB + 12.09 KiB raw
-  (1.34 + 3.71 KiB gzip), which keeps the ~15 KB self-contained CSS target across two files.
+  templates, none undefined and none unused. Run the same comparison (`--lcl-[a-z0-9-]+\s*:` against
+  `var\(\s*--lcl-`) after adding or removing a token. Sizes after the rename: 3.68 KiB + 13.04 KiB raw
+  (1.65 + 3.76 KiB gzip, 16.7 KiB raw / 5.4 KiB transferred). The longer names cost about 1.4 KiB of
+  raw bytes; gzip compresses the repeated prefix well, so the two sheets still stay self-contained
+  and small on the wire.

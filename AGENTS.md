@@ -102,14 +102,14 @@ wording is uncertain, verify the current statute before writing it — do not gu
 - Semantic HTML5, `lang="de"`, single `<h1>` per page, correct heading order, skip link.
 - WCAG 2.2 AA: contrast, visible focus styles, keyboard reachable, `aria-label` on icon links,
   text never relies on colour alone, `prefers-reduced-motion` respected.
-- Mobile-first fluid layout. Breakpoints at 640 and 768 px; content capped at `--maxw: 1024 px`,
+- Mobile-first fluid layout. Breakpoints at 640 and 768 px; content capped at `--lcl-size-maxw: 1024 px`,
   which is what keeps the layout intact above 1024 px (there is no 1024 px media query).
 - `tel:` and `mailto:` as primary contact mechanisms; no contact form, therefore no AVV needed.
 - Structured data: `schema.org/Electrician` JSON-LD generated from `_data/site.js`.
 - Per-page `<title>` and description, canonical, Open Graph, `sitemap.xml`, `robots.txt`,
   SVG favicon with PNG fallback.
-- Self-contained CSS, no build step (~15 KB target across `variables.css` + `styles.css`),
-  preloaded subset `woff2`, no layout shift on first paint.
+- Self-contained CSS, no build step (16.7 KiB raw / 5.4 KiB gzip across `variables.css` +
+  `styles.css`), preloaded subset `woff2`, no layout shift on first paint.
 
 ## 7. Design system
 
