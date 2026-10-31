@@ -380,8 +380,8 @@ Before hand-off:
 - [x] `lang="de"`, one `<h1>` per page, heading order intact, skip link, focus visible.
       Verified in the build output: `lang="de"` on every page, exactly one `<h1>`, no heading level
       jumps, skip link present. Focus rings now meet 3:1 (see below). Because the nav has no JS and
-      nothing is hidden or reordered, keyboard reachability is structural; a browser walk-through on
-      the served site still remains for phase 12.
+      nothing is hidden or reordered, keyboard reachability is structural; it has been measured with
+      real key presses on the served site — see the keyboard walk-through below.
 - [x] Contrast AA; no horizontal scroll. All text pairs computed against WCAG relative luminance:
       body text 16.6:1, secondary text 7.5:1, links 6.3:1, footer 9.5–14.2:1, CTA label 6.5:1 on
       amber and 5.2:1 on `--accent-dark`, skip link 9.8:1. Focus rings: `--brand` 6.3:1 on white,
@@ -437,6 +437,29 @@ Before hand-off:
       `/404.html` scores 100 on either server: it is a real file, so it returns `200` and
       `http-status-code` passes; the static server still answers a genuine `404` for an unknown path
       (`/keine-seite/` verified).
+- [x] Keyboard walk-through in Chrome (G4): real key presses, not programmatic focus. Headless
+      Chrome over the DevTools Protocol (`Input.dispatchKeyEvent`), all six routes at two sizes each —
+      mobile 390×720 and desktop 1280×900 — measured on the same two servers as G3 (static
+      production-like server on 8091, Eleventy dev server on 8081): **12 runs, 172 focus stops,
+      0 problems on both servers**. Tab order matches reading order: every stop is recorded by its
+      document-order index, and each run stepped through `0..n-1` with no missing or extra stop
+      (20 stops on `/` and `/404.html`, 16 on `/leistungen/`, 15 on `/kontakt/`, 12 on `/impressum/`,
+      11 on `/datenschutz/`). No focus trap and nothing to leave: Tab on the last stop cycles back to
+      the first element, and the Shift+Tab walk down from the end cycles the same way, in both
+      directions and both sizes. The skip link is the first stop and works — Tab lands on it, Enter
+      moves focus to `main#inhalt` and scrolls it into view (118 px on mobile, 76 px on desktop, 0 on
+      `/404.html` because that page does not scroll). Focus visible on every stop: exactly two ring
+      styles exist in the build — `3px solid` in `--brand`, and `3px solid` in `--accent` inside the
+      dark footer, both `outline-offset: 2px`. Measured against the painted page the weakest ring is
+      6.17:1 (footer links on `--ink`), the lowest overall 5.84:1 (Kontakt links on `--surface-soft`),
+      so every ring clears the 3:1 non-text minimum by a wide margin. Chrome's own accessibility tree
+      (`Accessibility.getFullAXTree`) names every link: **0 unnamed links**, because the `icon` filter
+      already wraps each icon in an `aria-hidden` span and the logo is `aria-hidden` /
+      `focusable="false"` — no markup change was needed. No stop was invisible, no stop sat outside
+      the viewport, no run produced a console error or a failed request, and `document.scrollWidth`
+      matched the viewport on every run (390 mobile, 1265 desktop with the scrollbar gutter, 1280 on
+      `/404.html`). Nothing in the CSS reorders content — no `order`, `grid-area`, `direction` or
+      `*-reverse`, no `tabindex` above 0 — which is why document order is reading order.
 - [ ] JSON-LD parses (Rich Results test), sitemap + robots live.
       JSON-LD parses locally (`Electrician`), sitemap and robots are generated; the Rich Results
       test needs a served URL.
@@ -464,8 +487,10 @@ rest needs a served URL.
 - [~] 11 A11y + responsive pass — contrast computed (all AA/3:1), focus rings fixed, skip-link
            overflow fixed; responsive pass done in Chrome (G2): 30 full-page screenshots, 6 routes
            × 5 widths (320–1440 px), measured clean and reviewed by eye; contact-row label wrap
-           fixed; Lighthouse done (G3): 100 / 100 / 100 / 100 on all six routes, on both servers.
-           Keyboard walk-through still pending (G4)
+           fixed; Lighthouse done (G3): 100 / 100 / 100 / 100 on all six routes, on both servers;
+           keyboard walk-through done (G4): 12 runs, 172 focus stops, 0 problems on both servers —
+           Tab order equals reading order, skip link first and working, ring visible on every stop,
+           no focus trap. Only the Rich Results test (section 11) still needs a served URL.
 - [ ] 12 Client review round — copy corrections, open items, hosting decision
 
 ---
@@ -480,14 +505,14 @@ commit. Work them in order; a goal is not started before the previous one is com
 | G1 | Docs commit: record this goal list + the served-routes finding in § 11 | `git status` clean, docs commit | done |
 | G2 | Visual pass in Chrome against the local dev server: screenshots of every page at 320 / 640 / 768 / 1024 / 1440 px | No overlap, truncation or horizontal scrollbar; findings either fixed or recorded | done — § 11 |
 | G3 | Lighthouse ≥ 90 on the served local site (all five routes): performance, accessibility, best practices, SEO | Scores ≥ 90, fixes applied, summary recorded in § 11 | done — § 11 |
-| G4 | Keyboard + focus walk-through in Chrome: Tab order, visible focus ring, skip link, icon-link labels | Tab order matches reading order, ring visible everywhere, no trap | next |
-| G5 | Hosting decision: final domain, HTTPS, `404.html` as error page, `sitemap:` line reachable | Canonical + OG URLs match the live domain; live smoke test | open |
+| G4 | Keyboard + focus walk-through in Chrome: Tab order, visible focus ring, skip link, icon-link labels | Tab order matches reading order, ring visible everywhere, no trap | done — § 11 |
+| G5 | Hosting decision: final domain, HTTPS, `404.html` as error page, `sitemap:` line reachable | Canonical + OG URLs match the live domain; live smoke test | next |
 | G6 | Copy review round with the client | Corrections applied, no invented claims, final German wording | open |
 | G7 | Open items from section 9 (Meistertitel, Öffnungszeiten, photos/references, trust info) | Each item either supplied and integrated, or explicitly marked not applicable | open |
 | G8 | Release check on the live site: Rich Results test, OG scrape, sitemap + robots live, 404 behaviour | § 11 fully `[x]`, ready for hand-off | open |
 
-Order: G1 → G2 → G3 → G4 are offline-verifiable now (local dev server + installed Chrome).
-G5 → G8 need the client's hosting decision and copy feedback, so they wait.
+Order: G1 → G2 → G3 → G4 were offline-verifiable (local dev server + installed Chrome) and are all
+done. G5 → G8 need the client's hosting decision and copy feedback, so they wait.
 
 G2 was run outside the repo: a plain Node script driving headless Chrome over the DevTools Protocol
 (no dependency added, no Puppeteer), with a per-route, per-width viewport override, a full-page
@@ -509,3 +534,18 @@ for unknown paths. Mobile with the default simulated throttle is the acceptance 
 added as extra evidence. Two harness notes worth remembering for the next audit run:
 `--form-factor=desktop` alone throws — it needs `--screen-emulation.mobile=false` — and the report
 directory must exist before `--output-path` will write into it.
+
+G4 used the same pattern: a plain Node script in the temp directory driving headless Chrome over the
+DevTools Protocol (debug port 9335, its own profile directory, no Puppeteer, nothing added to the
+project). Three things make it differ from a scripted focus check. It walks with **real key presses**
+— `Input.dispatchKeyEvent` for Tab and Enter, never `element.focus()` — and reads each stop from the
+live `document.activeElement`. It keys stops by their index in the focusable inventory
+(`a[href],button,input,select,textarea,summary,[tabindex]:not([tabindex="-1"])`) instead of by class
+or href, because those keys collide on repeated stops (`card__link` appears several times, the same
+`tel:` href twice). Shift+Tab needs the `modifiers` bitmask — `modifiers: 8` — `shiftKey` is ignored.
+The reverse walk runs on a freshly loaded page primed to the last stop with real Tab presses, and a
+wrap back to the first element counts as "focus cycles, no trap" rather than a truncated walk. Ring
+contrast is computed against the background colour painted under the ring, not the element's own
+fill, and accessible names come from `Accessibility.getFullAXTree` rather than a heuristic. Both
+servers were measured: the dev server's injected reload client adds no focusable element, so both
+report identical stop counts.
