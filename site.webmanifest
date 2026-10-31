@@ -6,8 +6,8 @@
   "dir": "ltr",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#12202b",
-  "theme_color": "#12202b",
+  "background_color": "#12324e",
+  "theme_color": "#12324e",
   "icons": [
     {
       "src": "/assets/favicon/favicon.svg",

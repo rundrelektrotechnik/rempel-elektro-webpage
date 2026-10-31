@@ -7,21 +7,52 @@
 }
 
 :root {
-  --ink: #12202b;
-  --ink-soft: #45566a;
+  /* Surfaces. The page base is a soft blue-grey tint rather than pure white —
+     it gives the layout a colour floor while cards and the header stay light.
+     Text on --canvas: --ink 14.4:1, --ink-soft 6.4:1, --brand 5.5:1. */
+  --canvas: #e9f0f7;
   --surface: #ffffff;
-  --surface-soft: #f4f7f9;
-  --line: #d7e0e7;
+  --surface-soft: #d8e6f2;
+  --line: #c4d6e6;
+  --line-soft: #dbe8f3;
+
+  --ink: #12202b;
+  --ink-soft: #44586b;
+
   --brand: #1a5fb4;
   --brand-dark: #12447d;
+  --brand-deep: #0d2b46;
+  --brand-tint: #dfebf7;
+
+  /* Dark surfaces: hero band and footer. */
+  --hero-1: #1d4269;
+  --hero-2: #12324e;
+  --hero-3: #0c2539;
+  --on-dark: #eaf3fa;
+  --on-dark-soft: #bccfdf;
+
+  /* Amber, reserved for actionable elements. As text on a light surface it is
+     only 2.3:1 on --canvas and 2.7:1 on --surface, so it never carries text
+     there: it works as a fill, with the ink below sitting on top of it. */
   --accent: #e08a1f;
-  /* AA for normal text on white and --surface-soft (5.2:1 / 4.8:1). Kept as
-     a fill only where text is on it, never as text on white. */
+  /* The darker fill for the hover state of an amber CTA. White text on it is
+     5.2:1, so the pair flips to white when the fill darkens. */
   --accent-dark: #a35a06;
+  /* Amber as text or hairline on a dark surface: 8.0:1 on --hero-2, 9.6:1 on
+     --hero-3. Bright enough to be the loudest thing on the navy. */
+  --accent-light: #f6c172;
+  /* Warm near-black ink for text on amber fills: 7.5:1 on --accent, 12.2:1 on
+     --accent-light. On --accent-dark it drops to 3.9:1, so there the text
+     switches to white instead. */
+  --accent-ink: #0b0702;
 
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --maxw: 1024px;
   --radius: 10px;
+
+  /* Depth on the tinted canvas: cards and steps lift slightly. */
+  --shadow-sm: 0 1px 2px rgb(13 43 70 / 0.06), 0 2px 8px rgb(13 43 70 / 0.05);
+  --shadow: 0 2px 6px rgb(13 43 70 / 0.08), 0 14px 28px -18px rgb(13 43 70 / 0.35);
 
   --body: clamp(1.0625rem, 0.9rem + 0.55vw, 1.125rem);
   --h1: clamp(2rem, 1.4rem + 2.2vw, 3rem);
@@ -43,7 +74,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--surface);
+  background: var(--canvas);
   color: var(--ink);
   font-family: 'Inter', system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: var(--body);
@@ -90,13 +121,12 @@ a:hover {
   outline-offset: 2px;
 }
 
-/* On the dark footer --brand is only 2.65:1 against --ink, so use --accent
-   (6.2:1). On light surfaces --brand is 6.3:1 against white and 6.1:1 against
-   --surface-soft. `outline-offset` keeps the ring on the page background, so
-   it also contrasts where the CTA is amber — the ring never has to beat the
-   button's own fill. PROJECT.md §6: focus ring ≥ 3:1 against the background. */
+/* Focus ring: --brand is 5.5:1 on --canvas, 4.9:1 on --surface-soft and 6.3:1
+   on --surface, so it is AA-safe on every light surface. `outline-offset` keeps
+   the ring on the page background, so it never has to beat the CTA's amber
+   fill. PROJECT.md §6: focus ring ≥ 3:1 against the background. */
 .site-footer :focus-visible {
-  outline-color: var(--accent);
+  outline-color: var(--accent); /* 4.9:1 on --hero-2, the lightest footer colour */
 }
 
 h1,
@@ -152,6 +182,16 @@ li {
 .site-header {
   border-bottom: 1px solid var(--line);
   background: var(--surface);
+  box-shadow: 0 1px 6px rgb(13 43 70 / 0.07);
+}
+
+/* Colour bar along the top edge: the brand blue fading into the amber accent.
+   Decorative, aria-hidden by construction (empty content, no text). */
+.site-header::before {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, var(--brand-deep), var(--brand) 55%, var(--accent));
 }
 
 .site-header__inner {
@@ -243,14 +283,12 @@ li {
 
 .btn--primary {
   background: var(--accent);
-  color: #23170a;
+  color: var(--accent-ink); /* 7.5:1 */
 }
 
 .btn--primary:hover {
   background: var(--accent-dark);
-  /* --accent-dark is dark enough now (5.2:1 with white), so the label keeps
-     AA in both states without recolouring. */
-  color: #fff;
+  color: #fff; /* 5.2:1 — the ink would only reach 3.9:1 on the darker fill */
 }
 
 .btn--secondary {
@@ -280,14 +318,26 @@ section,
   border-block: 1px solid var(--line);
 }
 
+/* Hero: the one dark surface at the top of the page. It carries the brand blue
+   from the first view instead of a white page, and the phone CTA stands out on
+   it. Text on --hero-2: 13.2:1 (#fff), 8.3:1 (--on-dark-soft). */
+.hero {
+  background:
+    radial-gradient(circle at 88% -12%, rgb(255 255 255 / 0.13), transparent 58%),
+    linear-gradient(160deg, var(--hero-1) 0%, var(--hero-2) 55%, var(--hero-3) 100%);
+  color: var(--on-dark);
+  border-bottom: 3px solid var(--accent);
+}
+
 .hero h1 {
   max-width: 22ch;
+  color: #fff;
 }
 
 .hero__lede {
   font-size: 1.1875rem;
   max-width: 58ch;
-  color: var(--ink-soft);
+  color: var(--on-dark-soft);
 }
 
 .hero__actions {
@@ -295,6 +345,40 @@ section,
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.5rem;
+}
+
+/* Secondary button and the phone number are the dark-surface variants. */
+.hero .btn--secondary {
+  border-color: rgb(255 255 255 / 0.5);
+  color: #fff;
+}
+
+.hero .btn--secondary:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--brand-dark);
+}
+
+/* On the dark hero the pill goes lighter so it stays the brightest element. */
+.hero .phone-big a {
+  background: var(--accent-light);
+  color: var(--accent-ink); /* 12.2:1 */
+  box-shadow: 0 0 0 1px rgb(246 193 114 / 0.45), var(--shadow-sm);
+}
+
+.hero .phone-big a:hover {
+  background: var(--accent);
+  color: var(--accent-ink); /* 7.5:1 */
+}
+
+.hero .cta__note {
+  color: var(--on-dark-soft);
+}
+
+/* --brand is dark on the dark hero (1.6:1), so the ring goes light: 6.3:1
+   against the lightest part of the hero gradient. */
+.hero :focus-visible {
+  outline-color: var(--accent-light);
 }
 
 /* Phone CTA (components/cta.njk) */
@@ -310,7 +394,7 @@ section,
   max-width: 46ch;
 }
 
-/* Cards */
+/* Cards. White sheets lifted off the tinted canvas, each marked with a blue chip. */
 .cards {
   display: grid;
   gap: 1rem;
@@ -321,14 +405,15 @@ section,
 
 .card {
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-soft);
   border-radius: var(--radius);
   padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
   transition: box-shadow var(--ease), border-color var(--ease);
 }
 
 .card:hover {
-  box-shadow: 0 2px 10px rgb(18 32 43 / 0.09);
+  box-shadow: var(--shadow);
   border-color: var(--brand);
 }
 
@@ -340,8 +425,24 @@ section,
   font-size: var(--h3);
 }
 
-.card__title .icon {
-  color: var(--brand);
+/* Icon chips: a filled brand-tinted square behind the stroke icon. This is what
+   carries the brand colour through the content instead of black text on white. */
+.card__title .icon,
+.service__title .icon,
+.contact-list .icon {
+  display: grid;
+  place-items: center;
+  width: 2.15em;
+  height: 2.15em;
+  border-radius: 8px;
+  background: var(--brand-tint);
+  color: var(--brand-dark);
+}
+
+.card__title .icon svg,
+.contact-list .icon svg {
+  width: 1.15em;
+  height: 1.15em;
 }
 
 .card__desc {
@@ -355,7 +456,7 @@ section,
   font-weight: 650;
 }
 
-/* Steps */
+/* Steps: numbered cards with a blue rule on top, matching the card treatment. */
 .steps {
   display: grid;
   gap: 1.25rem;
@@ -366,8 +467,12 @@ section,
 }
 
 .step {
-  border-top: 2px solid var(--brand);
-  padding-top: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-top: 3px solid var(--brand);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem 1.15rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .step__title {
@@ -375,17 +480,28 @@ section,
 }
 
 .step__num {
-  display: block;
+  display: inline-block;
   font-size: 0.8125rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  font-weight: 650;
   color: var(--brand-dark);
-  margin-bottom: 0.3rem;
+  background: var(--brand-tint);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  margin-bottom: 0.6rem;
 }
 
-/* Service sections */
+/* Service sections: white sheets on the tinted canvas, alternating with the
+   canvas itself so the page has rhythm without looking striped. */
 .service {
-  border-top: 1px solid var(--line);
+  background: var(--surface);
+  border-block-start: 1px solid var(--line-soft);
+}
+
+.service:nth-of-type(even) {
+  background: var(--canvas);
+  border-block-start-color: var(--line);
 }
 
 .service__title {
@@ -393,10 +509,6 @@ section,
   align-items: center;
   gap: 0.6rem;
   scroll-margin-top: 1.5rem;
-}
-
-.service__title .icon {
-  color: var(--brand);
 }
 
 .service__lede {
@@ -429,10 +541,6 @@ section,
   flex-wrap: wrap; /* the value wraps below the label instead of overflowing */
 }
 
-.contact-list .icon {
-  color: var(--brand);
-}
-
 /* Never break a label (e.g. "E-Mail"); the value wraps instead. */
 .contact-list .label {
   flex: none;
@@ -447,13 +555,34 @@ section,
   gap: 0.6rem;
   font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.25rem);
   font-weight: 700;
-  color: var(--accent-dark);
   text-decoration: none;
 }
 
-.phone-big:hover {
-  color: var(--brand-dark);
+/* A filled call pill rather than coloured text: the number is the call to
+   action, so it reads as a target. Amber text on the tinted canvas would fail
+   AA (2.3:1), amber as a fill with the warm near-black ink on top is 7.5:1 and
+   loud. The colour belongs on the anchor itself: `a { color: var(--brand) }`
+   applies directly to it and would otherwise beat an inherited colour. */
+.phone-big a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.5em 1.05em;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--ease), color var(--ease);
 }
+
+.phone-big a:hover {
+  background: var(--accent-dark);
+  color: #fff; /* 5.2:1 */
+}
+
+/* No focus override here: the global ring is brand blue, and `outline-offset`
+   places it on the canvas outside the pill, where it measures 5.5:1. */
 
 .phone-big .icon svg {
   width: 1.1em;
@@ -464,16 +593,21 @@ address {
   font-style: normal;
 }
 
-/* Footer */
+/* Footer: the closing dark surface, mirroring the hero. */
 .site-footer {
-  background: var(--ink);
-  color: #e8eef4;
+  background: linear-gradient(180deg, var(--hero-2), var(--hero-3) 70%, var(--brand-deep));
+  border-top: 3px solid var(--accent);
+  color: var(--on-dark);
   padding-block: 2rem 2.5rem;
   margin-top: clamp(2rem, 5vw, 3rem);
 }
 
 .site-footer a {
-  color: #ffd9a8;
+  color: var(--accent-light);
+}
+
+.site-footer a:hover {
+  color: #fff;
 }
 
 .site-footer .footer__grid {
@@ -493,7 +627,7 @@ address {
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid rgb(232 238 244 / 0.25);
+  border-top: 1px solid rgb(234 243 250 / 0.25);
   padding-top: 1.25rem;
 }
 
@@ -502,7 +636,7 @@ address {
 }
 
 .site-footer .fine {
-  color: #b8c6d3;
+  color: var(--on-dark-soft);
   font-size: 0.9375rem;
 }
 

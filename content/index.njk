@@ -5,8 +5,6 @@ description: 'Rempel-Elektro in Michelstadt: Planung und Beratung, Kundendienst,
 jsonld: true
 sitemap: true
 ---
-{% import 'components/cta.njk' as cta %}
-
 <section class="hero">
   <div class="wrap">
     <h1>Elektrohandwerk in Michelstadt und im Odenwald</h1>
@@ -75,9 +73,11 @@ sitemap: true
   <div class="wrap">
     <h2>Kontakt</h2>
     <p class="phone-big">
-      <a href="{{ site.phoneHref }}">{{ site.phone }}</a>
+      <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}{{ site.phone }}</a>
     </p>
-    {{ cta.phoneCta('Anrufen', 'Sollte der Anruf nicht passen, schreiben Sie eine E-Mail. Wir melden zurück.') | safe }}
+    <p class="cta__note">
+      Sollte der Anruf nicht passen, schreiben Sie eine E-Mail. Wir melden zurück.
+    </p>
     <ul class="contact-list">
       <li>
         <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>

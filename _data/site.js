@@ -42,7 +42,7 @@ module.exports = {
   ogImage: '/assets/img/og-image.png',
 
   /** Colour used by the manifest and theme-color meta. */
-  themeColor: '#12202b',
+  themeColor: '#12324e',
 
   /** Year in the footer copyright. Refreshed when the build runs. */
   year: new Date().getFullYear(),
