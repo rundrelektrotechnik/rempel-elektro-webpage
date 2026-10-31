@@ -411,6 +411,32 @@ Before hand-off:
       not a supported width). `document.scrollWidth` equals viewport minus the ~15 px scrollbar gutter
       on scrolling pages; `/404.html` reports the exact viewport width because that page is short
       enough not to scroll — that is the reason it differs, not an overflow.
+- [x] Lighthouse ≥ 90 in Chrome (G3): Lighthouse CLI 13.6.0, all four categories, all six routes
+      (`/`, `/leistungen/`, `/kontakt/`, `/impressum/`, `/datenschutz/`, `/404.html`), measured
+      against two servers on purpose — the Eleventy dev server on port 8081 and a static
+      production-like server on port 8091 (harness note in section 13). Mobile form factor with
+      Lighthouse's default simulated throttle (4× CPU, 4 Mbps / 55 ms RTT) is the primary evidence:
+      **100 / 100 / 100 / 100 on all six routes on both servers**. Desktop form factor as extra
+      evidence: 99 performance (98 for `/leistungen/` on the dev server), 100 on the other three
+      categories — everything at or above 90. Measured on the production-like run: FCP, LCP, TTI and
+      Speed Index all 751–753 ms (identical, because the page paints in one go — there is no JS),
+      TBT 0 ms, CLS 0, main-thread work 0.2–0.3 s, total weight 54–56 KiB transferred, of which
+      48.4 KiB is the preloaded Inter subset, 2.97 KiB gzip stylesheet, 1.9–4.2 KiB document,
+      `script` and `third-party` resources: 0. The dev server reports 73–83 KiB because it injects
+      `.11ty/reload-client.js` (10.7 KiB) — harness noise, not page weight. Accessibility 100
+      confirms the contrast, focus and heading work above; best practices and SEO 100 confirm no
+      console errors, no unused violations and complete meta, `lang`, viewport and link-name data on
+      every page. **No repo fix was needed**: every audit below its passing threshold has
+      `weight = 0`, so none of them contributes to the performance score. The non-scoring insights
+      that remain are `cache-insight` (≈ 51 s / 50 KiB "savings" — the test server sends no cache
+      headers on purpose, so that belongs to the hosting decision in phase 12, not to the markup),
+      `render-blocking-insight` 65–125 ms (`styles.css` is the single render-blocking stylesheet by
+      design, and at 2.97 KiB gzip it is most of the page's transfer cost already),
+      `document-latency-insight` and `network-dependency-tree-insight`, plus on the dev server only
+      `unminified-css` ≈ 3 KiB and `unminified-javascript` ≈ 4 KiB, both from the reload client.
+      `/404.html` scores 100 on either server: it is a real file, so it returns `200` and
+      `http-status-code` passes; the static server still answers a genuine `404` for an unknown path
+      (`/keine-seite/` verified).
 - [ ] JSON-LD parses (Rich Results test), sitemap + robots live.
       JSON-LD parses locally (`Electrician`), sitemap and robots are generated; the Rich Results
       test needs a served URL.
@@ -438,7 +464,8 @@ rest needs a served URL.
 - [~] 11 A11y + responsive pass — contrast computed (all AA/3:1), focus rings fixed, skip-link
            overflow fixed; responsive pass done in Chrome (G2): 30 full-page screenshots, 6 routes
            × 5 widths (320–1440 px), measured clean and reviewed by eye; contact-row label wrap
-           fixed. Keyboard walk-through + Lighthouse in the browser still pending (G3, G4)
+           fixed; Lighthouse done (G3): 100 / 100 / 100 / 100 on all six routes, on both servers.
+           Keyboard walk-through still pending (G4)
 - [ ] 12 Client review round — copy corrections, open items, hosting decision
 
 ---
@@ -452,8 +479,8 @@ commit. Work them in order; a goal is not started before the previous one is com
 | --- | --- | --- | --- |
 | G1 | Docs commit: record this goal list + the served-routes finding in § 11 | `git status` clean, docs commit | done |
 | G2 | Visual pass in Chrome against the local dev server: screenshots of every page at 320 / 640 / 768 / 1024 / 1440 px | No overlap, truncation or horizontal scrollbar; findings either fixed or recorded | done — § 11 |
-| G3 | Lighthouse ≥ 90 on the served local site (all five routes): performance, accessibility, best practices, SEO | Scores ≥ 90, fixes applied, summary recorded in § 11 | next |
-| G4 | Keyboard + focus walk-through in Chrome: Tab order, visible focus ring, skip link, icon-link labels | Tab order matches reading order, ring visible everywhere, no trap | open |
+| G3 | Lighthouse ≥ 90 on the served local site (all five routes): performance, accessibility, best practices, SEO | Scores ≥ 90, fixes applied, summary recorded in § 11 | done — § 11 |
+| G4 | Keyboard + focus walk-through in Chrome: Tab order, visible focus ring, skip link, icon-link labels | Tab order matches reading order, ring visible everywhere, no trap | next |
 | G5 | Hosting decision: final domain, HTTPS, `404.html` as error page, `sitemap:` line reachable | Canonical + OG URLs match the live domain; live smoke test | open |
 | G6 | Copy review round with the client | Corrections applied, no invented claims, final German wording | open |
 | G7 | Open items from section 9 (Meistertitel, Öffnungszeiten, photos/references, trust info) | Each item either supplied and integrated, or explicitly marked not applicable | open |
@@ -470,3 +497,15 @@ G3/G4: a horizontal-scrollbar the harness once reported came from a dev server s
 from before the icon fix — a stale build, not a layout bug, gone after a rebuild; and the dark band
 at the top of the full-page PNGs is a `captureBeyondViewport` artefact, not a page bug. The tiles
 reviewed by eye were clipped to legible slices instead of full pages, which is what makes them sharp.
+
+G3 was run the same way: outside the repo, nothing added to the project's dependencies. Lighthouse
+CLI 13.6.0 lives in a temp directory and is invoked from there with
+`--only-categories=performance,accessibility,best-practices,seo --output=json --chrome-flags=--headless=new`.
+Two servers were measured on purpose. Eleventy's `--serve` injects `.11ty/reload-client.js`
+(10.7 KiB), which Lighthouse counts as page weight plus two "unminified" assets, and it answers
+every path with `200`; so the production-like numbers come from a zero-dependency Node static server
+on port 8091 — real MIME types, gzip for text assets, `nosniff`, no cache headers, a genuine `404`
+for unknown paths. Mobile with the default simulated throttle is the acceptance figure; desktop was
+added as extra evidence. Two harness notes worth remembering for the next audit run:
+`--form-factor=desktop` alone throws — it needs `--screen-emulation.mobile=false` — and the report
+directory must exist before `--output-path` will write into it.
