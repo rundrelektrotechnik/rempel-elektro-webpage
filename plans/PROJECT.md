@@ -147,7 +147,8 @@ opening hours. No empty placeholders for references — the client supplies them
 
 ### 5.2 Leistungen (`/leistungen/`)
 
-Five `<section>` blocks, each with `id`, `<h2>` and icon:
+Five `<section>` blocks, each with `id`, `<h2>`, the stock photo of the start-page tile (side alternating),
+one sentence and a checklist of 3–4 short items. No paragraphs of running text:
 
 | `id` | Heading | Copy direction |
 | --- | --- | --- |
@@ -157,8 +158,9 @@ Five `<section>` blocks, each with `id`, `<h2>` and icon:
 | `antennenanlagen` | Antennenanlagen | SAT, DAB, Kabel, Empfang, Justierarbeiten. |
 | `photovoltaik` | Photovoltaik | PV auf dem Dach, Wechselrichter, Speicher, Anschluss an die Hausinstallation, Einspeisung. |
 
-Each section ends with a phone CTA. Each paragraph states things an electrician of this size can
-actually deliver — no claims about guaranteed response times or certifications.
+One closing band after the five sections carries the phone CTA ("Anrufen", number in the header / call bar).
+Every line states things an electrician of this size can actually deliver — no claims about guaranteed
+response times or certifications.
 
 ### 5.3 Kontakt (`/kontakt/`)
 
@@ -257,7 +259,7 @@ gradient inside the SVG lightning bolt in the logo — brand recognition without
 ### Icons and logo
 
 - One inline-SVG stroke system: 24×24 viewBox, 1.5 stroke, round caps, `currentColor`,
-  `aria-hidden="true"`. Five service icons plus phone, mail, fax, location, arrow.
+  `aria-hidden="true"`. Phone, mail, fax, location, arrow. The five service icons were dropped in favour of the stock photos.
 - Logo: hand-written SVG wordmark, bolt as the gradient element, name at
   `clamp(1.5rem, 1.25rem + 1.2vw, 1.875rem)`. Inline in the header so it
   inherits colour and needs no HTTP request. PNG fallback for favicon and OG image.
@@ -350,10 +352,10 @@ Ordered so each phase ends in something verifiable. Nothing starts before the pl
 | 1 | Docs into repo | `AGENTS.md`, `plans/PROJECT.md`, `.gitignore`, first commit |
 | 2 | Scaffold | `npm init`, Eleventy installed, `eleventy.config.js`, `_data/site.js`, layouts. `npm run build` produces `_site/index.html`. |
 | 3 | Design system | `variables.css` tokens + `styles.css` type scale, header/footer, always-visible wrapping nav. Rendered with real data. |
-| 4 | Logo + icons | SVG wordmark, 5 service icons, contact icons, favicon, manifest. Visual check in header. |
+| 4 | Logo + icons | SVG wordmark, contact icons, favicon, manifest. Visual check in header. |
 | 5 | Fonts | Inter subset installed, passthrough copy, `@font-face`, preload, `font-display: swap`. No FOUC, no layout shift. |
 | 6 | Start page | Full German copy, hero, teaser cards, ablauf, region, contact block. |
-| 7 | Leistungen | Five anchored sections + icons + per-section CTA. |
+| 7 | Leistungen | Five anchored sections (photo + lede + checklist) + closing CTA band. |
 | 8 | Kontakt | Contact channels, address, Maps link. |
 | 9 | Legal pages | Impressum + Datenschutz, correct statutes, footer links live on both. |
 | 10 | SEO + 404 | Titles, descriptions, canonical, OG, JSON-LD, `sitemap.xml`, `robots.txt`, `404.html`. |
@@ -464,10 +466,10 @@ rest needs a served URL.
 - [x] 1 Docs + first commit — `AGENTS.md`, this file, `.gitignore`
 - [x] 2 Scaffold — Eleventy 3 config, `_data/site.js`, `_data/services.js`, layouts
 - [x] 3 Design system — `variables.css` tokens, `styles.css` type scale, header/footer/nav
-- [x] 4 Logo + icons — SVG wordmark, 10 icons, favicon + PNG fallbacks, manifest
+- [x] 4 Logo + icons — SVG wordmark, 5 icons, favicon + PNG fallbacks, manifest
 - [x] 5 Fonts — Inter variable Latin subset self-hosted, preloaded, OFL file shipped
 - [x] 6 Start page — hero, service teasers, Ablauf, Region, contact block
-- [x] 7 Leistungen — five anchored sections with icons and per-section CTA
+- [x] 7 Leistungen — five anchored photo + checklist sections and a closing CTA band
 - [x] 8 Kontakt — phone/e-mail/-address blocks, Fax, Maps link
 - [x] 9 Legal pages — Impressum (§ 5 DDG, § 18 MStV) and Datenschutz
 - [x] 10 SEO + 404 — titles, canonical, OG image, JSON-LD, sitemap, robots, 404

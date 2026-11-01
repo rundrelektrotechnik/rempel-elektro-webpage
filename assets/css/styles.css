@@ -476,8 +476,7 @@ section,
   height: 1.1em;
 }
 
-/* Icon chips on the Leistungen page and the contact rows. */
-.service__title .icon,
+/* Icon chips in the contact rows. */
 .contact-list .icon {
   display: grid;
   place-items: center;
@@ -500,45 +499,71 @@ section,
   font-weight: 650;
 }
 
-/* Steps: numbered cards with a blue rule on top, matching the card treatment. */
+/* Steps: a plain process line, not another set of cards. A numbered disc per step
+   (the same brand-dark as the tile arrows), joined by a thin line: vertical on
+   a phone, horizontal from 768 px. The number is a CSS counter, so the list
+   stays a real <ol> for assistive technology. */
 .steps {
   max-width: none;
   display: grid;
-  gap: 1.25rem;
-  margin: 1.5rem 0 0;
+  gap: 1.75rem;
+  margin: 2rem 0 0;
   padding: 0;
   list-style: none;
   counter-reset: step;
 }
 
 .step {
-  background: var(--lcl-color-surface);
-  border: 1px solid var(--lcl-color-line-soft);
-  border-top: 3px solid var(--lcl-color-brand);
-  border-radius: var(--lcl-size-radius);
-  padding: 1rem 1.1rem 1.15rem;
-  box-shadow: var(--lcl-shadow-sm);
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  column-gap: 1rem;
+  align-content: start;
+  margin: 0;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step);
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--lcl-color-brand-dark);
+  color: #fff; /* 9.8:1 */
+  font-size: 1.25rem;
+  font-weight: 700;
+  z-index: 1;
+}
+
+/* The connector to the next step. */
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(1.5rem - 1px);
+  top: 3.5rem;
+  bottom: -1.5rem;
+  width: 2px;
+  background: var(--lcl-color-line);
 }
 
 .step__title {
-  margin: 0 0 0.4rem;
+  margin: 0.55rem 0 0.35rem;
+  font-size: 1.25rem;
+  line-height: 1.25;
 }
 
-.step__num {
-  display: inline-block;
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 650;
-  color: var(--lcl-color-brand-dark);
-  background: var(--lcl-color-brand-tint);
-  border-radius: 999px;
-  padding: 0.15rem 0.6rem;
-  margin-bottom: 0.6rem;
+.step p {
+  margin: 0;
+  color: var(--lcl-color-ink-soft);
+  font-size: 1rem;
 }
 
-/* Service sections: white sheets on the tinted canvas, alternating with the
-   canvas itself so the page has rhythm without looking striped. */
+/* Service sections on the Leistungen page: a photo beside a short text, the
+   side alternating, on alternating backgrounds so the page has rhythm without
+   looking striped. */
 .service {
   background: var(--lcl-color-surface);
   border-block-start: 1px solid var(--lcl-color-line-soft);
@@ -549,10 +574,25 @@ section,
   border-block-start-color: var(--lcl-color-line);
 }
 
-.service__title {
-  display: flex;
+.service__grid {
+  display: grid;
+  gap: clamp(1.25rem, 4vw, 3rem);
   align-items: center;
-  gap: 0.6rem;
+}
+
+.service__img {
+  display: block;
+  width: 100%;
+  height: auto; /* beats the height attribute, so aspect-ratio decides */
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--lcl-size-radius);
+  background: var(--lcl-color-surface-soft); /* shown while the photo loads */
+  box-shadow: var(--lcl-shadow-sm);
+}
+
+.service__title {
+  margin: 0 0 0.5rem;
   scroll-margin-top: 1.5rem;
 }
 
@@ -561,8 +601,30 @@ section,
   color: var(--lcl-color-ink-soft);
 }
 
-.service__cta {
+/* Short checklist: a brand-dark tick per line, drawn with borders so it needs
+   no icon file and follows the text colour tokens. */
+.checks {
   margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checks li {
+  position: relative;
+  margin: 0 0 0.6rem;
+  padding-inline-start: 1.9rem;
+}
+
+.checks li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.35em;
+  width: 0.4rem;
+  height: 0.75rem;
+  border: solid var(--lcl-color-brand-dark);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(40deg);
 }
 
 /* Contact */
@@ -793,7 +855,31 @@ address {
   }
 
   .steps {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .step {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  .step::before {
+    grid-row: auto;
+    margin-bottom: 1.1rem;
+  }
+
+  .step:not(:last-child)::after {
+    left: 3.75rem;
+    right: -1.25rem;
+    top: calc(1.5rem - 1px);
+    bottom: auto;
+    width: auto;
+    height: 2px;
+  }
+
+  .step__title {
+    margin-top: 0;
   }
 
   .footer__top {
@@ -851,6 +937,14 @@ address {
 }
 
 @media (min-width: 768px) {
+  .service__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service:nth-of-type(odd) .service__img {
+    order: 2;
+  }
+
   .footer__top {
     grid-template-columns: 1.5fr 1fr 1fr;
   }
