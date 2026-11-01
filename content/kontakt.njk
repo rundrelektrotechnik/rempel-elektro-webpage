@@ -1,7 +1,8 @@
 ---
 layout: layouts/base.njk
 title: 'Kontakt'
-description: 'Rempel-Elektro in Michelstadt: Telefon 06061 - 70 31 96, Mobil 0170 - 514 562 5, E-Mail und Anschrift Chemnitzer-Str. 4, 64720 Michelstadt.'
+eleventyComputed:
+  description: '{{ site.name }} in {{ site.city }}: Telefon {{ site.phone }}, Mobil {{ site.mobile }}, E-Mail und Anschrift {{ site.address }}.'
 sitemap: true
 ---
 
@@ -24,39 +25,40 @@ sitemap: true
 
 <section class="band">
   <div class="wrap">
-    <h2>Erreichbarkeit</h2>
-    <ul class="contact-list">
-      <li>
-        <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}<span class="label">Telefon</span>{{ site.phone }}</a>
-      </li>
-      <li>
-        <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>
-      </li>
-      <li>
-        <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
-      </li>
-      <li>
-        <a href="{{ site.faxHref }}">{{ 'fax' | icon }}<span class="label">Fax</span>{{ site.fax }}</a>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Anschrift</h2>
-    <address>
-      {{ site.name }}<br>
-      {{ site.owner }}, {{ site.title }}<br>
-      {{ site.street }}<br>
-      {{ site.zip }} {{ site.city }}
-    </address>
-    <p>
-      <a class="card__link" href="{{ site.mapsUrl }}" rel="noopener">{{ 'location' | icon }}Standort auf Google Maps</a>
-    </p>
-    <p class="cta__note">
-      Ein Formular gibt es nicht. Telefon und E-Mail sind die Wege, auf denen wir
-      erreichen – und auf denen wir zurückmelden.
-    </p>
+    <div class="kontakt">
+      <div>
+        <h2>Erreichbarkeit</h2>
+        <ul class="contact-list">
+          <li>
+            <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}<span class="label">Telefon</span>{{ site.phone }}</a>
+          </li>
+          <li>
+            <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>
+          </li>
+          <li>
+            <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
+          </li>
+          <li>
+            <a href="{{ site.faxHref }}">{{ 'fax' | icon }}<span class="label">Fax</span>{{ site.fax }}</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Anschrift</h2>
+        <address>
+          {{ site.name }}<br>
+          {{ site.owner }}, {{ site.title }}<br>
+          {{ site.street }}<br>
+          {{ site.zip }} {{ site.city }}
+        </address>
+        <p>
+          <a class="card__link" href="{{ site.mapsUrl }}" rel="noopener">{{ 'location' | icon }}Standort auf Google Maps</a>
+        </p>
+        <p class="cta__note">
+          Ein Formular gibt es nicht. Telefon und E-Mail sind die Wege, auf denen wir
+          erreichen – und auf denen wir zurückmelden.
+        </p>
+      </div>
+    </div>
   </div>
 </section>

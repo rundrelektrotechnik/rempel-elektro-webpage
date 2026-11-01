@@ -25,6 +25,7 @@
     </main>
 
     {% include 'components/footer.njk' %}
+    <a class="callbar" href="{{ site.phoneHref }}">{{ 'phone' | icon }}Anrufen {{ site.phone }}</a>
     {% if jsonld %}{% include 'components/jsonld.njk' %}{% endif %}
   </body>
 </html>

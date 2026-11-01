@@ -20,9 +20,11 @@ module.exports = {
 
   phone,
   phonePlain: '06061703196',
+  phoneIntl: '+49 6061 703196',
   phoneHref: 'tel:06061703196',
   fax: '06061 - 70 31 97',
   faxPlain: '06061703197',
+  faxIntl: '+49 6061 703197',
   faxHref: 'tel:06061703197',
   mobile: '0170 - 514 562 5',
   mobilePlain: '01705145625',
@@ -40,9 +42,13 @@ module.exports = {
   mapsUrl:
     'https://www.google.com/maps/search/?api=1&query=Chemnitzer+Str.+4+64720+Michelstadt',
   ogImage: '/assets/img/og-image.png',
+  ogImageAlt: 'Rempel-Elektro: Blitzsymbol und Schriftzug',
 
   /** Colour used by the manifest and theme-color meta. */
   themeColor: '#12324e',
+
+  /** Date shown on the legal pages. Edit by hand when the text changes; never derive it from the build. */
+  legalStand: 'November 2026',
 
   /** Year in the footer copyright. Refreshed when the build runs. */
   year: new Date().getFullYear(),

@@ -54,7 +54,6 @@ module.exports = function (eleventy) {
   // String globs keep their folder structure in the output. Object mappings are
   // only used where a single file needs a fixed target name.
   eleventy.addPassthroughCopy('assets/**')
-  eleventy.addPassthroughCopy('site.webmanifest')
   eleventy.addPassthroughCopy({
     // Self-hosted Inter: Latin variable subset plus the OFL licence.
     'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2':

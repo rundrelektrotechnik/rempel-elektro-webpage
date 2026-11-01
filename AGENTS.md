@@ -37,7 +37,7 @@ supports that.
 /eleventy.config.js
 /plans             planning documents (PROJECT.md)
 /_site             build output — ignored
-/site.webmanifest  manifest + favicon fallbacks
+/content/site.webmanifest.njk  manifest, built from site.js
 ```
 
 Every page is generated from `layouts/base.njk`. Navigation, footer and legal links come from

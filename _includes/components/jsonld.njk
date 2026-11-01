@@ -12,8 +12,8 @@
     "logo": "{{ site.url }}{{ site.ogImage }}",
     "image": "{{ site.url }}{{ site.ogImage }}",
     "description": "{{ site.metaDescription }}",
-    "telephone": "{{ site.phonePlain }}",
-    "faxNumber": "{{ site.faxPlain }}",
+    "telephone": "{{ site.phoneIntl }}",
+    "faxNumber": "{{ site.faxIntl }}",
     "email": "{{ site.email }}",
     "address": {
       "@type": "PostalAddress",
@@ -27,7 +27,6 @@
       {% for area in site.areaNames %}
       { "@type": "AdministrativeArea", "name": "{{ area }}" }{{ "," if not loop.last }}
       {% endfor %}
-    ],
-    "sameAs": ["{{ site.mapsUrl }}"]
+    ]
   }
 </script>
