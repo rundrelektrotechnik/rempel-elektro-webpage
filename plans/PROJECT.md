@@ -75,7 +75,7 @@ this build, not legal advice for the client.
 | Self-hosted fonts | Loading fonts from a CDN transmits the visitor's IP to a third party and needs consent management. | Inter subset served from own `assets/fonts/`, OFL licence. |
 | No third-party embeds | Google Fonts, Maps iframe, analytics, social plugins all create DSGVO-relevant data transfers. | None. Address → plain external Google Maps link with `rel="noopener"`. |
 | No cookie banner | No tracking, no technically unnecessary cookies → no consent case exists. | Banner not implemented; must stay absent if nothing changes. |
-| No contact form | A form would require AVV / data-minimisation wording and a legal basis. | Direct channels only: `tel:`, `mailto:`, Fax, address. |
+| Contact form only as `mailto:` | A form that posts to a server or a form service would require an AVV, data-minimisation wording and a legal basis, and would add a third-party request. A `mailto:` form transmits nothing to this site: the visitor's mail program sends the mail. | Kontakt page form with `action="mailto:…"`, `enctype="text/plain"`, no JS. Datenschutz says so. Limitation: needs a mail program on the visitor's device; the direct channels stay next to it. Server-side delivery would be a hosting decision (G5) plus a processor. |
 
 If any analytics or embed is ever added, the Datenschutzerklärung and the consent position must be
 rewritten at the same time. That is the trigger condition, not an optional cleanup.
@@ -166,7 +166,9 @@ response times or certifications.
 
 - Telefon, Mobil, E-Mail, Fax as clickable links. `tel:` hrefs use `+49` without spacing; the displayed number keeps the leading 0.
 - Address as `<address>` with a plain Google Maps link (external, `rel="noopener"`), no iframe.
-- No form, no opening-hours block, no "Nachricht senden" placeholder.
+- Layout: hero with the call pill, then channel cards (e-mail, mobile, fax, address + Maps link) beside the
+  `mailto:` form card (Name, Telefon optional, Nachricht). Fields have visible labels and a border ≥ 3:1
+  (`--lcl-color-field`). No opening-hours block.
 - A short note on reaching the business by phone is the only filler.
 
 ### 5.4 Impressum (`/impressum/`)

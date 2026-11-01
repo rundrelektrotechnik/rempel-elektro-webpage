@@ -28,6 +28,9 @@
   --lcl-color-surface-soft: #d8e6f2;
   --lcl-color-line: #c4d6e6;
   --lcl-color-line-soft: #dbe8f3;
+  /* Border of form fields: 4.1:1 on white, above the 3:1 that WCAG 1.4.11 asks of
+     the boundary of an input. The decorative line colours above stay below it. */
+  --lcl-color-field: #6c8096;
 
   --lcl-color-ink: #12202b;
   --lcl-color-ink-soft: #44586b;

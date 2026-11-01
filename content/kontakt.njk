@@ -9,53 +9,74 @@ sitemap: true
 <section class="hero">
   <div class="wrap">
     <h1>Kontakt</h1>
-    <p class="hero__lede">
-      Der kürzeste Weg ist der Anruf. Wir fragen nach, was ansteht, und sagen am
-      Telefon, was nötig ist und welcher Aufwand dabei entsteht.
-    </p>
+    <p class="hero__lede">Am schnellsten erreichen Sie uns telefonisch.</p>
     <p class="phone-big">
       <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}{{ site.phone }}</a>
-    </p>
-    <p class="cta__note">
-      Rufen Sie an, wenn etwas nicht funktioniert oder etwas geplant ist.
-      Sollte der Anruf nicht passen, schreiben Sie eine E-Mail.
     </p>
   </div>
 </section>
 
-<section class="band">
-  <div class="wrap">
-    <div class="kontakt">
-      <div>
-        <h2>Erreichbarkeit</h2>
-        <ul class="contact-list">
-          <li>
-            <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>
-          </li>
-          <li>
-            <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
-          </li>
-          <li>
-            <a href="{{ site.faxHref }}">{{ 'fax' | icon }}<span class="label">Fax</span>{{ site.fax }}</a>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2>Anschrift</h2>
-        <address>
-          {{ site.name }}<br>
-          {{ site.owner }}, {{ site.title }}<br>
-          {{ site.street }}<br>
-          {{ site.zip }} {{ site.city }}
-        </address>
-        <p>
-          <a class="card__link" href="{{ site.mapsUrl }}" rel="noopener">{{ 'location' | icon }}Standort auf Google Maps</a>
-        </p>
-        <p class="cta__note">
-          Ein Formular gibt es nicht. Telefon und E-Mail sind die Wege, auf denen wir
-          erreichen – und auf denen wir zurückmelden.
-        </p>
-      </div>
+<section>
+  <div class="wrap contact-layout">
+    <ul class="channels">
+      <li class="channel">
+        {{ 'mail' | icon }}
+        <div>
+          <span class="channel__label">E-Mail</span>
+          <a class="channel__value" href="{{ site.emailHref }}">{{ site.email }}</a>
+        </div>
+      </li>
+      <li class="channel">
+        {{ 'phone' | icon }}
+        <div>
+          <span class="channel__label">Mobil</span>
+          <a class="channel__value" href="{{ site.mobileHref }}">{{ site.mobile }}</a>
+        </div>
+      </li>
+      <li class="channel">
+        {{ 'fax' | icon }}
+        <div>
+          <span class="channel__label">Fax</span>
+          <a class="channel__value" href="{{ site.faxHref }}">{{ site.fax }}</a>
+        </div>
+      </li>
+      <li class="channel">
+        {{ 'location' | icon }}
+        <div>
+          <span class="channel__label">Anschrift</span>
+          <address class="channel__value">
+            {{ site.name }}<br>
+            {{ site.street }}<br>
+            {{ site.zip }} {{ site.city }}
+          </address>
+          <a class="card__link" href="{{ site.mapsUrl }}" rel="noopener">Auf Google Maps ansehen</a>
+        </div>
+      </li>
+    </ul>
+
+    <div class="form-card">
+      <h2>Nachricht schreiben</h2>
+      <form class="form" action="mailto:{{ site.email }}?subject=Anfrage%20%C3%BCber%20die%20Website" method="post" enctype="text/plain">
+        <div class="field">
+          <label for="f-name">Name <span class="field__hint">(erforderlich)</span></label>
+          <input id="f-name" name="Name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-tel">Telefon <span class="field__hint">(optional)</span></label>
+          <input id="f-tel" name="Telefon" type="tel" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="f-msg">Nachricht <span class="field__hint">(erforderlich)</span></label>
+          <textarea id="f-msg" name="Nachricht" rows="5" required></textarea>
+        </div>
+        <button class="btn btn--primary" type="submit">E-Mail erstellen</button>
+        <p class="form__note">Öffnet Ihr E-Mail-Programm mit einer vorbereiteten Nachricht, die Sie dort abschicken. Es wird nichts an diese Website übertragen.</p>
+      </form>
+      <p class="form__fallback">
+        Öffnet sich nichts? Dann ist auf diesem Gerät vermutlich kein E-Mail-Programm eingerichtet.
+        Schreiben Sie uns direkt an <a href="{{ site.emailHref }}">{{ site.email }}</a> oder rufen Sie an.
+      </p>
+      
     </div>
   </div>
 </section>

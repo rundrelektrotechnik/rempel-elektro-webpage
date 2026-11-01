@@ -105,7 +105,10 @@ wording is uncertain, verify the current statute before writing it — do not gu
   text never relies on colour alone, `prefers-reduced-motion` respected.
 - Mobile-first fluid layout. Breakpoints at 640 and 768 px; content capped at `--lcl-size-maxw: 1200 px`,
   which is what keeps the layout intact above 1200 px (there is no 1200 px media query).
-- `tel:` and `mailto:` as primary contact mechanisms; no contact form, therefore no AVV needed.
+- `tel:` and `mailto:` as primary contact mechanisms. The one form (Kontakt page) is a `mailto:` form: no server,
+  no JavaScript, no third-party form service. It opens the visitor's own mail program with a prepared message and
+  transmits nothing to this site, therefore no AVV. A form that posts to a server or a form service would change
+  the Datenschutzerklärung and needs a processor agreement: do not add one without updating both.
 - Structured data: `schema.org/Electrician` JSON-LD generated from `_data/site.js`.
 - Per-page `<title>` and description, canonical, Open Graph, `sitemap.xml`, `robots.txt`,
   SVG favicon with PNG fallback.
