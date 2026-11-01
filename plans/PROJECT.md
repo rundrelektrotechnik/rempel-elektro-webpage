@@ -258,7 +258,8 @@ gradient inside the SVG lightning bolt in the logo — brand recognition without
 
 - One inline-SVG stroke system: 24×24 viewBox, 1.5 stroke, round caps, `currentColor`,
   `aria-hidden="true"`. Five service icons plus phone, mail, fax, location, arrow.
-- Logo: hand-written SVG wordmark, bolt as the gradient element. Inline in the header so it
+- Logo: hand-written SVG wordmark, bolt as the gradient element, name at
+  `clamp(1.5rem, 1.25rem + 1.2vw, 1.875rem)`. Inline in the header so it
   inherits colour and needs no HTTP request. PNG fallback for favicon and OG image.
 - Favicon: SVG favicon plus 32/180 px PNG fallbacks, `site.webmanifest` with theme colour.
 

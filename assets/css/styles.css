@@ -159,7 +159,7 @@ li {
   gap: 0.5rem;
   color: var(--lcl-color-ink);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: clamp(1.5rem, 1.25rem + 1.2vw, 1.875rem);
   letter-spacing: -0.01em;
   text-decoration: none;
 }
@@ -200,6 +200,7 @@ li {
 
 .nav ul {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.25rem 1rem;
   margin: 0;
@@ -207,9 +208,16 @@ li {
   list-style: none;
 }
 
+.nav li {
+  display: flex; /* the item is exactly as tall as its link: no stray line-box gap */
+  margin: 0; /* the global li margin would push the link off the logo's centre line */
+}
+
+/* The 2px bottom border is balanced by 2px extra on top, so the link text sits
+   on the same centre line as the logo and the call button. */
 .nav a {
   display: inline-block;
-  padding: 0.35rem 0.1rem;
+  padding: calc(0.35rem + 2px) 0.1rem 0.35rem;
   color: var(--lcl-color-ink);
   text-decoration: none;
   border-bottom: 2px solid transparent;
