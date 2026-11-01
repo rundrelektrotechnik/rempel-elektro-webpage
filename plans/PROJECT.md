@@ -140,7 +140,7 @@ fallback), `lang="de"`.
 | So läuft die Zusammenarbeit | 3 steps: contact → assessment → execution. Generic, no invented certifications or hours. |
 | Region | Text: Michelstadt, Odenwald, Odenwaldkreis and surrounding communities. Plain text, no map embed. |
 | Kontakt block | Phone number as the dominant element; mobile, e-mail, address. |
-| Footer | Company name, address, phone, legal links. |
+| Footer | Three columns (name + tagline, service links, owner/address/e-mail) over a bar with © line and the legal links. No phone number (see number policy). |
 
 Deliberately absent: trust badges, "Meisterbetrieb" seal, testimonials, reference counters,
 opening hours. No empty placeholders for references — the client supplies them later.

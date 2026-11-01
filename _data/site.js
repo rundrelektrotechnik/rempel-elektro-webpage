@@ -57,6 +57,9 @@ module.exports = {
   /** Same areas as plain place names, for schema.org/areaServed. */
   areaNames: ['Michelstadt', 'Odenwald', 'Odenwaldkreis'],
 
+  /** One-line description of the business: footer and default title. */
+  tagline: 'Elektrohandwerk in Michelstadt und im Odenwald',
+
   /** Default metadata for pages that set nothing in their frontmatter. */
   metaTitle: 'Rempel-Elektro – Elektrohandwerk in Michelstadt und im Odenwald',
   metaDescription:
