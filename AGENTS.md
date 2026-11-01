@@ -31,10 +31,13 @@ supports that.
 
 ```
 /content           source pages, one file per URL
-/kundendaten.txt   the customer's facts (name, address, phones, e-mail, Kammer, USt-IdNr, domain) in a
-                   plain `Name: Wert` file the customer edits; the only place these facts are typed
-/_data             site.js reads kundendaten.txt, validates it (German error messages) and derives
-                   hrefs, address line, maps link; also the developers' copy and config
+/kundendaten.txt   everything the customer maintains, in a plain `Name: Wert` file: the facts (name, address,
+                   phones, e-mail, Kammer, USt-IdNr, domain) and, in [sections], the page texts (hero, headings,
+                   the five services' words, the three steps, area text, page lead-ins)
+/lib/kundendaten.js  the reader: declares every allowed field and section, checks the file, and fails the
+                   build with a German message naming the line
+/_data             site.js (facts + derived hrefs), text.js (page texts), services.js (the five services:
+                   fixed order/id/photo, words from the file); also the developers' config
 /_includes         layouts/ and components/
 /assets            css/ (variables.css + styles.css), fonts/, icons/, favicon
 /eleventy.config.js
@@ -53,10 +56,12 @@ includes, never from duplicated markup.
 - **Never invent business claims.** No "Meisterbetrieb", no certifications, no customer reviews,
   no reference projects, no team members, no invented founding year. The existing Impressum
   states `Dipl. Ing. (FH)` only — do not upgrade that into a master-title claim.
-- Customer-supplied facts live in `kundendaten.txt` and reach the templates through `_data/site.js`; copy that
-  repeats a fact (address, phone) must pull from `site` instead of being retyped. Any change to contact data
-  happens in exactly one place: `kundendaten.txt`. Keep that file in plain German for a non-technical editor;
-  a new customer-owned fact is a new `Name: Wert` line plus a field entry in `site.js`, never a hard-coded value.
+- Customer-supplied facts and page texts live in `kundendaten.txt` and reach the templates through `site`, `text`
+  and `services` (`_data/`); copy that repeats a fact (address, phone) must pull from there instead of being
+  retyped. Any change to contact data or to the hero, headings, service words, steps or area text happens in
+  exactly one place: `kundendaten.txt`. Keep that file in plain German for a non-technical editor. Adding a
+  customer-owned text means a field entry in `lib/kundendaten.js`, the line in the file and the template using it:
+  never a hard-coded string. Structure (order, anchors, photos, button labels) stays in code.
 - Service list is fixed: **Planung & Beratung, Kundendienst, Elektroinstallation,
   Antennenanlagen, Photovoltaik.**
 - German copy must read as written for this business, not as filler. Placeholder text is
@@ -144,9 +149,9 @@ npm run dev      # Eleventy --serve with watch, local preview on http://localhos
 npm run build    # production build into _site/
 ```
 
-`kundendaten.txt` is a watch target and `_data/site.js` exports a function, so edits to the customer file
-rebuild live. The other `_data/*.js` files (e.g. `services.js`) are not reloaded (CommonJS cache): after editing
-one, restart `npm run dev`, otherwise pages render with the old data (e.g. empty image paths).
+`kundendaten.txt` is a watch target and the `_data/*.js` files read it through functions, so edits to the
+customer file rebuild live. Edits to the `_data/*.js` or `lib/*.js` files themselves are not reloaded (CommonJS
+cache): restart `npm run dev` after changing them, otherwise pages render with the old data.
 
 The dev server is pinned to port 8081 (`--port=8081` in `package.json`): 8080 is already
 used by the local strata service, so do not switch this back.

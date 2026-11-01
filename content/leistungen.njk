@@ -6,8 +6,8 @@ sitemap: true
 ---
 <section class="hero">
   <div class="wrap">
-    <h1>Leistungen</h1>
-    <p class="hero__lede">Fünf Bereiche. Rufen Sie an, wir sagen, was nötig ist.</p>
+    <h1>{{ text.servicesPage.title }}</h1>
+    <p class="hero__lede">{{ text.servicesPage.lede }}</p>
     <div class="hero__actions">
       <a class="btn btn--primary" href="{{ site.phoneHref }}">{{ 'phone' | icon }}Anrufen</a>
       <a class="btn btn--secondary" href="/kontakt/">Kontakt</a>
@@ -34,8 +34,8 @@ sitemap: true
 
 <section class="band">
   <div class="wrap">
-    <h2>Fragen zu Ihrem Vorhaben?</h2>
-    <p>Rufen Sie an. Wir sagen Ihnen, was nötig ist.</p>
+    <h2>{{ text.servicesPage.closingTitle }}</h2>
+    <p>{{ text.servicesPage.closingText }}</p>
     <p class="cta"><a class="btn btn--primary" href="{{ site.phoneHref }}">{{ 'phone' | icon }}Anrufen</a></p>
   </div>
 </section>

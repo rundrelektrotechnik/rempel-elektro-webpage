@@ -293,13 +293,17 @@ content/
   404.njk
   sitemap.xml.njk     → sitemap.xml (from the `sitemap` collection + `isoDate` filter)
   robots.txt.njk      → robots.txt
-kundendaten.txt       the customer's facts as `Name: Wert` lines (Firma, Inhaber, Titel, Straße, PLZ, Ort,
-                      Telefon, Mobil, Fax, E-Mail, Handwerkskammer, Betriebsnummer, USt-IdNr.,
-                      Internetadresse). Plain German, comments with #, for a non-technical editor.
-                      Watched by `npm run dev`; a typo fails the build with a German message
-_data/site.js         reads kundendaten.txt, validates it, derives hrefs / address / maps link / +49
-                      forms; adds developer copy (tagline, area, nav, meta). Exports a function
-_data/services.js     the five services with copy, used by index, leistungen and JSON-LD
+kundendaten.txt       what the customer maintains, as `Name: Wert` lines: facts (Firma, Inhaber, Titel, Straße,
+                      PLZ, Ort, Telefon, Mobil, Fax, E-Mail, Handwerkskammer, Betriebsnummer, USt-IdNr.,
+                      Internetadresse) and texts in [sections] ([Startseite Hero], [Leistung 1..5],
+                      [Schritt 1..3], [Einsatzgebiet], [Seite Leistungen], …). Plain German, comments with #,
+                      long values continue on indented lines, `Punkt:` repeats for lists. Watched by
+                      `npm run dev`; a typo fails the build with a German message naming the line
+lib/kundendaten.js    the reader: declares every field/section, validates, builds { facts, text, services }
+_data/site.js         facts + derived hrefs / address / maps link / +49 forms; developer config (nav, meta)
+_data/text.js         the page texts from the file, as `text` in templates
+                      (the German wording of the pages is therefore owned by the customer, not by templates)
+_data/services.js     the five services: fixed order / anchor id / photo in code, words from the file
 _includes/
   layouts/base.njk
   components/header.njk, footer.njk, cta.njk, logo.njk, seo.njk, jsonld.njk

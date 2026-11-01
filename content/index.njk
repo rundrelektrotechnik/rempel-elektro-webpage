@@ -1,19 +1,15 @@
 ---
 layout: layouts/base.njk
-title: 'Elektrohandwerk in Michelstadt und im Odenwald'
 eleventyComputed:
+  title: '{{ text.hero.title }}'
   description: 'Rempel-Elektro in Michelstadt: Planung und Beratung, Kundendienst, Elektroinstallation, Antennenanlagen und Photovoltaik im Odenwald. Anruf unter {{ site.phone }}.'
 jsonld: true
 sitemap: true
 ---
 <section class="hero">
   <div class="wrap">
-    <h1>Elektrohandwerk in Michelstadt und im Odenwald</h1>
-    <p class="hero__lede">
-      Ein Betrieb, ein Ansprechpartner. Sie rufen an, wir fragen nach, was ansteht,
-      und schätzen am Telefon ein, was zu tun ist. Wenn wir kommen müssen, kommen wir –
-      und sagen vorher, welcher Aufwand dabei entsteht.
-    </p>
+    <h1>{{ text.hero.title }}</h1>
+    <p class="hero__lede">{{ text.hero.text }}</p>
     <div class="hero__actions">
       <a class="btn btn--primary" href="{{ site.phoneHref }}">{{ 'phone' | icon }}Anrufen</a>
       <a class="btn btn--secondary" href="/kontakt/">Kontakt aufnehmen</a>
@@ -23,7 +19,7 @@ sitemap: true
 
 <section class="band">
   <div class="wrap">
-    <h2>Leistungen</h2>
+    <h2>{{ text.servicesStart.heading }}</h2>
     <ul class="tiles">
       {% for service in services %}
       <li class="tile">
@@ -41,45 +37,34 @@ sitemap: true
 
 <section>
   <div class="wrap">
-    <h2>So läuft die Zusammenarbeit</h2>
+    <h2>{{ text.steps.heading }}</h2>
     <ol class="steps">
+      {% for step in text.steps.items %}
       <li class="step">
-        <h3 class="step__title">Sie schildern, was ansteht</h3>
-        <p>Telefon oder E-Mail: Wir fragen nach, was passiert ist oder was Sie vorhaben.</p>
+        <h3 class="step__title">{{ step.title }}</h3>
+        <p>{{ step.text }}</p>
       </li>
-      <li class="step">
-        <h3 class="step__title">Wir sagen, was nötig ist</h3>
-        <p>Was gemacht werden muss, welcher Aufwand dabei entsteht und in welcher Reihenfolge.</p>
-      </li>
-      <li class="step">
-        <h3 class="step__title">Wir führen aus und prüfen</h3>
-        <p>Nach der Arbeit prüfen wir die Anlage.</p>
-      </li>
+      {% endfor %}
     </ol>
   </div>
 </section>
 
 <section class="band">
   <div class="wrap">
-    <h2>Wo wir arbeiten</h2>
-    <p>
-      Wir sind in {{ site.area }} im Einsatz. Das heißt: kurze Wege, und wir können
-      sagen, wann wir bei Ihnen sein können.
-    </p>
+    <h2>{{ text.region.heading }}</h2>
+    <p>{{ text.region.text }}</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>Kontakt</h2>
+    <h2>{{ text.contactStart.heading }}</h2>
     <div class="kontakt">
       <div class="kontakt__primary">
         <p class="phone-big">
           <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}{{ site.phone }}</a>
         </p>
-        <p class="cta__note">
-          Sollte der Anruf nicht passen, schreiben Sie eine E-Mail. Wir melden zurück.
-        </p>
+        <p class="cta__note">{{ text.contactStart.note }}</p>
       </div>
       <ul class="contact-list">
         <li>

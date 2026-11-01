@@ -64,3 +64,136 @@ USt-IdNr.: DE 245119682
 # Adresse noch nicht feststeht, die bisherige stehen lassen.
 
 Internetadresse: https://www.rempel-elektro.de
+
+
+
+# ============================================================================
+#  TEXTE DER WEBSITE
+# ============================================================================
+#
+#  Ab hier stehen die Texte, die auf den Seiten erscheinen. Jeder Block beginnt
+#  mit einer Überschrift in eckigen Klammern, zum Beispiel [Startseite Hero].
+#  Die Überschrift in eckigen Klammern bitte NICHT ändern. Ändern Sie nur den
+#  Text hinter dem Doppelpunkt.
+#
+#  - Ein langer Text darf in der nächsten Zeile weitergehen, wenn diese Zeile
+#    mit einem Leerzeichen beginnt.
+#  - Bei jeder Leistung steht "Punkt:" mehrmals untereinander (2 bis 6 Zeilen).
+#    Eine Zeile "Punkt:" hinzufügen oder entfernen ändert die Liste.
+#  - Bitte nichts Neues erfinden, was nicht stimmt: keine Zertifikate, keine
+#    Auszeichnungen, keine Zusagen zu Reaktionszeiten.
+#  - Die fünf Leistungen selbst (Reihenfolge, Bilder, Sprungmarken) bleiben
+#    fest. Sie ändern hier nur die Wörter.
+# ============================================================================
+
+
+# --- Allgemein ---------------------------------------------------------------
+# Eine Zeile, die den Betrieb beschreibt: erscheint unten auf jeder Seite und in
+# Suchergebnissen.
+
+[Allgemein]
+Kurzbeschreibung: Elektrohandwerk in Michelstadt und im Odenwald
+
+
+# --- Startseite --------------------------------------------------------------
+
+[Startseite Hero]
+Titel: Elektrohandwerk in Michelstadt und im Odenwald
+Text: Ein Betrieb, ein Ansprechpartner. Sie rufen an, wir fragen nach, was ansteht,
+    und schätzen am Telefon ein, was zu tun ist. Wenn wir kommen müssen, kommen wir –
+    und sagen vorher, welcher Aufwand dabei entsteht.
+
+[Startseite Leistungen]
+Überschrift: Leistungen
+
+[Zusammenarbeit]
+Überschrift: So läuft die Zusammenarbeit
+
+[Schritt 1]
+Titel: Sie schildern, was ansteht
+Text: Telefon oder E-Mail: Wir fragen nach, was passiert ist oder was Sie vorhaben.
+
+[Schritt 2]
+Titel: Wir sagen, was nötig ist
+Text: Was gemacht werden muss, welcher Aufwand dabei entsteht und in welcher Reihenfolge.
+
+[Schritt 3]
+Titel: Wir führen aus und prüfen
+Text: Nach der Arbeit prüfen wir die Anlage.
+
+[Einsatzgebiet]
+Überschrift: Wo wir arbeiten
+Text: Wir sind in Michelstadt, dem Odenwald und den umliegenden Gemeinden des
+    Odenwaldkreises im Einsatz. Das heißt: kurze Wege, und wir können sagen, wann wir
+    bei Ihnen sein können.
+# Die Ortsnamen, mit Komma getrennt (für Suchmaschinen):
+Orte: Michelstadt, Odenwald, Odenwaldkreis
+
+[Startseite Kontakt]
+Überschrift: Kontakt
+Hinweis: Sollte der Anruf nicht passen, schreiben Sie eine E-Mail. Wir melden zurück.
+
+
+# --- Die fünf Leistungen -----------------------------------------------------
+# Titel         = Überschrift der Leistung
+# Kurztext      = die wenigen Worte auf der Kachel der Startseite
+# Beschreibung  = der Satz auf der Seite "Leistungen"
+# Punkt         = eine Zeile der kurzen Liste auf der Seite "Leistungen"
+
+[Leistung 1]
+Titel: Planung und Beratung
+Kurztext: Vorab klären, was sinnvoll ist.
+Beschreibung: Erst das Gespräch, dann der Auftrag: Wir erfassen, was Sie vorhaben, und sagen, was davon sinnvoll ist.
+Punkt: Sichtprüfung der vorhandenen Installation
+Punkt: Übersicht der Arbeiten und ihres Aufwands
+Punkt: Hinweise zu Fördermitteln bei Photovoltaik
+
+[Leistung 2]
+Titel: Kundendienst
+Kurztext: Fehler finden, Schäden beheben.
+Beschreibung: Wenn der Strom fehlt oder eine Steckdose nicht mehr geht: Sie rufen an, wir fragen nach und kommen.
+Punkt: Fehlersuche in Leitungen, Steckdosen und Verteilungen
+Punkt: Reparaturen an der elektrischen Anlage
+Punkt: Wartung nach Absprache
+
+[Leistung 3]
+Titel: Elektroinstallation
+Kurztext: Neubau und Bestand.
+Beschreibung: Leitungen, Verteilungen, Steckdosen und Beleuchtung – im Neubau und dort, wo das Haus schon steht.
+Punkt: Leitungen verlegen
+Punkt: Verteilungen setzen oder erweitern
+Punkt: Steckdosen, Schalter und Beleuchtung
+Punkt: Prüfung der Anlage nach Abschluss
+
+[Leistung 4]
+Titel: Antennenanlagen
+Kurztext: SAT, DAB und Kabel.
+Beschreibung: Wir richten die Anlage aus und prüfen, wo der Empfang scheitert.
+Punkt: Sat-Antennen, montiert und justiert
+Punkt: DAB-Empfang
+Punkt: Kabelanschluss
+Punkt: Störungssuche bei Empfangsproblemen
+
+[Leistung 5]
+Titel: Photovoltaik
+Kurztext: Module, Speicher, Anschluss.
+Beschreibung: Wir prüfen das Dach, montieren Module und Wechselrichter und schließen Speicher an.
+Punkt: Module und Wechselrichter auf dem Dach
+Punkt: Anschluss an die Hausinstallation
+Punkt: Speicher und Einspeisung
+Punkt: Prüfung der fertigen Anlage
+
+
+# --- Seite "Leistungen" ------------------------------------------------------
+
+[Seite Leistungen]
+Titel: Leistungen
+Text: Fünf Bereiche. Rufen Sie an, wir sagen, was nötig ist.
+Abschluss Überschrift: Fragen zu Ihrem Vorhaben?
+Abschluss Text: Rufen Sie an. Wir sagen Ihnen, was nötig ist.
+
+
+# --- Seite "Kontakt" ---------------------------------------------------------
+
+[Seite Kontakt]
+Text: Am schnellsten erreichen Sie uns telefonisch.
