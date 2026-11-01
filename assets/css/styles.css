@@ -306,11 +306,6 @@ section,
   color: var(--lcl-color-on-dark-soft);
 }
 
-.wrap > p,
-.wrap > ul:not(.cards) {
-  max-width: 68ch;
-}
-
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -365,40 +360,123 @@ section,
   max-width: 46ch;
 }
 
-/* Cards. White sheets lifted off the tinted canvas, each marked with a blue chip. */
-.cards {
+/* Service tiles: a photo over a short title line. The whole tile is one link
+   (the title's anchor stretches over it), so there is a single tab stop per tile. */
+.tiles {
+  max-width: none; /* prose lists stop at 68ch, a grid of tiles uses the full width */
   display: grid;
-  gap: 1rem;
-  margin: 1.5rem 0 0;
+  gap: 1.25rem;
+  margin: 2rem 0 0;
   padding: 0;
   list-style: none;
 }
 
-.card {
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
   background: var(--lcl-color-surface);
   border: 1px solid var(--lcl-color-line-soft);
   border-radius: var(--lcl-size-radius);
-  padding: 1.25rem;
   box-shadow: var(--lcl-shadow-sm);
   transition: box-shadow var(--lcl-motion-ease), border-color var(--lcl-motion-ease);
 }
 
-.card:hover {
+.tile:hover {
   box-shadow: var(--lcl-shadow);
   border-color: var(--lcl-color-brand);
 }
 
-.card__title {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 0 0 0.5rem;
-  font-size: var(--lcl-size-h3);
+.tile__img {
+  display: block;
+  width: 100%;
+  height: auto; /* beats the height attribute, so aspect-ratio decides */
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background: var(--lcl-color-surface-soft); /* shown while the photo loads */
+  transition: transform var(--lcl-motion-ease);
 }
 
-/* Icon chips: a filled brand-tinted square behind the stroke icon. This is what
-   carries the brand colour through the content instead of black text on white. */
-.card__title .icon,
+.tile:hover .tile__img {
+  transform: scale(1.03);
+}
+
+/* The photo scales inside the tile; the tile clips it. */
+.tile > .tile__img {
+  transform-origin: center;
+}
+
+.tile__body {
+  position: relative;
+  padding: 1rem 3.5rem 1.1rem 1.25rem;
+}
+
+.tile__title {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.tile__link {
+  color: var(--lcl-color-ink);
+  text-decoration: none;
+}
+
+.tile__link:hover {
+  color: var(--lcl-color-brand-dark);
+}
+
+/* Stretched link: the anchor's box covers the whole tile. The focus ring sits on
+   the tile's edge, so it is drawn on the anchor's ::after instead of the text. */
+.tile__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.tile__link:focus-visible {
+  outline: none;
+}
+
+.tile__link:focus-visible::after {
+  outline: 3px solid var(--lcl-color-brand);
+  outline-offset: 2px;
+  border-radius: var(--lcl-size-radius);
+}
+
+.tile__text {
+  margin: 0.3rem 0 0;
+  color: var(--lcl-color-ink-soft);
+  font-size: 1rem;
+}
+
+.tile__go {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--lcl-color-brand-tint);
+  color: var(--lcl-color-brand-dark);
+  transition: background-color var(--lcl-motion-ease), color var(--lcl-motion-ease);
+}
+
+.tile:hover .tile__go {
+  background: var(--lcl-color-brand-dark);
+  color: #fff;
+}
+
+.tile__go .icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+/* Icon chips on the Leistungen page and the contact rows. */
 .service__title .icon,
 .contact-list .icon {
   display: grid;
@@ -410,14 +488,9 @@ section,
   color: var(--lcl-color-brand-dark);
 }
 
-.card__title .icon svg,
 .contact-list .icon svg {
   width: 1.15em;
   height: 1.15em;
-}
-
-.card__desc {
-  margin: 0 0 0.75rem;
 }
 
 .card__link {
@@ -429,6 +502,7 @@ section,
 
 /* Steps: numbered cards with a blue rule on top, matching the card treatment. */
 .steps {
+  max-width: none;
   display: grid;
   gap: 1.25rem;
   margin: 1.5rem 0 0;
@@ -655,8 +729,13 @@ address {
 }
 
 @media (min-width: 640px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Five tiles in two columns: the last one takes the full row. */
+  .tiles > .tile:last-child {
+    grid-column: 1 / -1;
   }
 
   .steps {
@@ -714,18 +793,23 @@ address {
 }
 
 @media (min-width: 768px) {
-  /* Five services: three cards over two, on a six-column grid so both rows fill
+  /* Five services: three tiles over two, on a six-column grid so both rows fill
      the full width instead of leaving an empty slot. */
-  .cards {
-    grid-template-columns: repeat(6, 1fr);
+  .tiles {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  .cards > .card {
+  .tiles > .tile {
     grid-column: span 2;
   }
 
-  .cards > .card:nth-child(n + 4) {
+  .tiles > .tile:nth-child(n + 4) {
     grid-column: span 3;
+  }
+
+  /* The two wide tiles get a wider crop, so all five photos are the same height. */
+  .tiles > .tile:nth-child(n + 4) .tile__img {
+    aspect-ratio: 9 / 4;
   }
 
   .kontakt {

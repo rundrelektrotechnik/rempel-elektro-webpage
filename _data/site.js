@@ -3,7 +3,8 @@
  * Never retype a fact in a template: pull it from here.
  *
  * Displayed values keep the German spacing ("06061 - 70 31 96").
- * Link hrefs strip spacing and dashes ("tel:06061703196").
+ * Link hrefs use the international form without spacing ("tel:+496061703196"):
+ * the visible number starts with the German 0, the link works from abroad too.
  */
 const phone = '06061 - 70 31 96';
 
@@ -19,16 +20,13 @@ module.exports = {
   address: 'Chemnitzer-Str. 4, 64720 Michelstadt',
 
   phone,
-  phonePlain: '06061703196',
   phoneIntl: '+49 6061 703196',
-  phoneHref: 'tel:06061703196',
+  phoneHref: 'tel:+496061703196',
   fax: '06061 - 70 31 97',
-  faxPlain: '06061703197',
   faxIntl: '+49 6061 703197',
-  faxHref: 'tel:06061703197',
+  faxHref: 'tel:+496061703197',
   mobile: '0170 - 514 562 5',
-  mobilePlain: '01705145625',
-  mobileHref: 'tel:01705145625',
+  mobileHref: 'tel:+491705145625',
 
   email: 'nikolai.rempel@freenet.de',
   emailHref: 'mailto:nikolai.rempel@freenet.de',

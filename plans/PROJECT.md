@@ -94,7 +94,7 @@ Innung membership. The current Impressum states `Dipl. Ing. (FH)` only.
 | Styling | Single plain modern CSS file, custom properties | No Sass, no Tailwind, no CSS-in-JS. Keeps output inspectable and dependency-free. |
 | JavaScript | None, apart from the JSON-LD block | Header nav is always visible and wraps on small screens; nothing needs JS. No bundler. |
 | Fonts | Inter, Latin-subset `woff2`, self-hosted via npm | OFL licence, preloaded, `font-display: swap`, no third-party request. |
-| Imagery | Hand-written inline SVG icons + SVG logo | `currentColor`, no raster assets, no image CDN. |
+| Imagery | Inline SVG icons + SVG logo; five self-hosted Pexels stock photos on the start-page service tiles | Client-requested 2026-11-01. Photos are placeholders (`assets/img/services/CREDITS.md`), lazy-loaded, ~60–130 KB each, no image CDN, no hot-linking. Replaced by real photos in G7. |
 | Structured data | `schema.org/Electrician` JSON-LD built from `_data/site.js` | Contact details become machine-readable. |
 | Output | `_site/`, never committed, never hand-edited | Standard Eleventy output. |
 
@@ -136,7 +136,7 @@ fallback), `lang="de"`.
 | Block | Content |
 | --- | --- |
 | Hero | Short, benefit-led German headline about electric work in Michelstadt and the Odenwald. Sub-line. Primary CTA "Anrufen" (`tel:`), secondary "Kontakt aufnehmen". No photo. |
-| Leistungen teaser | Five cards with one inline-SVG icon each, one sentence per service, link to the anchor. |
+| Leistungen teaser | No sub-header. Five photo tiles (3 + 2), title plus a few words each, whole tile links to the anchor. |
 | So läuft die Zusammenarbeit | 3 steps: contact → assessment → execution. Generic, no invented certifications or hours. |
 | Region | Text: Michelstadt, Odenwald, Odenwaldkreis and surrounding communities. Plain text, no map embed. |
 | Kontakt block | Phone number as the dominant element; mobile, e-mail, address. |
@@ -162,7 +162,7 @@ actually deliver — no claims about guaranteed response times or certifications
 
 ### 5.3 Kontakt (`/kontakt/`)
 
-- Telefon, Mobil, E-Mail, Fax as clickable links. `tel:` hrefs strip spacing.
+- Telefon, Mobil, E-Mail, Fax as clickable links. `tel:` hrefs use `+49` without spacing; the displayed number keeps the leading 0.
 - Address as `<address>` with a plain Google Maps link (external, `rel="noopener"`), no iframe.
 - No form, no opening-hours block, no "Nachricht senden" placeholder.
 - A short note on reaching the business by phone is the only filler.
@@ -324,11 +324,11 @@ module.exports = {
   city: 'Michelstadt',
   region: 'Odenwald',
   phone: '06061 - 70 31 96',
-  phoneHref: 'tel:06061703196',
+  phoneHref: 'tel:+496061703196',
   fax: '06061 - 70 31 97',
-  faxHref: 'tel:06061703197',
+  faxHref: 'tel:+496061703197',
   mobile: '0170 - 514 562 5',
-  mobileHref: 'tel:01705145625',
+  mobileHref: 'tel:+491705145625',
   email: 'nikolai.rempel@freenet.de',
   kammer: 'Handwerkskammer Frankfurt-Rhein-Main',
   betriebsnummer: '4165157',
@@ -388,7 +388,7 @@ Tracked so nothing gets silently invented. Do not write around them.
 | --- | --- | --- |
 | Meister title / qualification | Unknown | No "Meisterbetrieb" wording anywhere; Impressum shows `Dipl.-Ing. (FH)`. |
 | Öffnungszeiten | Not provided | No hours block. Kontakt page states phone contact only. |
-| Project photos / references | Deferred, will be provided later | No gallery markup, no empty slots, no placeholder images. |
+| Project photos / references | Deferred, will be provided later | No gallery markup, no empty slots. The service tiles use stock placeholders until real photos arrive; they are never labelled as references. |
 | Trust info (Innung, certifications) | Will be provided later | No badges, no seals. |
 | Hosting provider / final domain | Unknown | Canonical and OG URLs use the known `rempel-elektro.de` domain; revisit after hosting decision. |
 | HTTPS on the old server | Unknown | Rebuild assumes HTTPS available. |
@@ -402,9 +402,9 @@ Tracked so nothing gets silently invented. Do not write around them.
 | Outdated legal statutes in templates | Verified in section 2. `§ 5 DDG` / `§ 18 MStV` only; re-check before release. |
 | Client adds analytics later | Triggers rewrite of Datenschutzerklärung plus consent management; documented in AGENTS.md § 5. |
 | Invented marketing claims | Forbidden by AGENTS.md § 4. Copy review before release. |
-| Missing photos making the site look empty | Layout has no photo slots; region + service text carry the page. |
+| Missing photos making the site look empty | Service tiles carry stock photos; everywhere else region + service text carry the page. |
 | Font licensing | Inter is OFL; licence file shipped next to the subset. |
-| Broken `tel:` links on mobile | Hrefs stripped of spacing and dashes, verified by a manual click test. |
+| Broken `tel:` links on mobile | Hrefs in `+49` form without spacing, verified by a manual click test. |
 
 ---
 
@@ -423,8 +423,8 @@ Before hand-off:
 - [x] Datenschutz describes only what actually happens; no cookie banner.
 - [x] Zero third-party requests in the HTML (no CDN fonts, no iframe, no pixel). The only external
       reference is the plain Google Maps link on Kontakt, `rel="noopener"`.
-- [x] All contact numbers clickable and correct, Fax included (`tel:` hrefs stripped:
-      `06061703196`, `06061703197`, `01705145625`).
+- [x] All contact numbers clickable and correct, Fax included (`tel:` hrefs in `+49` form:
+      `+496061703196`, `+496061703197`, `+491705145625`).
 - [x] `lang="de"`, one `<h1>` per page, heading order intact, skip link, focus visible.
       Verified in the build output: `lang="de"` on every page, exactly one `<h1>`, no heading level
       jumps, skip link present. Focus rings now meet 3:1 (see below). Because the nav has no JS and

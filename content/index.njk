@@ -24,13 +24,15 @@ sitemap: true
 <section class="band">
   <div class="wrap">
     <h2>Leistungen</h2>
-    <p>Fünf Bereiche. Was genau anfällt, klären wir im Gespräch.</p>
-    <ul class="cards">
+    <ul class="tiles">
       {% for service in services %}
-      <li class="card">
-        <h3 class="card__title">{{ service.icon | icon }}{{ service.title }}</h3>
-        <p class="card__desc">{{ service.desc }}</p>
-        <a class="card__link" href="/leistungen/#{{ service.id }}">Mehr dazu {{ 'arrow' | icon }}</a>
+      <li class="tile">
+        <img class="tile__img" src="{{ service.image }}" alt="" width="900" height="600" loading="lazy" decoding="async" style="object-position: {{ service.imagePos }}">
+        <div class="tile__body">
+          <h3 class="tile__title"><a class="tile__link" href="/leistungen/#{{ service.id }}">{{ service.title }}</a></h3>
+          <p class="tile__text">{{ service.teaser }}</p>
+          <span class="tile__go" aria-hidden="true">{{ 'arrow' | icon }}</span>
+        </div>
       </li>
       {% endfor %}
     </ul>

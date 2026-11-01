@@ -1,15 +1,17 @@
 /**
  * Service copy — the fixed list of the business, per AGENTS.md section 4.
  * Never add a service, a certification or a claim that the client has not
- * confirmed. `desc` is the teaser on the start page; `lede` and `body` are
+ * confirmed. `teaser` is the few words on the start-page tile, `image` its stock photo (CREDITS.md); `lede` and `body` are
  * used on the Leistungen page.
  */
 module.exports = [
   {
     id: 'planung-beratung',
+    image: '/assets/img/services/planung-beratung.jpg',
+    imagePos: '50% 50%',
+    teaser: 'Vorab klären, was sinnvoll ist.',
     title: 'Planung und Beratung',
     icon: 'plan',
-    desc: 'Klären, was sinnvoll ist und was es kostet, bevor die erste Steckdose gesetzt wird.',
     lede: 'Am Anfang steht ein Gespräch, kein Auftrag. Wir erfassen, was Sie vorhaben, und schätzen ein, was davon tragfähig ist.',
     body: [
       'Wir hören zu, bevor wir planen: Was soll die Anlage leisten, welche Räume sind betroffen, was ist schon vorhanden? Danach sprechen wir darüber, welche Ausführung für Ihr Gebäude sinnvoll ist und welche Anforderungen die einschlägigen VDE-Vorschriften stellen.',
@@ -24,9 +26,11 @@ module.exports = [
   },
   {
     id: 'kundendienst',
+    image: '/assets/img/services/kundendienst.jpg',
+    imagePos: '50% 50%',
+    teaser: 'Fehler finden, Schäden beheben.',
     title: 'Kundendienst',
     icon: 'wrench',
-    desc: 'Sie rufen an, wir klären am Telefon, was zu tun ist, und kommen, wenn es nötig ist.',
     lede: 'Wenn der Strom fehlt oder eine Steckdose nicht mehr funktioniert: Sie rufen an, wir fragen nach und kommen.',
     body: [
       'Der Anruf ist der kürzeste Weg. Wir fragen am Telefon nach, was passiert ist, und schätzen ein, ob Sie selbst etwas tun können oder wir kommen müssen.',
@@ -40,9 +44,11 @@ module.exports = [
   },
   {
     id: 'elektroinstallation',
+    image: '/assets/img/services/elektroinstallation.jpg',
+    imagePos: '50% 30%',
+    teaser: 'Neubau und Bestand.',
     title: 'Elektroinstallation',
     icon: 'outlet',
-    desc: 'Leitungen, Verteilungen, Steckdosen, Beleuchtung und Prüfung im Bestand und im Neubau.',
     lede: 'Wir verlegen Leitungen, setzen Verteilungen und schließen Beleuchtung und Steckdosen an – auch dort, wo das Haus schon steht.',
     body: [
       'Vom einzelnen Stromkreis bis zur ganzen Verteilung: Leitungen verlegen, Verteilungen setzen oder erweitern, Steckdosen und Schalter setzen und Beleuchtung anschließen.',
@@ -58,9 +64,11 @@ module.exports = [
   },
   {
     id: 'antennenanlagen',
+    image: '/assets/img/services/antennenanlagen.jpg',
+    imagePos: '50% 50%',
+    teaser: 'SAT, DAB und Kabel.',
     title: 'Antennenanlagen',
     icon: 'sat',
-    desc: 'SAT, DAB und Kabel: Empfang herstellen, Anlagen justieren, Verteilung ordnen.',
     lede: 'Empfang ist kein Zufall. Wir richten die Anlage aus und prüfen, wo der Empfang scheitert.',
     body: [
       'Wir montieren und justieren Sat-Anlagen, bauen DAB-Empfang auf und schließen Kabelanschlüsse an. Dazu gehören Antenne, Halterung und Kabel.',
@@ -75,9 +83,11 @@ module.exports = [
   },
   {
     id: 'photovoltaik',
+    image: '/assets/img/services/photovoltaik.jpg',
+    imagePos: '50% 50%',
+    teaser: 'Module, Speicher, Anschluss.',
     title: 'Photovoltaik',
     icon: 'solar',
-    desc: 'PV auf dem Dach, Wechselrichter, Speicher, Anschluss an die Hausinstallation.',
     lede: 'Wir prüfen das Dach, montieren Module und Wechselrichter und schließen Speicher an.',
     body: [
       'Zuerst prüfen wir, ob Dach und Hausinstallation für eine Photovoltaikanlage geeignet sind, und sagen Ihnen, was real auf dem Dach möglich ist. Danach montieren wir Module und Wechselrichter und schließen die Anlage an die vorhandene Hausinstallation an.',

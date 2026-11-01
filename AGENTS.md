@@ -24,7 +24,7 @@ supports that.
 | Styling | Plain modern CSS, two sheets: `variables.css` (tokens) + `styles.css` (rules). No Sass, no Tailwind, no CSS-in-JS, no `@import` |
 | JavaScript | None, apart from the JSON-LD block. Header nav is always visible and wraps on small screens |
 | Fonts | Self-hosted, OFL-licensed, Latin-subset `woff2` via npm |
-| Imagery | Hand-written inline SVG. No stock photos, no external image CDNs |
+| Imagery | Inline SVG for icons and logo. Photos: only the five Pexels stock photos on the start-page service tiles (`assets/img/services/`, self-hosted, licence in `CREDITS.md`), as placeholders until the client supplies real ones. No external image CDNs, no hot-linking |
 | Build output | `_site/` — never hand-edit, never commit |
 
 ## 3. Repository layout
@@ -71,8 +71,9 @@ includes, never from duplicated markup.
 | Kammer | Handwerkskammer Frankfurt-Rhein-Main, Betriebs-Nr. 4165157 |
 | USt-IdNr. | DE 245119682 |
 
-Numbers keep their German spacing when displayed; the `tel:` href strips spaces and dashes
-(`06061 703196`, not `06061-70 31 96`).
+Numbers keep their German spacing when displayed; the `tel:` href uses the international
+form without spaces or dashes (`tel:+496061703196`, not `tel:06061-70 31 96`). The leading 0 is always shown,
+never `+49`, because the site is German-only.
 
 ## 5. Legal constraints (German law — treat as hard requirements)
 
@@ -124,7 +125,9 @@ pure white and the translucent white overlays that sit on the dark surfaces.
 - Icons: one inline-SVG stroke system, consistent stroke width, `currentColor`, no decorative
   animation.
 - Logo: modern SVG wordmark, hand-written, no raster assets.
-- No photos until the client supplies them — the layout must not reserve empty photo slots.
+- Photos: the service tiles carry stock placeholders (see §2 Imagery). Anywhere else, no photos until the client
+  supplies them — the layout must not reserve empty photo slots. Stock photos are never presented as
+  references or as the business's own work.
 
 ## 8. Commands
 
@@ -132,6 +135,9 @@ pure white and the translucent white overlays that sit on the dark surfaces.
 npm run dev      # Eleventy --serve with watch, local preview on http://localhost:8081/
 npm run build    # production build into _site/
 ```
+
+The dev server does not reload `_data/*.js` (CommonJS cache): after editing a data file, restart `npm run dev`,
+otherwise pages render with the old data (e.g. empty image paths).
 
 The dev server is pinned to port 8081 (`--port=8081` in `package.json`): 8080 is already
 used by the local strata service, so do not switch this back.
@@ -154,7 +160,8 @@ Tracked here so nothing gets silently invented:
 
 - Meistertitel / actual qualification — currently deliberately not stated anywhere.
 - Opening hours — not provided by the client; block left out until supplied.
-- Real project photos and references — deferred until the client provides them; no empty slots.
+- Real project photos and references — deferred until the client provides them; the service-tile stock photos
+  are replaced then. No empty slots.
 - Hosting provider for the new build, and whether the old server is reused.
 - Trust information (Innung membership, certifications) — deferred, will be provided later.
 
