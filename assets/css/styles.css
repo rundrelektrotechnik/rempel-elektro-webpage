@@ -963,6 +963,75 @@ address {
   text-underline-offset: 0.2em;
 }
 
+/* Impressum: facts in cards (the same sheet as the tiles), then two short text
+   blocks. Labels are small caps over the value, so each fact scans on its own. */
+.facts-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.fact-card {
+  background: var(--lcl-color-surface);
+  border: 1px solid var(--lcl-color-line-soft);
+  border-radius: var(--lcl-size-radius);
+  box-shadow: var(--lcl-shadow-sm);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.fact-card h2 {
+  margin: 0 0 1.1rem;
+  font-size: 1.25rem;
+}
+
+.fact-card p {
+  margin: 0;
+}
+
+.facts {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--lcl-color-ink-soft);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.facts dd {
+  margin: 0.15rem 0 0;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.legal-text {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  padding-top: clamp(1.5rem, 4vw, 2rem);
+  border-top: 1px solid var(--lcl-color-line);
+}
+
+.legal-text h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.legal-text p {
+  margin: 0;
+  color: var(--lcl-color-ink-soft);
+}
+
+.legal-stand {
+  margin: 2rem 0 0;
+  color: var(--lcl-color-ink-soft);
+  font-size: 0.9375rem;
+}
+
 /* Legal text pages */
 .pro h2:first-of-type {
   margin-top: 1.5rem;
@@ -1065,6 +1134,15 @@ address {
 }
 
 @media (min-width: 768px) {
+  .facts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .legal-text {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
   .contact-layout {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   }
