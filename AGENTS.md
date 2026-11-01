@@ -34,6 +34,7 @@ supports that.
 /kundendaten.txt   everything the customer maintains, in a plain `Name: Wert` file: the facts (name, address,
                    phones, e-mail, Kammer, USt-IdNr, domain) and, in [sections], the page texts (hero, headings,
                    the five services' words, the three steps, area text, page lead-ins)
+/scripts/preview.js  builds the offline preview (relative links, link check, own zip writer, no dependency)
 /lib/kundendaten.js  the reader: declares every allowed field and section, checks the file, and fails the
                    build with a German message naming the line
 /_data             site.js (facts + derived hrefs), text.js (page texts), services.js (the five services:
@@ -147,6 +148,8 @@ pure white and the translucent white overlays that sit on the dark surfaces.
 ```bash
 npm run dev      # Eleventy --serve with watch, local preview on http://localhost:8081/
 npm run build    # production build into _site/
+npm run preview  # offline preview for the customer: _preview/site (open index.html from disk) and
+                 # _preview/rempel-elektro-vorschau.zip; links made relative, checked, never committed
 ```
 
 `kundendaten.txt` is a watch target and the `_data/*.js` files read it through functions, so edits to the

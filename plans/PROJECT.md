@@ -299,6 +299,9 @@ kundendaten.txt       what the customer maintains, as `Name: Wert` lines: facts 
                       [Schritt 1..3], [Einsatzgebiet], [Seite Leistungen], …). Plain German, comments with #,
                       long values continue on indented lines, `Punkt:` repeats for lists. Watched by
                       `npm run dev`; a typo fails the build with a German message naming the line
+scripts/preview.js     `npm run preview`: builds to _preview/site, rewrites root-relative links to relative ones
+                      (folder links -> index.html), drops preload/manifest/sitemap/robots/404, checks every local
+                      link, adds LIESMICH.txt and writes rempel-elektro-vorschau.zip for the customer
 lib/kundendaten.js    the reader: declares every field/section, validates, builds { facts, text, services }
 _data/site.js         facts + derived hrefs / address / maps link / +49 forms; developer config (nav, meta)
 _data/text.js         the page texts from the file, as `text` in templates
