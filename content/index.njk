@@ -72,22 +72,26 @@ sitemap: true
 <section>
   <div class="wrap">
     <h2>Kontakt</h2>
-    <p class="phone-big">
-      <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}{{ site.phone }}</a>
-    </p>
-    <p class="cta__note">
-      Sollte der Anruf nicht passen, schreiben Sie eine E-Mail. Wir melden zurück.
-    </p>
-    <ul class="contact-list">
-      <li>
-        <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>
-      </li>
-      <li>
-        <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
-      </li>
-      <li>
-        <address>{{ 'location' | icon }}{{ site.street }}, {{ site.zip }} {{ site.city }}</address>
-      </li>
-    </ul>
+    <div class="kontakt">
+      <div class="kontakt__primary">
+        <p class="phone-big">
+          <a href="{{ site.phoneHref }}">{{ 'phone' | icon }}{{ site.phone }}</a>
+        </p>
+        <p class="cta__note">
+          Sollte der Anruf nicht passen, schreiben Sie eine E-Mail. Wir melden zurück.
+        </p>
+      </div>
+      <ul class="contact-list">
+        <li>
+          <a href="{{ site.mobileHref }}">{{ 'phone' | icon }}<span class="label">Mobil</span>{{ site.mobile }}</a>
+        </li>
+        <li>
+          <a href="{{ site.emailHref }}">{{ 'mail' | icon }}<span class="label">E-Mail</span>{{ site.email }}</a>
+        </li>
+        <li>
+          <address>{{ 'location' | icon }}<span class="label">Anschrift</span>{{ site.address }}</address>
+        </li>
+      </ul>
+    </div>
   </div>
 </section>

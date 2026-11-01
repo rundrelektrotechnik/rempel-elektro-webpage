@@ -482,27 +482,63 @@ section,
   margin: 0;
 }
 
-.contact-list a {
-  display: flex;
+/* Every row has the same shape: chip, label, value. It applies to the anchor
+   rows and to the address row, which is not a link — sharing the rule is what
+   keeps the address from reading as a stray line of text under the list.
+   A three-column grid keeps the value in its own column: a long value wraps
+   there, beside the label, instead of dropping onto a second line. */
+.contact-list a,
+.contact-list address {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
   align-items: center;
   gap: 0.6rem;
   font-weight: 650;
-  flex-wrap: wrap; /* the value wraps below the label instead of overflowing */
 }
 
-/* Never break a label (e.g. "E-Mail"); the value wraps instead. */
+/* The chip stays on the row's centre line, the label and value on their first
+   line, so a two-line address still reads as one row. */
+.contact-list .icon {
+  align-self: center;
+}
+
+.contact-list .label,
+.contact-list address {
+  align-self: start;
+}
+
+/* Never break a label (e.g. "E-Mail"); the value wraps inside its column. */
 .contact-list .label {
-  flex: none;
   white-space: nowrap;
   font-weight: 400;
   color: var(--lcl-color-ink-soft);
 }
 
+/* The Kontakt block: on a wide screen the call pill and the list of the other
+   channels stand beside each other, so the section is not one long column.
+   `align-items: start` keeps both edges even instead of stretching the list. */
+.kontakt {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+/* The gap carries the spacing; the columns start without their own margin. */
+.kontakt > * {
+  margin: 0;
+}
+
+/* The number is a telephone number, not a word: it must never break in the
+   middle ("31 96" on its own line would look like a wrong number). The size is
+   capped so the pill stays on one line inside the narrowest place it is used —
+   the left column of the two-column Kontakt block at 768 px, where the column
+   measures 350 px and one line of this size measures about 337 px. */
 .phone-big {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.25rem);
+  font-size: clamp(1.35rem, 1.05rem + 1.6vw, 1.8rem);
   font-weight: 700;
   text-decoration: none;
 }
@@ -521,6 +557,7 @@ section,
   background: var(--lcl-color-accent);
   color: var(--lcl-color-accent-ink);
   text-decoration: none;
+  white-space: nowrap; /* the whole number on one line, no matter how narrow */
   box-shadow: var(--lcl-shadow-sm);
   transition: background-color var(--lcl-motion-ease), color var(--lcl-motion-ease);
 }
@@ -615,6 +652,10 @@ address {
 @media (min-width: 768px) {
   .cards {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .kontakt {
+    grid-template-columns: 1.1fr 1fr;
   }
 }
 
