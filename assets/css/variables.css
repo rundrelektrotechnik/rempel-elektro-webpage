@@ -63,7 +63,7 @@
 
   /* Layout sizes. */
   --lcl-size-gutter: clamp(1rem, 4vw, 2.5rem);
-  --lcl-size-maxw: 1024px;
+  --lcl-size-maxw: 1200px;
   --lcl-size-radius: 10px;
 
   /* Depth on the tinted canvas: cards and steps lift slightly. */

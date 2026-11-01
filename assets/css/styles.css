@@ -298,6 +298,11 @@ section,
   color: var(--lcl-color-on-dark-soft);
 }
 
+.wrap > p,
+.wrap > ul:not(.cards) {
+  max-width: 68ch;
+}
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -481,13 +486,19 @@ section,
 /* Contact */
 .contact-list {
   display: grid;
-  gap: 0.85rem;
+  /* chip | label | value. The list owns the columns and every row borrows them
+     through `subgrid`, so the values start on one line however long a label is. */
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: 0.85rem 0.6rem;
   margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .contact-list li {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   margin: 0;
 }
 
@@ -499,21 +510,11 @@ section,
 .contact-list a,
 .contact-list address {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   align-items: center;
-  gap: 0.6rem;
+  column-gap: 0.6rem;
   font-weight: 650;
-}
-
-/* The chip stays on the row's centre line, the label and value on their first
-   line, so a two-line address still reads as one row. */
-.contact-list .icon {
-  align-self: center;
-}
-
-.contact-list .label,
-.contact-list address {
-  align-self: start;
 }
 
 /* Never break a label (e.g. "E-Mail"); the value wraps inside its column. */
@@ -562,7 +563,7 @@ section,
   align-items: center;
   gap: 0.45em;
   padding: 0.5em 1.05em;
-  border-radius: 999px;
+  border-radius: var(--lcl-size-radius);
   background: var(--lcl-color-accent);
   color: var(--lcl-color-accent-ink);
   text-decoration: none;
@@ -705,8 +706,18 @@ address {
 }
 
 @media (min-width: 768px) {
+  /* Five services: three cards over two, on a six-column grid so both rows fill
+     the full width instead of leaving an empty slot. */
   .cards {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .cards > .card {
+    grid-column: span 2;
+  }
+
+  .cards > .card:nth-child(n + 4) {
+    grid-column: span 3;
   }
 
   .kontakt {

@@ -3,7 +3,7 @@
 {% macro phoneCta(text = 'Anrufen', note = '') %}
 <p class="cta">
   <a class="btn btn--primary" href="{{ site.phoneHref }}">
-    {{ 'phone' | icon }}{{ text }} {{ site.phone }}
+    {{ 'phone' | icon }}{{ text }}
   </a>
 </p>
 {% if note %}

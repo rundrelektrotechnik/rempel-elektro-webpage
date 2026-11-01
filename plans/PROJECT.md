@@ -237,13 +237,16 @@ gradient inside the SVG lightning bolt in the logo — brand recognition without
 ### Layout
 
 - Mobile-first, single column. Layout breakpoints at 640 and 768 px. Content max width
-  `--lcl-size-maxw: 1024 px`, gutters via `clamp()`. There is deliberately no 1024 px media query: the
+  `--lcl-size-maxw: 1200 px`, gutters via `clamp()`. There is deliberately no 1200 px media query: the
   max-width cap already handles it, and the 768 px three-column grid is the final layout state.
-  Nothing above 1024 px may break — that is what the cap guarantees.
+  Nothing above 1200 px may break — that is what the cap guarantees.
 - Call access: a `Anrufen` button with the number in the header from 640 px up; below 640 px a fixed
   full-width call bar (amber, `--lcl-color-accent-ink` text, 7.5:1) at the bottom edge instead. CSS only.
   The footer keeps bottom padding and `html` a `scroll-padding-bottom` so the bar never hides content or
   a focused element (WCAG 2.4.11).
+- Number policy: the full number is shown once per view as the call target — header button (≥ 640 px)
+  or call bar (< 640 px) — plus the big pill in the Kontakt block. Hero and section CTAs say only
+  "Anrufen"; the footer carries address and e-mail, not the number. The Impressum lists it as law requires.
 - Header: logo + three links, no JS. Implemented as an always-visible nav that wraps with
   `flex-wrap` below 640 px instead of a hamburger disclosure — three links are short enough not
   to need one, and a hidden nav would hide the page's most important content.
