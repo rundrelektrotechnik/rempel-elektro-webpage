@@ -1032,13 +1032,107 @@ address {
   font-size: 0.9375rem;
 }
 
-/* Legal text pages */
-.pro h2:first-of-type {
-  margin-top: 1.5rem;
+/* Datenschutz: a table of contents beside one white sheet of numbered parts, the
+   way a formal notice reads. The numbers are CSS counters on the headings. The
+   table of contents sticks beside the sheet on wide screens and sits above it
+   as a row of links on narrow ones. */
+.privacy {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
 }
 
-.pro .block {
-  margin-bottom: 2rem;
+.toc ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc li {
+  margin: 0;
+}
+
+.toc a {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--lcl-color-line);
+  border-radius: 999px;
+  background: var(--lcl-color-surface);
+  color: var(--lcl-color-ink);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  border-color: var(--lcl-color-brand);
+  color: var(--lcl-color-brand-dark);
+}
+
+.toc__title {
+  display: none;
+  margin: 0 0 0.75rem;
+  color: var(--lcl-color-ink-soft);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sheet {
+  counter-reset: part;
+  background: var(--lcl-color-surface);
+  border: 1px solid var(--lcl-color-line-soft);
+  border-radius: var(--lcl-size-radius);
+  box-shadow: var(--lcl-shadow-sm);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.sheet__part {
+  padding-block: clamp(1.5rem, 3vw, 2rem);
+  scroll-margin-top: 1.5rem;
+  counter-increment: part;
+}
+
+.sheet__part + .sheet__part {
+  border-top: 1px solid var(--lcl-color-line-soft);
+}
+
+.sheet__part h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 0.9rem;
+  font-size: 1.375rem;
+}
+
+.sheet__part h2::before {
+  content: counter(part);
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--lcl-color-brand-dark);
+  color: #fff; /* 9.8:1 */
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sheet__part > :last-child {
+  margin-bottom: 0;
+}
+
+.sheet__part address {
+  margin-bottom: 0.5rem;
+}
+
+.sheet__part .legal-stand {
+  margin-top: 1.25rem;
 }
 
 @media (min-width: 640px) {
@@ -1134,6 +1228,38 @@ address {
 }
 
 @media (min-width: 768px) {
+  .privacy {
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .toc {
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .toc__title {
+    display: block;
+  }
+
+  .toc ol {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .toc a {
+    display: block;
+    padding: 0.35rem 0.75rem;
+    border: 0;
+    border-left: 2px solid var(--lcl-color-line);
+    border-radius: 0;
+    background: none;
+  }
+
+  .toc a:hover {
+    border-left-color: var(--lcl-color-brand);
+  }
+
   .facts-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
