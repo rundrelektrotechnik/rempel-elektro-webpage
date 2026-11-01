@@ -61,5 +61,9 @@ module.exports = function (eleventy) {
     'node_modules/@fontsource-variable/inter/LICENSE': 'assets/fonts/OFL.txt',
   })
 
+  // The customer's facts live in one plain text file, read by _data/site.js. Watching it
+  // makes `npm run dev` rebuild when the customer's edits are saved.
+  eleventy.addWatchTarget('kundendaten.txt')
+
   eleventy.setServerOptions({ showAllAvailableUrls: true })
 }

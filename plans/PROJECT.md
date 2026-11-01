@@ -293,8 +293,12 @@ content/
   404.njk
   sitemap.xml.njk     → sitemap.xml (from the `sitemap` collection + `isoDate` filter)
   robots.txt.njk      → robots.txt
-_data/site.js         company data: name, address, phone, fax, mobile, e-mail, Kammer,
-                      USt-IdNr, url, nav — single source of truth
+kundendaten.txt       the customer's facts as `Name: Wert` lines (Firma, Inhaber, Titel, Straße, PLZ, Ort,
+                      Telefon, Mobil, Fax, E-Mail, Handwerkskammer, Betriebsnummer, USt-IdNr.,
+                      Internetadresse). Plain German, comments with #, for a non-technical editor.
+                      Watched by `npm run dev`; a typo fails the build with a German message
+_data/site.js         reads kundendaten.txt, validates it, derives hrefs / address / maps link / +49
+                      forms; adds developer copy (tagline, area, nav, meta). Exports a function
 _data/services.js     the five services with copy, used by index, leistungen and JSON-LD
 _includes/
   layouts/base.njk
@@ -315,8 +319,8 @@ AGENTS.md
 plans/PROJECT.md
 ```
 
-`_data/site.js` shape (values as in section 1, displayed with German spacing, hrefs without
-spacing):
+`_data/site.js` result shape (the customer values come from `kundendaten.txt`; shown here as the data the
+templates see, displayed with German spacing, hrefs in `+49` form without spacing):
 
 ```js
 module.exports = {

@@ -1,0 +1,66 @@
+# ============================================================================
+#  KUNDENDATEN – die Angaben zu Ihrem Betrieb
+# ============================================================================
+#
+#  Diese Datei enthält alle Angaben, die auf der Website erscheinen:
+#  Anschrift, Telefonnummern, E-Mail, Handwerkskammer und so weiter.
+#  Sie können die Datei mit jedem Texteditor ändern (zum Beispiel Notepad).
+#
+#  SO GEHT ES
+#    1. Ändern Sie nur den Text HINTER dem Doppelpunkt.
+#    2. Lassen Sie den Namen VOR dem Doppelpunkt unverändert.
+#    3. Speichern Sie die Datei und geben Sie sie an die Webseitenbetreuung
+#       weiter (oder committen Sie sie).
+#    4. Die Website übernimmt die Angaben automatisch. Jede Angabe steht
+#       nur hier, nirgends sonst.
+#
+#  WICHTIG
+#    - Zeilen, die mit # beginnen, sind Hinweise. Sie werden ignoriert.
+#    - Keine Zeile löschen. Jede Angabe wird gebraucht.
+#    - Telefonnummern bitte so schreiben, wie sie auf der Website erscheinen
+#      sollen, mit der 0 am Anfang, zum Beispiel: 06061 - 70 31 96
+#      (Der Anruf-Link auf der Website wird daraus automatisch erzeugt.)
+#    - Die Datei bitte als "UTF-8" speichern (Standard in neuen Editoren),
+#      damit Umlaute wie ä, ö, ü und ß richtig angezeigt werden.
+#
+#  Wenn etwas nicht stimmt, zeigt die Website beim Erstellen eine deutsche
+#  Fehlermeldung mit der betroffenen Zeile an.
+# ============================================================================
+
+
+# --- Betrieb -----------------------------------------------------------------
+
+Firma: Rempel-Elektro
+Inhaber: Nikolai Rempel
+Titel: Dipl.-Ing. (FH)
+
+
+# --- Anschrift ---------------------------------------------------------------
+# Eine Anschrift, an der Post zugestellt werden kann (kein Postfach).
+
+Straße: Chemnitzer-Str. 4
+PLZ: 64720
+Ort: Michelstadt
+
+
+# --- Erreichbarkeit ----------------------------------------------------------
+
+Telefon: 06061 - 70 31 96
+Mobil: 0170 - 514 562 5
+Fax: 06061 - 70 31 97
+E-Mail: nikolai.rempel@freenet.de
+
+
+# --- Angaben für das Impressum -----------------------------------------------
+
+Handwerkskammer: Handwerkskammer Frankfurt-Rhein-Main
+Betriebsnummer: 4165157
+USt-IdNr.: DE 245119682
+
+
+# --- Internetadresse ---------------------------------------------------------
+# Die Adresse der Website, mit https:// am Anfang und OHNE Schrägstrich am
+# Ende. Sie wird für Suchmaschinen und Link-Vorschauen verwendet. Wenn die
+# Adresse noch nicht feststeht, die bisherige stehen lassen.
+
+Internetadresse: https://www.rempel-elektro.de
