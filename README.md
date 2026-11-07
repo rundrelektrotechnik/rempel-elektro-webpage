@@ -37,4 +37,4 @@ The result is in `_preview/` (a folder and a zip file).
 
 - `plans/PROJECT.md`: the full plan and page descriptions
 - `AGENTS.md`: working rules for everyone who edits this project
-- `CREDITS.md`: sources and licences of the photos
+- `assets/img/services/CREDITS.md`: sources and licences of the photos
