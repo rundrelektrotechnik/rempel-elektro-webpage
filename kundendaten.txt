@@ -146,7 +146,7 @@ Kurztext: Vorab klären, was sinnvoll ist.
 Beschreibung: Erst das Gespräch, dann der Auftrag: Wir erfassen, was Sie vorhaben, und sagen, was davon sinnvoll ist.
 Punkt: Sichtprüfung der vorhandenen Installation
 Punkt: Übersicht der Arbeiten und ihres Aufwands
-Punkt: Hinweise zu Fördermitteln bei Photovoltaik
+Punkt: Hinweise zu gesetzlichen Normen bei Photovoltaik
 
 [Leistung 2]
 Titel: Kundendienst
@@ -169,18 +169,16 @@ Punkt: Prüfung der Anlage nach Abschluss
 Titel: Antennenanlagen
 Kurztext: SAT, DAB und Kabel.
 Beschreibung: Wir richten die Anlage aus und prüfen, wo der Empfang scheitert.
-Punkt: Sat-Antennen, montiert und justiert
-Punkt: DAB-Empfang
-Punkt: Kabelanschluss
+Punkt: Sat-Anlagen, montiert und justiert
 Punkt: Störungssuche bei Empfangsproblemen
 
 [Leistung 5]
 Titel: Photovoltaik
 Kurztext: Module, Speicher, Anschluss.
 Beschreibung: Wir prüfen das Dach, montieren Module und Wechselrichter und schließen Speicher an.
-Punkt: Module und Wechselrichter auf dem Dach
+Punkt: Module auf dem Dach
 Punkt: Anschluss an die Hausinstallation
-Punkt: Speicher und Einspeisung
+Punkt: Speicher und Wechselrichter
 Punkt: Prüfung der fertigen Anlage
 
 
