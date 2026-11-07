@@ -5,8 +5,8 @@
  * Facts the customer supplies live in /kundendaten.txt, a plain `Name: Wert` file
  * the customer edits without any tooling. lib/kundendaten.js reads and checks it on every
  * data build (this module exports a function, so the dev server picks edits up too);
- * this module derives the rest from the facts: link hrefs, the address line, the maps
- * link. Everything below the derived values is configuration that belongs to the
+ * this module derives the rest from the facts: link hrefs, and the address line.
+ * Everything below the derived values is configuration that belongs to the
  * developers, not to the customer.
  *
  * Displayed values keep the German spacing ("06061 - 70 31 96").
@@ -61,7 +61,6 @@ module.exports = function () {
 
     /** Canonical origin. */
     url: c.url,
-    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${c.street} ${c.zip} ${c.city}`).replace(/%20/g, '+')}`,
 
     // --- developer copy and configuration ---
     ogImage: '/assets/img/og-image.png',

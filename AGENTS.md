@@ -103,7 +103,7 @@ never `+49`, because the site is German-only.
 - Fonts are self-hosted. Loading fonts from a CDN sends visitors' IP addresses to a third party
   and requires consent management.
 - No third-party embeds at all: no Google Fonts, no Maps iframe, no analytics, no social plugins.
-  Address links to Google Maps as a plain external link, `rel="noopener"`.
+  No Google Maps link either (removed per client decision); the address is plain text.
 - A cookie banner is therefore not needed. Do not add one.
 
 These are not legal advice for the client: they are the constraints for this build. If a legal

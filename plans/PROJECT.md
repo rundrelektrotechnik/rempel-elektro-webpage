@@ -73,7 +73,7 @@ this build, not legal advice for the client.
 | Impressum content | Name, ladungsfähige postal address (no PO box, no virtual office), phone, e-mail, Kammer with Betriebs-Nr., USt-IdNr. | All present, Fax included deliberately per client decision. |
 | Datenschutzerklärung | Art. 13/14 DSGVO require a privacy notice; the current site has none. | Mandatory page. Content describes reality: nothing happens. |
 | Self-hosted fonts | Loading fonts from a CDN transmits the visitor's IP to a third party and needs consent management. | Inter subset served from own `assets/fonts/`, OFL licence. |
-| No third-party embeds | Google Fonts, Maps iframe, analytics, social plugins all create DSGVO-relevant data transfers. | None. Address → plain external Google Maps link with `rel="noopener"`. |
+| No third-party embeds | Google Fonts, Maps iframe, analytics, social plugins all create DSGVO-relevant data transfers. | None. Address → plain text, no map link. |
 | No cookie banner | No tracking, no technically unnecessary cookies → no consent case exists. | Banner not implemented; must stay absent if nothing changes. |
 | Contact form only as `mailto:` | A form that posts to a server or a form service would require an AVV, data-minimisation wording and a legal basis, and would add a third-party request. A `mailto:` form transmits nothing to this site: the visitor's mail program sends the mail. | Kontakt page form with `action="mailto:…"`, `enctype="text/plain"`, no JS. Datenschutz says so. Limitation: needs a mail program on the visitor's device; the direct channels stay next to it. Server-side delivery would be a hosting decision (G5) plus a processor. |
 
@@ -108,7 +108,7 @@ Deliberately compact: 5 URLs plus a 404. A handwerk business with five services 
 ```
 /                Start              hero, services teaser, ablauf, region, contact
 /leistungen/     Leistungen         one page, five anchored sections (h2 + id per service)
-/kontakt/        Kontakt            phone, mobile, e-mail, fax, address, Maps link
+/kontakt/        Kontakt            phone, mobile, e-mail, fax, address
 /impressum/      Impressum          § 5 DDG, § 18 MStV
 /datenschutz/    Datenschutz         Art. 13/14 DSGVO
 /404.html        Seite nicht gefunden  404, links back to start and contact
@@ -165,8 +165,8 @@ response times or certifications.
 ### 5.3 Kontakt (`/kontakt/`)
 
 - Telefon, Mobil, E-Mail, Fax as clickable links. `tel:` hrefs use `+49` without spacing; the displayed number keeps the leading 0.
-- Address as `<address>` with a plain Google Maps link (external, `rel="noopener"`), no iframe.
-- Layout: hero with the call pill, then channel cards (e-mail, mobile, fax, address + Maps link) beside the
+- Address as `<address>`, plain text: no map link, no iframe.
+- Layout: hero with the call pill, then channel cards (e-mail, mobile, fax, address) beside the
   `mailto:` form card (Name, Telefon optional, Nachricht). Fields have visible labels and a border ≥ 3:1
   (`--lcl-color-field`). No opening-hours block.
 - A short note on reaching the business by phone is the only filler.
@@ -303,7 +303,7 @@ scripts/preview.js     `npm run preview`: builds to _preview/site, rewrites root
                       (folder links -> index.html), drops preload/manifest/sitemap/robots/404, checks every local
                       link, adds LIESMICH.txt and writes rempel-elektro-vorschau.zip for the customer
 lib/kundendaten.js    the reader: declares every field/section, validates, builds { facts, text, services }
-_data/site.js         facts + derived hrefs / address / maps link / +49 forms; developer config (nav, meta)
+_data/site.js         facts + derived hrefs / address / +49 forms; developer config (nav, meta)
 _data/text.js         the page texts from the file, as `text` in templates
                       (the German wording of the pages is therefore owned by the customer, not by templates)
 _data/services.js     the five services: fixed order / anchor id / photo in code, words from the file
@@ -369,7 +369,7 @@ Ordered so each phase ends in something verifiable. Nothing starts before the pl
 | 5 | Fonts | Inter subset installed, passthrough copy, `@font-face`, preload, `font-display: swap`. No FOUC, no layout shift. |
 | 6 | Start page | Full German copy, hero, teaser cards, ablauf, region, contact block. |
 | 7 | Leistungen | Five anchored sections (photo + lede + checklist) + closing CTA band. |
-| 8 | Kontakt | Contact channels, address, Maps link. |
+| 8 | Kontakt | Contact channels, address. |
 | 9 | Legal pages | Impressum + Datenschutz, correct statutes, footer links live on both. |
 | 10 | SEO + 404 | Titles, descriptions, canonical, OG, JSON-LD, `sitemap.xml`, `robots.txt`, `404.html`. |
 | 11 | A11y + responsive pass | Keyboard walk-through, contrast check, widths at 320/640/768/1024/1440, Lighthouse ≥ 90. |
@@ -391,8 +391,8 @@ them. Anything else the client wants to promise comes back in only after they co
   none of. Client/legal call whether to keep the "inhaltlich verantwortlich" line.
 - Aufsichtsbehörde: "Der Hessische Beauftragte für Datenschutz und Informationsfreiheit" (HBDI).
 - Datenschutz carries the Art. 21 right to object (Art. 6 Abs. 1 lit. f is used). No consent is collected,
-  so no revocation sentence. The Impressum has no "Haftung für Verweise" paragraph: the only external
-  link is the Maps link.
+  so no revocation sentence. The Impressum has no "Haftung für Verweise" paragraph: the site has no external
+  links.
 - "Stand" on the legal pages is `site.legalStand`, edited by hand, not the build year.
 
 ## 9. Open items (client)
@@ -436,8 +436,8 @@ Before hand-off:
       configuration is part of the hosting decision in phase 12.
 - [x] Impressum cites `§ 5 DDG` + `§ 18 MStV`, no `TMG`/`RStV`, no OS link, no `§ 36 VSBG`.
 - [x] Datenschutz describes only what actually happens; no cookie banner.
-- [x] Zero third-party requests in the HTML (no CDN fonts, no iframe, no pixel). The only external
-      reference is the plain Google Maps link on Kontakt, `rel="noopener"`.
+- [x] Zero third-party requests in the HTML (no CDN fonts, no iframe, no pixel). There are no
+      external links.
 - [x] All contact numbers clickable and correct, Fax included (`tel:` hrefs in `+49` form:
       `+496061703196`, `+496061703197`, `+491705145625`).
 - [x] `lang="de"`, one `<h1>` per page, heading order intact, skip link, focus visible.
@@ -483,7 +483,7 @@ rest needs a served URL.
 - [x] 5 Fonts — Inter variable Latin subset self-hosted, preloaded, OFL file shipped
 - [x] 6 Start page — hero, service teasers, Ablauf, Region, contact block
 - [x] 7 Leistungen — five anchored photo + checklist sections and a closing CTA band
-- [x] 8 Kontakt — phone/e-mail/-address blocks, Fax, Maps link
+- [x] 8 Kontakt — phone/e-mail/-address blocks, Fax
 - [x] 9 Legal pages — Impressum (§ 5 DDG, § 18 MStV) and Datenschutz
 - [x] 10 SEO + 404 — titles, canonical, OG image, JSON-LD, sitemap, robots, 404
 - [~] 11 A11y + responsive pass — contrast computed (all AA/3:1), focus rings fixed, skip-link
