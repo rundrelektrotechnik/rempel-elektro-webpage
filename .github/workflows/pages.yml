@@ -1,12 +1,9 @@
 # Publishes the site to GitHub Pages on every push to main.
 #
-# The project page lives under /rempel-elektro-webpage/, but the real build uses
-# root-relative links ("/kontakt/") that only work at the domain root. So this
-# deploys the offline preview (`npm run preview`): relative links, checked for
-# broken ones. It leaves out sitemap, robots, manifest and the 404 page.
-#
-# Once the site has its own domain (Settings > Pages > Custom domain), deploy the
-# real build instead: run `npm run build` and upload `_site` as the artifact.
+# The real production build (`npm run build`, output in `_site`) is deployed to the
+# custom domain https://www.rempel-elektro.de (Settings > Pages > Custom domain).
+# Its root-relative links ("/kontakt/") need the domain root, so this does not work
+# on the github.io project URL any more.
 name: Deploy to GitHub Pages
 
 on:
@@ -34,11 +31,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: npm run preview
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _preview/site
+          path: _site
 
   deploy:
     needs: build
