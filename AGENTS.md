@@ -179,7 +179,7 @@ Tracked here so nothing gets silently invented:
 - Opening hours — not provided by the client; block left out until supplied.
 - Real project photos and references — deferred until the client provides them; the service-tile stock photos
   are replaced then. No empty slots.
-- Hosting provider for the new build, and whether the old server is reused.
+- Hosting: GitHub Pages on rempel-elektro.de (domain at freenet.de, e-mail at freenet.de). Datenschutz names GitHub; revisit if the host changes.
 - Trust information (Innung membership, certifications) — deferred, will be provided later.
 
 ## 11. Before implementing
